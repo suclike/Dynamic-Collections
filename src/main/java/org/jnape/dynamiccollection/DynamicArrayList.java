@@ -1,5 +1,6 @@
 package org.jnape.dynamiccollection;
 
+import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 
@@ -21,6 +22,16 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     public DynamicArrayList(Element... elements) {
         super(asList(elements));
+    }
+
+    @Override
+    public DynamicArrayList<Element> concat(Collection<Element> collection) {
+        DynamicArrayList<Element> combined = new DynamicArrayList<Element>();
+
+        combined.addAll(this);
+        combined.addAll(collection);
+
+        return combined;
     }
 
     @Override
@@ -63,6 +74,17 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
                 without.add(element);
 
         return without;
+    }
+
+    @Override
+    public ListPartition<Element> partition(Function<Element, Boolean> sieve) {
+        List<Element> trues = new ArrayList<Element>();
+        List<Element> falses = new ArrayList<Element>();
+
+        for (Element element : this)
+            (sieve.apply(element) ? trues : falses).add(element);
+
+        return new ListPartition<Element>(trues, falses);
     }
 
     @Override

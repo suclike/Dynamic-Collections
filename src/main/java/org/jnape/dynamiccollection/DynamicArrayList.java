@@ -41,4 +41,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
         return collected;
     }
+
+    public DynamicArrayList<Element> unique() {
+        DynamicArrayList<Element> unique = new DynamicArrayList<Element>();
+
+        for (Element element : this)
+            if (!unique.contains(element))
+                unique.add(element);
+
+        return unique;
+    }
 }

@@ -114,4 +114,14 @@ public class DynamicArrayListTest {
         assertEquals(asList(2, 4), integers.collect(evenNumbers));
         assertEquals(asList(10, 12, 14, 16), moreIntegers.collect(evenNumbers));
     }
+
+    @Test
+    public void shouldUnique() {
+        DynamicArrayList<String> names = new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris");
+        DynamicArrayList<Integer> ages = new DynamicArrayList<Integer>(12, 42, 38, 38, 62, 25, 59, 59);
+
+        assertEquals(asList("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
+        assertEquals(asList(12, 42, 38, 62, 25, 59), ages.unique());
+    }
+
 }

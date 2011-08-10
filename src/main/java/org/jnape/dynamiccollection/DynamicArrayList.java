@@ -21,6 +21,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         super(asList(elements));
     }
 
+    @Override
     public <Transformation> DynamicArrayList<Transformation> transform(Function<Element, Transformation> transformer) {
         DynamicArrayList<Transformation> transformed = new DynamicArrayList<Transformation>();
 
@@ -28,5 +29,16 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
             transformed.add(transformer.apply(element));
 
         return transformed;
+    }
+
+    @Override
+    public DynamicArrayList<Element> collect(Function<Element, Boolean> collector) {
+        DynamicArrayList<Element> collected = new DynamicArrayList<Element>();
+
+        for (Element element : this)
+            if (collector.apply(element))
+                collected.add(element);
+
+        return collected;
     }
 }

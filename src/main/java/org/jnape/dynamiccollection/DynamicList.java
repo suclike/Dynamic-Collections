@@ -8,4 +8,7 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
 
     @Override
     <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer);
+
+    @Override
+    DynamicList<Element> collect(Function<Element, Boolean> collector);
 }

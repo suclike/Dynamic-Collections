@@ -85,8 +85,6 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldTransform() {
-        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
-
         Function<Number, String> intoStrings = new Function<Number, String>() {
             @Override
             public String apply(Number number) {
@@ -94,6 +92,26 @@ public class DynamicArrayListTest {
             }
         };
 
+        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
+        DynamicArrayList<Number> moreNumbers = new DynamicArrayList<Number>(1842.12d, 220, 1l);
+
         assertEquals(asList("1", "2.0", "3.5"), numbers.transform(intoStrings));
+        assertEquals(asList("1842.12", "220", "1"), moreNumbers.transform(intoStrings));
+    }
+
+    @Test
+    public void shouldCollect() {
+        Function<Integer, Boolean> evenNumbers = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
+
+        DynamicArrayList<Integer> integers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        DynamicArrayList<Integer> moreIntegers = new DynamicArrayList<Integer>(10, 11, 12, 13, 14, 15, 16);
+
+        assertEquals(asList(2, 4), integers.collect(evenNumbers));
+        assertEquals(asList(10, 12, 14, 16), moreIntegers.collect(evenNumbers));
     }
 }

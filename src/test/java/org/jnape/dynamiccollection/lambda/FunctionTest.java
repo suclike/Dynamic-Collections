@@ -4,12 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class FunctionTest {
 
     @Test
     public void shouldConstruct() {
-        Function function = new Function() {
+        new Function() {
             @Override
             public Object apply(Object o) {
                 return null;
@@ -18,7 +17,7 @@ public class FunctionTest {
     }
 
     @Test
-    public void shouldApply() {
+    public void shouldApplyLogicToInputAndReturnOutput() {
         Function<Integer, Integer> squared = new Function<Integer, Integer>() {
             @Override
             public Integer apply(Integer integer) {

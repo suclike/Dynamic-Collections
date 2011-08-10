@@ -1,6 +1,7 @@
 package org.jnape.dynamiccollection;
 
 import org.jnape.dynamiccollection.lambda.Function;
+import org.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +43,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return collected;
     }
 
+    @Override
     public DynamicArrayList<Element> unique() {
         DynamicArrayList<Element> unique = new DynamicArrayList<Element>();
 
@@ -50,5 +52,13 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
                 unique.add(element);
 
         return unique;
+    }
+
+    @Override
+    public DynamicArrayList<Element> each(Procedure<Element> procedure) {
+        for (Element element : this)
+            procedure.execute(element);
+
+        return this;
     }
 }

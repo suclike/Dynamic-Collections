@@ -1,6 +1,7 @@
 package org.jnape.dynamiccollection;
 
 import org.jnape.dynamiccollection.lambda.Function;
+import org.jnape.dynamiccollection.lambda.Procedure;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class DynamicArrayListTest {
 
@@ -84,7 +86,7 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldTransform() {
+    public void shouldTransformElementsToDifferentType() {
         Function<Number, String> intoStrings = new Function<Number, String>() {
             @Override
             public String apply(Number number) {
@@ -100,7 +102,7 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldCollect() {
+    public void shouldCollectSpecificElements() {
         Function<Integer, Boolean> evenNumbers = new Function<Integer, Boolean>() {
             @Override
             public Boolean apply(Integer integer) {
@@ -116,12 +118,31 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldUnique() {
-        DynamicArrayList<String> names = new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris");
+    public void shouldGetUniqueElements() {
+        DynamicArrayList<String> names = new DynamicArrayList<String>(
+                "Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris"
+        );
         DynamicArrayList<Integer> ages = new DynamicArrayList<Integer>(12, 42, 38, 38, 62, 25, 59, 59);
 
         assertEquals(asList("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
         assertEquals(asList(12, 42, 38, 62, 25, 59), ages.unique());
     }
 
+    @Test
+    public void shouldApplyProcedureToEachElement() {
+        final List<Character> letters = new ArrayList<Character>();
+
+        Procedure<String> addLetterToList = new Procedure<String>() {
+            @Override
+            public void execute(String string) {
+                for (int i = 0, stringLength = string.length(); i < stringLength; i++)
+                    letters.add(string.charAt(i));
+            }
+        };
+
+        DynamicArrayList<String> words = new DynamicArrayList<String>("The", "rain", "in", "Spain");
+
+        assertSame(words, words.each(addLetterToList));
+        assertEquals(asList('T', 'h', 'e', 'r', 'a', 'i', 'n', 'i', 'n', 'S', 'p', 'a', 'i', 'n'), letters);
+    }
 }

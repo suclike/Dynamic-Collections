@@ -1,5 +1,6 @@
 package org.jnape.dynamiccollection;
 
+import org.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -17,7 +18,6 @@ public class DynamicArrayListTest {
     private static final Item C = new Item();
 
     @Test
-    @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection"})
     public void shouldConstructWithoutArgs() {
         DynamicArrayList dynamicArrayList = new DynamicArrayList();
 
@@ -48,6 +48,17 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldConstructAndPopulateFromVarArgs() {
+        DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(B, C, A, C);
+
+        assertEquals(4, dynamicArrayList.size());
+        assertEquals(B, dynamicArrayList.get(0));
+        assertEquals(C, dynamicArrayList.get(1));
+        assertEquals(A, dynamicArrayList.get(2));
+        assertEquals(C, dynamicArrayList.get(3));
+    }
+
+    @Test
     public void shouldPolymorphToDynamicCollection() {
         DynamicCollection dynamicCollection = new DynamicArrayList();
     }
@@ -70,5 +81,19 @@ public class DynamicArrayListTest {
     @Test
     public void shouldPolymorphToArrayList() {
         ArrayList arrayList = new DynamicArrayList();
+    }
+
+    @Test
+    public void shouldTransform() {
+        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
+
+        Function<Number, String> intoStrings = new Function<Number, String>() {
+            @Override
+            public String apply(Number number) {
+                return number.toString();
+            }
+        };
+
+        assertEquals(asList("1", "2.0", "3.5"), numbers.transform(intoStrings));
     }
 }

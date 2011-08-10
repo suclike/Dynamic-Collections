@@ -1,5 +1,6 @@
 package org.jnape.dynamiccollection;
 
+import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.junit.Test;
@@ -86,6 +87,15 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldConcatenateAnotherCollectionAfterLastElement() {
+        DynamicArrayList<Item> a = new DynamicArrayList<Item>(A);
+        DynamicArrayList<Item> bAndC = new DynamicArrayList<Item>(B, C);
+
+        assertEquals(new DynamicArrayList<Item>(A, B, C), a.concat(bAndC));
+        assertEquals(new DynamicArrayList<Item>(B, C, A), bAndC.concat(a));
+    }
+
+    @Test
     public void shouldApplyProcedureToEachElement() {
         final List<Character> letters = new ArrayList<Character>();
 
@@ -144,6 +154,27 @@ public class DynamicArrayListTest {
 
         assertEquals(new DynamicArrayList<Item>(A, B, A, B), items.without(C));
         assertEquals(new DynamicArrayList<Item>(C, C), items.without(A, B));
+    }
+
+    @Test
+    public void shouldPartitionElementsIntoTruesAndFalses() {
+        Function<Integer, Boolean> intoEvensAndOdds = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
+
+        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        DynamicArrayList<Integer> elevenThroughFifteen = new DynamicArrayList<Integer>(11, 12, 13, 14, 15);
+
+        ListPartition<Integer> oneThroughTenPartition = oneThroughTen.partition(intoEvensAndOdds);
+        assertEquals(new DynamicArrayList<Integer>(2, 4, 6, 8, 10), oneThroughTenPartition.trues());
+        assertEquals(new DynamicArrayList<Integer>(1, 3, 5, 7, 9), oneThroughTenPartition.falses());
+
+        ListPartition<Integer> elevenThroughFifteenPartition = elevenThroughFifteen.partition(intoEvensAndOdds);
+        assertEquals(new DynamicArrayList<Integer>(12, 14), elevenThroughFifteenPartition.trues());
+        assertEquals(new DynamicArrayList<Integer>(11, 13, 15), elevenThroughFifteenPartition.falses());
     }
 
     @Test

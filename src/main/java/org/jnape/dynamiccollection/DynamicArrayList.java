@@ -5,6 +5,7 @@ import org.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -23,13 +24,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Transformation> DynamicArrayList<Transformation> transform(Function<Element, Transformation> transformer) {
-        DynamicArrayList<Transformation> transformed = new DynamicArrayList<Transformation>();
-
+    public DynamicArrayList<Element> each(Procedure<Element> procedure) {
         for (Element element : this)
-            transformed.add(transformer.apply(element));
+            procedure.execute(element);
 
-        return transformed;
+        return this;
     }
 
     @Override
@@ -44,6 +43,29 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public <Transformation> DynamicArrayList<Transformation> transform(Function<Element, Transformation> transformer) {
+        DynamicArrayList<Transformation> transformed = new DynamicArrayList<Transformation>();
+
+        for (Element element : this)
+            transformed.add(transformer.apply(element));
+
+        return transformed;
+    }
+
+    @Override
+    public DynamicArrayList<Element> without(Element... subtractions) {
+        DynamicArrayList<Element> without = new DynamicArrayList<Element>();
+
+        List<Element> subtractionsList = asList(subtractions);
+
+        for (Element element : this)
+            if (!subtractionsList.contains(element))
+                without.add(element);
+
+        return without;
+    }
+
+    @Override
     public DynamicArrayList<Element> unique() {
         DynamicArrayList<Element> unique = new DynamicArrayList<Element>();
 
@@ -52,13 +74,5 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
                 unique.add(element);
 
         return unique;
-    }
-
-    @Override
-    public DynamicArrayList<Element> each(Procedure<Element> procedure) {
-        for (Element element : this)
-            procedure.execute(element);
-
-        return this;
     }
 }

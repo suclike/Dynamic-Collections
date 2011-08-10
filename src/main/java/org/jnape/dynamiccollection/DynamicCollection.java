@@ -7,11 +7,13 @@ import java.util.Collection;
 
 public interface DynamicCollection<Element> extends Collection<Element> {
 
-    <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformer);
+    DynamicCollection<Element> each(Procedure<Element> procedure);
 
     DynamicCollection<Element> collect(Function<Element, Boolean> collector);
 
-    DynamicCollection<Element> unique();
+    <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformer);
 
-    DynamicCollection<Element> each(Procedure<Element> procedure);
+    DynamicList<Element> without(Element... subtractions);
+
+    DynamicCollection<Element> unique();
 }

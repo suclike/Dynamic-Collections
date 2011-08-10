@@ -86,49 +86,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldTransformElementsToDifferentType() {
-        Function<Number, String> intoStrings = new Function<Number, String>() {
-            @Override
-            public String apply(Number number) {
-                return number.toString();
-            }
-        };
-
-        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
-        DynamicArrayList<Number> moreNumbers = new DynamicArrayList<Number>(1842.12d, 220, 1l);
-
-        assertEquals(asList("1", "2.0", "3.5"), numbers.transform(intoStrings));
-        assertEquals(asList("1842.12", "220", "1"), moreNumbers.transform(intoStrings));
-    }
-
-    @Test
-    public void shouldCollectSpecificElements() {
-        Function<Integer, Boolean> evenNumbers = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer % 2 == 0;
-            }
-        };
-
-        DynamicArrayList<Integer> integers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
-        DynamicArrayList<Integer> moreIntegers = new DynamicArrayList<Integer>(10, 11, 12, 13, 14, 15, 16);
-
-        assertEquals(asList(2, 4), integers.collect(evenNumbers));
-        assertEquals(asList(10, 12, 14, 16), moreIntegers.collect(evenNumbers));
-    }
-
-    @Test
-    public void shouldGetUniqueElements() {
-        DynamicArrayList<String> names = new DynamicArrayList<String>(
-                "Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris"
-        );
-        DynamicArrayList<Integer> ages = new DynamicArrayList<Integer>(12, 42, 38, 38, 62, 25, 59, 59);
-
-        assertEquals(asList("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
-        assertEquals(asList(12, 42, 38, 62, 25, 59), ages.unique());
-    }
-
-    @Test
     public void shouldApplyProcedureToEachElement() {
         final List<Character> letters = new ArrayList<Character>();
 
@@ -143,6 +100,60 @@ public class DynamicArrayListTest {
         DynamicArrayList<String> words = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
         assertSame(words, words.each(addLetterToList));
-        assertEquals(asList('T', 'h', 'e', 'r', 'a', 'i', 'n', 'i', 'n', 'S', 'p', 'a', 'i', 'n'), letters);
+        assertEquals(
+                new DynamicArrayList<Character>('T', 'h', 'e', 'r', 'a', 'i', 'n', 'i', 'n', 'S', 'p', 'a', 'i', 'n'),
+                letters
+        );
+    }
+
+    @Test
+    public void shouldCollectSpecificElements() {
+        Function<Integer, Boolean> evenNumbers = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
+
+        DynamicArrayList<Integer> integers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        DynamicArrayList<Integer> moreIntegers = new DynamicArrayList<Integer>(10, 11, 12, 13, 14, 15, 16);
+
+        assertEquals(new DynamicArrayList<Integer>(2, 4), integers.collect(evenNumbers));
+        assertEquals(new DynamicArrayList<Integer>(10, 12, 14, 16), moreIntegers.collect(evenNumbers));
+    }
+
+    @Test
+    public void shouldTransformElementsToDifferentType() {
+        Function<Number, String> intoStrings = new Function<Number, String>() {
+            @Override
+            public String apply(Number number) {
+                return number.toString();
+            }
+        };
+
+        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
+        DynamicArrayList<Number> moreNumbers = new DynamicArrayList<Number>(1842.12d, 220, 1l);
+
+        assertEquals(new DynamicArrayList<String>("1", "2.0", "3.5"), numbers.transform(intoStrings));
+        assertEquals(new DynamicArrayList<String>("1842.12", "220", "1"), moreNumbers.transform(intoStrings));
+    }
+
+    @Test
+    public void shouldListWithoutSpecifiedElements() {
+        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C, A, B, C);
+
+        assertEquals(new DynamicArrayList<Item>(A, B, A, B), items.without(C));
+        assertEquals(new DynamicArrayList<Item>(C, C), items.without(A, B));
+    }
+
+    @Test
+    public void shouldGetUniqueElements() {
+        DynamicArrayList<String> names = new DynamicArrayList<String>(
+                "Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris"
+        );
+        DynamicArrayList<Integer> ages = new DynamicArrayList<Integer>(12, 42, 38, 38, 62, 25, 59, 59);
+
+        assertEquals(new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
+        assertEquals(new DynamicArrayList<Integer>(12, 42, 38, 62, 25, 59), ages.unique());
     }
 }

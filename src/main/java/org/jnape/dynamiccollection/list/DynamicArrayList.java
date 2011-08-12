@@ -1,4 +1,4 @@
-package org.jnape.dynamiccollection;
+package org.jnape.dynamiccollection.list;
 
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
@@ -22,6 +22,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     public DynamicArrayList(Element... elements) {
         super(asList(elements));
+    }
+
+    @Override
+    public DynamicList<Element> subList(int fromIndex, int toIndex) {
+        List<Element> subList = super.subList(fromIndex, toIndex);
+        return new DynamicArrayList<Element>(subList);
     }
 
     @Override

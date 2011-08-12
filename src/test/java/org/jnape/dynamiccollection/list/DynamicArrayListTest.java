@@ -1,5 +1,6 @@
-package org.jnape.dynamiccollection;
+package org.jnape.dynamiccollection.list;
 
+import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
@@ -21,6 +22,7 @@ public class DynamicArrayListTest {
     private static final Item C = new Item();
 
     @Test
+    @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection"})
     public void shouldConstructWithoutArgs() {
         DynamicArrayList dynamicArrayList = new DynamicArrayList();
 
@@ -84,6 +86,29 @@ public class DynamicArrayListTest {
     @Test
     public void shouldPolymorphToArrayList() {
         ArrayList arrayList = new DynamicArrayList();
+    }
+
+    @Test
+    public void shouldReturnDynamicListForSubList() {
+        DynamicList<Item> items = new DynamicArrayList<Item>(A, B, C);
+        DynamicList<Item> subList = items.subList(0, items.size());
+    }
+
+    @Test
+    public void shouldSubListExactlyBackingImplementation() {
+        List<Integer> numbers = asList(1, 2, 3, 4, 5);
+
+        ArrayList<Integer> arrayList = new ArrayList<Integer>(numbers);
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(numbers);
+
+        // TODO: a cartesian product method, combined with #collect, will hugely clean this up
+        for (Integer fromIndex : asList(0, 1, 2, 3)) {
+            for (Integer toIndex : asList(1, 2, 3, 4)) {
+                if (toIndex < fromIndex)
+                    continue;
+                assertEquals(arrayList.subList(fromIndex, toIndex), dynamicArrayList.subList(fromIndex, toIndex));
+            }
+        }
     }
 
     @Test

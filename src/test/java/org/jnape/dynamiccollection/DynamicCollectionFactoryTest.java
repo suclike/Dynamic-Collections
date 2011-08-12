@@ -1,5 +1,6 @@
 package org.jnape.dynamiccollection;
 
+import org.jnape.dynamiccollection.list.DynamicArrayList;
 import org.junit.Test;
 import testsupport.Item;
 

@@ -1,5 +1,8 @@
 package org.jnape.dynamiccollection;
 
+import org.jnape.dynamiccollection.list.DynamicArrayList;
+import org.jnape.dynamiccollection.list.DynamicList;
+
 import java.util.Collection;
 
 public class DynamicCollectionFactory {

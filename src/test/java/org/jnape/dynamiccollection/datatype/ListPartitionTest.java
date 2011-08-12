@@ -1,7 +1,7 @@
 package org.jnape.dynamiccollection.datatype;
 
-import org.jnape.dynamiccollection.DynamicArrayList;
-import org.jnape.dynamiccollection.DynamicList;
+import org.jnape.dynamiccollection.list.DynamicArrayList;
+import org.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 
 import java.util.ArrayList;

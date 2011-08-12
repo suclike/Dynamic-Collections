@@ -1,5 +1,6 @@
-package org.jnape.dynamiccollection;
+package org.jnape.dynamiccollection.list;
 
+import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
@@ -8,6 +9,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface DynamicList<Element> extends List<Element>, DynamicCollection<Element> {
+
+    @Override
+    DynamicList<Element> subList(int fromIndex, int toIndex);
 
     @Override
     DynamicList<Element> concat(Collection<Element> collection);

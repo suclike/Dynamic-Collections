@@ -17,6 +17,9 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
+    DynamicList<DynamicList<Element>> cartesianProduct(Collection<Element> collection);
+
+    @Override
     DynamicList<Element> each(Procedure<Element> procedure);
 
     @Override

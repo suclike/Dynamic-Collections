@@ -31,8 +31,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicArrayList<Element> concat(Collection<Element> collection) {
-        DynamicArrayList<Element> combined = new DynamicArrayList<Element>();
+    public DynamicList<Element> concat(Collection<Element> collection) {
+        DynamicList<Element> combined = new DynamicArrayList<Element>();
 
         combined.addAll(this);
         combined.addAll(collection);
@@ -40,8 +40,20 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return combined;
     }
 
+    @SuppressWarnings({"unchecked"})
     @Override
-    public DynamicArrayList<Element> each(Procedure<Element> procedure) {
+    public DynamicList<DynamicList<Element>> cartesianProduct(Collection<Element> collection) {
+        DynamicList<DynamicList<Element>> cartesianProduct = new DynamicArrayList<DynamicList<Element>>();
+
+        for (Element x : this)
+            for (Element y : collection)
+                cartesianProduct.add(new DynamicArrayList<Element>(x, y));
+
+        return cartesianProduct;
+    }
+
+    @Override
+    public DynamicList<Element> each(Procedure<Element> procedure) {
         for (Element element : this)
             procedure.execute(element);
 
@@ -49,8 +61,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicArrayList<Element> collect(Function<Element, Boolean> collector) {
-        DynamicArrayList<Element> collected = new DynamicArrayList<Element>();
+    public DynamicList<Element> collect(Function<Element, Boolean> collector) {
+        DynamicList<Element> collected = new DynamicArrayList<Element>();
 
         for (Element element : this)
             if (collector.apply(element))
@@ -60,8 +72,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Transformation> DynamicArrayList<Transformation> transform(Function<Element, Transformation> transformer) {
-        DynamicArrayList<Transformation> transformed = new DynamicArrayList<Transformation>();
+    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer) {
+        DynamicList<Transformation> transformed = new DynamicArrayList<Transformation>();
 
         for (Element element : this)
             transformed.add(transformer.apply(element));
@@ -70,8 +82,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicArrayList<Element> without(Element... subtractions) {
-        DynamicArrayList<Element> without = new DynamicArrayList<Element>();
+    public DynamicList<Element> without(Element... subtractions) {
+        DynamicList<Element> without = new DynamicArrayList<Element>();
 
         List<Element> subtractionsList = asList(subtractions);
 
@@ -84,8 +96,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public ListPartition<Element> partition(Function<Element, Boolean> sieve) {
-        List<Element> trues = new ArrayList<Element>();
-        List<Element> falses = new ArrayList<Element>();
+        List<Element> trues = new DynamicArrayList<Element>();
+        List<Element> falses = new DynamicArrayList<Element>();
 
         for (Element element : this)
             (sieve.apply(element) ? trues : falses).add(element);
@@ -94,8 +106,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicArrayList<Element> unique() {
-        DynamicArrayList<Element> unique = new DynamicArrayList<Element>();
+    public DynamicList<Element> unique() {
+        DynamicList<Element> unique = new DynamicArrayList<Element>();
 
         for (Element element : this)
             if (!unique.contains(element))

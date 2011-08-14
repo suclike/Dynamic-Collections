@@ -1,9 +1,12 @@
 package org.jnape.dynamiccollection.set;
 
+import org.jnape.dynamiccollection.DynamicCollection;
 import org.junit.Test;
 import testsupport.Item;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -48,5 +51,30 @@ public class DynamicHashSetTest {
         assertTrue(dynamicHashSet.contains(C));
         assertTrue(dynamicHashSet.contains(B));
         assertTrue(dynamicHashSet.contains(A));
+    }
+
+    @Test
+    public void shouldPolymorphToDynamicCollection() {
+        DynamicCollection dynamicCollection = new DynamicHashSet();
+    }
+
+    @Test
+    public void shouldPolymorphToDynamicSet() {
+        DynamicSet dynamicSet = new DynamicHashSet();
+    }
+
+    @Test
+    public void shouldPolymorphToCollection() {
+        Collection collection = new DynamicHashSet();
+    }
+
+    @Test
+    public void shouldPolymorphToSet() {
+        Set set = new DynamicHashSet();
+    }
+
+    @Test
+    public void shouldPolymorphToHashSet() {
+        HashSet hashSet = new DynamicHashSet();
     }
 }

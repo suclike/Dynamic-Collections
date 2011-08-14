@@ -95,20 +95,17 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldSubListExactlyBackingImplementation() {
-        List<Integer> numbers = asList(1, 2, 3, 4, 5);
+    public void shouldSubList() {
+        List<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
-        ArrayList<Integer> arrayList = new ArrayList<Integer>(numbers);
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(numbers);
+        assertEquals(new DynamicArrayList<Integer>(), numbers.subList(0, 0));
+        assertEquals(new DynamicArrayList<Integer>(1, 2, 3), numbers.subList(0, 3));
+        assertEquals(new DynamicArrayList<Integer>(3, 4, 5), numbers.subList(2, 5));
+    }
 
-        // TODO: a cartesian product method, combined with #collect, will hugely clean this up
-        for (Integer fromIndex : asList(0, 1, 2, 3)) {
-            for (Integer toIndex : asList(1, 2, 3, 4)) {
-                if (toIndex < fromIndex)
-                    continue;
-                assertEquals(arrayList.subList(fromIndex, toIndex), dynamicArrayList.subList(fromIndex, toIndex));
-            }
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenNegativeToIndex() {
+        new DynamicArrayList<Item>(A, B, C).subList(0, -1);
     }
 
     @Test
@@ -126,6 +123,14 @@ public class DynamicArrayListTest {
     @Test
     @SuppressWarnings({"unchecked"})
     public void shouldGenerateListOfTuplesRepresentingCartesianProduct() {
+        DynamicArrayList<Item> vowels = new DynamicArrayList<Item>(A);
+        DynamicArrayList<Item> consonants = new DynamicArrayList<Item>(B, C);
+
+        assertEquals(new DynamicArrayList<DynamicList<Item>>(
+                new DynamicArrayList<Item>(A, B),
+                new DynamicArrayList<Item>(A, C)
+        ), vowels.cartesianProduct(consonants));
+
         DynamicArrayList<Integer> evens = new DynamicArrayList<Integer>(2, 4, 6, 8, 10);
         DynamicArrayList<Integer> odds = new DynamicArrayList<Integer>(1, 3, 5, 7, 9);
         DynamicArrayList<Integer> empty = new DynamicArrayList<Integer>();

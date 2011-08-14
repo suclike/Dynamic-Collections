@@ -40,8 +40,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return combined;
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
+    @SuppressWarnings({"unchecked"})
     public DynamicList<DynamicList<Element>> cartesianProduct(Collection<Element> collection) {
         DynamicList<DynamicList<Element>> cartesianProduct = new DynamicArrayList<DynamicList<Element>>();
 

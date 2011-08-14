@@ -14,13 +14,10 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static testsupport.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration"})
 public class DynamicArrayListTest {
-
-    private static final Item A = new Item();
-    private static final Item B = new Item();
-    private static final Item C = new Item();
 
     @Test
     public void shouldConstructWithoutArgs() {

@@ -8,12 +8,9 @@ import java.util.Collection;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static testsupport.ItemFixture.*;
 
 public class DynamicCollectionFactoryTest {
-
-    private static final Item A = new Item();
-    private static final Item B = new Item();
-    private static final Item C = new Item();
 
     private static final Collection<Character> LETTERS = asList('A', 'B', 'C');
     private static final Collection<Integer> NUMBERS = asList(1, 2, 3);

@@ -19,7 +19,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformer);
 
-    DynamicList<Element> without(Element... subtractions);
+    DynamicCollection<Element> without(Element... subtractions);
 
     Partition<Element> partition(Function<Element, Boolean> sieve);
 

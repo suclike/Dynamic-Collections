@@ -26,7 +26,12 @@ public class DynamicHashSet<Element> extends HashSet<Element> implements Dynamic
 
     @Override
     public DynamicSet<Element> concat(Collection<Element> collection) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        DynamicSet<Element> combined = new DynamicHashSet<Element>();
+
+        combined.addAll(this);
+        combined.addAll(collection);
+
+        return combined;
     }
 
     @Override

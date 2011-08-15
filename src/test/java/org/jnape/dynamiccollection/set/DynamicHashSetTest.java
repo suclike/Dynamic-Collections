@@ -77,4 +77,16 @@ public class DynamicHashSetTest {
     public void shouldPolymorphToHashSet() {
         HashSet hashSet = new DynamicHashSet();
     }
+
+    @Test
+    public void shouldConcatenateAnotherCollectionAfterLastElement() {
+        DynamicHashSet<Item> a = new DynamicHashSet<Item>(A);
+        DynamicHashSet<Item> bAndC = new DynamicHashSet<Item>(B, C);
+        DynamicHashSet<Item> empty = new DynamicHashSet<Item>();
+
+        assertEquals(new DynamicHashSet<Item>(A, B, C), a.concat(bAndC));
+        assertEquals(new DynamicHashSet<Item>(B, C, A), bAndC.concat(a));
+        assertEquals(new DynamicHashSet<Item>(A), empty.concat(a));
+        assertEquals(new DynamicHashSet<Item>(B, C), bAndC.concat(empty));
+    }
 }

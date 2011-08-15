@@ -1,10 +1,14 @@
 package org.jnape.dynamiccollection;
 
 import org.jnape.dynamiccollection.list.DynamicArrayList;
+import org.jnape.dynamiccollection.set.DynamicHashSet;
 import org.junit.Test;
 import testsupport.Item;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Queue;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -13,14 +17,26 @@ import static testsupport.ItemFixture.*;
 public class DynamicCollectionFactoryTest {
 
     private static final Collection<Character> LETTERS = asList('A', 'B', 'C');
-    private static final Collection<Integer> NUMBERS = asList(1, 2, 3);
-    private static final Collection<Item> ITEMS = asList(A, B, C);
+    private static final Collection<Integer> NUMBERS = new HashSet<Integer>() {{
+        add(1);
+        add(2);
+        add(3);
+    }};
 
     @Test
     public void shouldProvideDynamicCollectionImplementationForCollection() {
         assertEquals(new DynamicArrayList<Character>(LETTERS), DynamicCollectionFactory.with(LETTERS));
-        assertEquals(new DynamicArrayList<Integer>(NUMBERS), DynamicCollectionFactory.with(NUMBERS));
-        assertEquals(new DynamicArrayList<Item>(ITEMS), DynamicCollectionFactory.with(ITEMS));
+        assertEquals(new DynamicHashSet<Integer>(NUMBERS), DynamicCollectionFactory.with(NUMBERS));
+    }
+
+    @Test
+    public void shouldDefaultToDynamicListImplementationForCollectionWithoutExplicitDynamicCounterpart() {
+        Queue<Item> queue = new ArrayDeque<Item>();
+        queue.add(A);
+        queue.add(B);
+        queue.add(C);
+
+        assertEquals(new DynamicArrayList<Item>(A, B, C), DynamicCollectionFactory.with(queue));
     }
 
     @Test
@@ -32,14 +48,10 @@ public class DynamicCollectionFactoryTest {
     public void shouldProvideDynamicListFromCollection() {
         assertEquals(new DynamicArrayList<Character>(LETTERS), DynamicCollectionFactory.list(LETTERS));
         assertEquals(new DynamicArrayList<Integer>(NUMBERS), DynamicCollectionFactory.list(NUMBERS));
-        assertEquals(new DynamicArrayList<Item>(ITEMS), DynamicCollectionFactory.list(ITEMS));
     }
 
     @Test
     public void shouldProvideDynamicListFromArray() {
-        Item[] items = new Item[]{A, B, C};
-        assertEquals(new DynamicArrayList<Item>(items), DynamicCollectionFactory.list(items));
-
         Character[] letters = new Character[]{'A', 'B', 'C'};
         assertEquals(new DynamicArrayList<Character>(letters), DynamicCollectionFactory.list(letters));
 
@@ -51,6 +63,5 @@ public class DynamicCollectionFactoryTest {
     public void shouldProvideDynamicListFromVarArgs() {
         assertEquals(new DynamicArrayList<Integer>(1, 2, 3), DynamicCollectionFactory.list(1, 2, 3));
         assertEquals(new DynamicArrayList<Character>('A', 'B', 'C'), DynamicCollectionFactory.list('A', 'B', 'C'));
-        assertEquals(new DynamicArrayList<Item>(A, B, C), DynamicCollectionFactory.list(A, B, C));
     }
 }

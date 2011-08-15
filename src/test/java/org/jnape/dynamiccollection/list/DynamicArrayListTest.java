@@ -101,7 +101,7 @@ public class DynamicArrayListTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenNegativeToIndex() {
+    public void shouldThrowExceptionWhenSubListGivenNegativeToIndex() {
         new DynamicArrayList<Item>(A, B, C).subList(0, -1);
     }
 

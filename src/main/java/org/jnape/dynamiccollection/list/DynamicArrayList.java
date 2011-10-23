@@ -3,9 +3,11 @@ package org.jnape.dynamiccollection.list;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
+import org.jnape.dynamiccollection.list.exception.CouldNotInferComparatorException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -114,5 +116,16 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
                 unique.add(element);
 
         return unique;
+    }
+
+    @Override
+    @SuppressWarnings({"unchecked"})
+    public DynamicList<Element> sort() {
+        try {
+            Collections.sort((List<Comparable>) this);
+            return this;
+        } catch (ClassCastException notComparable) {
+            throw new CouldNotInferComparatorException(this);
+        }
     }
 }

@@ -36,4 +36,6 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
 
     @Override
     DynamicList<Element> unique();
+
+    DynamicList<Element> sort();
 }

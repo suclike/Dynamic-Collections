@@ -3,7 +3,6 @@ package org.jnape.dynamiccollection;
 import org.jnape.dynamiccollection.datatype.Partition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
-import org.jnape.dynamiccollection.list.DynamicList;
 
 import java.util.Collection;
 

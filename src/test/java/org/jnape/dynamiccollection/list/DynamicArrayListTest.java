@@ -4,6 +4,7 @@ import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
+import org.jnape.dynamiccollection.list.exception.CouldNotInferComparatorException;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static testsupport.ItemFixture.*;
@@ -255,5 +257,19 @@ public class DynamicArrayListTest {
 
         assertEquals(new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
         assertEquals(new DynamicArrayList<Integer>(12, 42, 38, 62, 25, 59), ages.unique());
+    }
+
+    @Test
+    public void shouldSort() {
+        DynamicArrayList<Character> letters = new DynamicArrayList<Character>('c', 'a', 'd', 'b');
+        assertEquals(new DynamicArrayList<Character>('a', 'b', 'c', 'd'), letters.sort());
+
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(5, 3, 2, 4, 1);
+        assertEquals(new DynamicArrayList<Integer>(1, 2, 3, 4, 5), numbers.sort());
+    }
+
+    @Test(expected = CouldNotInferComparatorException.class)
+    public void shouldThrowExceptionIfListDoesNotContainComparables() {
+        list(new Item()).sort();
     }
 }

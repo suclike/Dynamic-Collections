@@ -52,6 +52,8 @@
     <properties>
         <junit.version>4.8.2</junit.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+        <maven-site-plugin.version>3.0</maven-site-plugin.version>
+        <wagon-ssh.version>1.0-beta-7</wagon-ssh.version>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +82,11 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -93,7 +100,25 @@
                     <compilerVersion>1.6</compilerVersion>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh</artifactId>
+                        <version>${wagon-ssh.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <site>
+            <id>www.jnape.com</id>
+            <url>scp://jnape.com/home/endelo/jnape.com/oss/dynamic-collections</url>
+        </site>
+    </distributionManagement>
 
 </project>

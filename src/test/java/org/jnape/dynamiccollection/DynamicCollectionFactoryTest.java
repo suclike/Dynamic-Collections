@@ -1,7 +1,6 @@
 package org.jnape.dynamiccollection;
 
 import org.jnape.dynamiccollection.list.DynamicArrayList;
-import org.jnape.dynamiccollection.set.DynamicHashSet;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -26,7 +25,6 @@ public class DynamicCollectionFactoryTest {
     @Test
     public void shouldProvideDynamicCollectionImplementationForCollection() {
         assertEquals(new DynamicArrayList<Character>(LETTERS), DynamicCollectionFactory.with(LETTERS));
-        assertEquals(new DynamicHashSet<Integer>(NUMBERS), DynamicCollectionFactory.with(NUMBERS));
     }
 
     @Test

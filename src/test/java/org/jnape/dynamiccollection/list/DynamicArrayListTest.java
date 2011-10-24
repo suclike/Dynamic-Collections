@@ -261,6 +261,15 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldReverse() {
+        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
+        assertEquals(new DynamicArrayList<Item>(C, B, A), items.reverse());
+
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3);
+        assertEquals(new DynamicArrayList<Integer>(3, 2, 1), numbers.reverse());
+    }
+
+    @Test
     public void shouldSort() {
         DynamicArrayList<Character> letters = new DynamicArrayList<Character>('c', 'a', 'd', 'b');
         assertEquals(new DynamicArrayList<Character>('a', 'b', 'c', 'd'), letters.sort());

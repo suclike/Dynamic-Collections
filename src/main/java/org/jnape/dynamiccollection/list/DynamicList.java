@@ -39,6 +39,8 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     @Override
     DynamicList<Element> unique();
 
+    DynamicList<Element> reverse();
+
     DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException;
 
     <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<Element, Comparison> comparator);

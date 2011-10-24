@@ -117,6 +117,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<Element> reverse() {
+        Collections.reverse(this);
+        return this;
+    }
+
+    @Override
     @SuppressWarnings({"unchecked"})
     public DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException {
         try {

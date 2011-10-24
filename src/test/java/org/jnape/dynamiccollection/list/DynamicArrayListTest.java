@@ -5,6 +5,7 @@ import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
+import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -284,8 +285,78 @@ public class DynamicArrayListTest {
 
         DynamicArrayList<Item> ABC = new DynamicArrayList<Item>(A, B, C);
 
-        assertEquals(ABC, list(B, C, A).sort(byLabel));
-        assertEquals(ABC, list(C, B, A).sort(byLabel));
-        assertEquals(ABC, list(A, C, B).sort(byLabel));
+        assertEquals(ABC, new DynamicArrayList<Item>(B, C, A).sort(byLabel));
+        assertEquals(ABC, new DynamicArrayList<Item>(C, B, A).sort(byLabel));
+        assertEquals(ABC, new DynamicArrayList<Item>(A, C, B).sort(byLabel));
+    }
+
+    @Test
+    public void shouldGetFirst() {
+        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
+        assertSame(A, items.first());
+
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(3, 2, 1);
+        assertSame(3, numbers.first());
+    }
+
+    @Test(expected = ListWasEmptyException.class)
+    public void shouldThrowExceptionIfGetFirstOnEmptyList() {
+        new DynamicArrayList<Object>().first();
+    }
+
+    @Test
+    public void shouldGetLast() {
+        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
+        assertSame(C, items.last());
+
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(3, 2, 1);
+        assertSame(1, numbers.last());
+    }
+
+    @Test(expected = ListWasEmptyException.class)
+    public void shouldThrowExceptionIfGetLastOnEmptyList() {
+        new DynamicArrayList<Object>().last();
+    }
+
+    @Test
+    public void shouldGetMax() {
+        Function<String, Integer> wordLength = new Function<String, Integer>() {
+            @Override
+            public Integer apply(String s) {
+                return s.length();
+            }
+        };
+
+        assertEquals("Spain", new DynamicArrayList<String>("the", "rain", "in", "Spain").max(wordLength));
+
+        Function<Integer, Integer> integerValue = new Function<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer) {
+                return integer;
+            }
+        };
+
+        assertEquals((Integer) 5, new DynamicArrayList<Integer>(1, 2, 3, 4, 5).max(integerValue));
+    }
+
+    @Test
+    public void shouldGetMin() {
+        Function<String, Integer> wordLength = new Function<String, Integer>() {
+            @Override
+            public Integer apply(String s) {
+                return s.length();
+            }
+        };
+
+        assertEquals("in", new DynamicArrayList<String>("the", "rain", "in", "Spain").min(wordLength));
+
+        Function<Integer, Integer> integerValue = new Function<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer) {
+                return integer;
+            }
+        };
+
+        assertEquals((Integer) 1, new DynamicArrayList<Integer>(1, 2, 3, 4, 5).min(integerValue));
     }
 }

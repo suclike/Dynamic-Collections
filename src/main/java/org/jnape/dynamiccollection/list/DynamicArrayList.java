@@ -4,6 +4,7 @@ import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
+import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.*;
 
@@ -117,7 +118,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     @SuppressWarnings({"unchecked"})
-    public DynamicList<Element> sort() {
+    public DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException {
         try {
             Collections.sort((List<Comparable>) this);
             return this;
@@ -140,5 +141,43 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
         Collections.sort(this, internalComparator);
         return this;
+    }
+
+    @Override
+    public Element first() throws ListWasEmptyException {
+        ensureNotEmpty();
+        return get(0);
+    }
+
+    @Override
+    public Element last() throws ListWasEmptyException {
+        ensureNotEmpty();
+        return get(size() - 1);
+    }
+
+    @Override
+    public Element max(final Function<Element, Integer> calculator) {
+        return sortByNumericValue(calculator).last();
+    }
+
+    @Override
+    public Element min(Function<Element, Integer> calculator) {
+        return sortByNumericValue(calculator).first();
+    }
+
+    private void ensureNotEmpty() {
+        if (isEmpty())
+            throw new ListWasEmptyException();
+    }
+
+    private DynamicList<Element> sortByNumericValue(final Function<Element, Integer> calculator) {
+        Function<Element, Integer> byNumericValue = new Function<Element, Integer>() {
+            @Override
+            public Integer apply(Element element) {
+                return calculator.apply(element);
+            }
+        };
+
+        return sort(byNumericValue);
     }
 }

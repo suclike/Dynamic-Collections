@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings({"ThrowableInstanceNeverThrown"})
-public class CouldNotInferComparatorExceptionTest {
+public class ListNotSortableWithoutCustomComparatorExceptionTest {
 
     @Test
     public void shouldConstruct() {

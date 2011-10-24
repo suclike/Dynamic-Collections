@@ -3,12 +3,9 @@ package org.jnape.dynamiccollection.list;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
-import org.jnape.dynamiccollection.list.exception.CouldNotInferComparatorException;
+import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 
@@ -125,7 +122,23 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
             Collections.sort((List<Comparable>) this);
             return this;
         } catch (ClassCastException notComparable) {
-            throw new CouldNotInferComparatorException(this);
+            throw new ListNotSortableWithoutCustomComparatorException(this);
         }
+    }
+
+    @Override
+    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(final Function<Element, Comparison> comparator) {
+        Comparator<Element> internalComparator = new Comparator<Element>() {
+            @Override
+            public int compare(Element element1, Element element2) {
+                Comparison comparison1 = comparator.apply(element1);
+                Comparison comparison2 = comparator.apply(element2);
+
+                return comparison1.compareTo(comparison2);
+            }
+        };
+
+        Collections.sort(this, internalComparator);
+        return this;
     }
 }

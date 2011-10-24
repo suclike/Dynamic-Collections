@@ -13,19 +13,19 @@ public class ListNotSortableWithoutCustomComparatorExceptionTest {
 
     @Test
     public void shouldConstruct() {
-        new CouldNotInferComparatorException(list());
+        new ListNotSortableWithoutCustomComparatorException(list());
     }
 
     @Test
     public void shouldBeRuntimeException() {
-        boolean isRuntimeException = RuntimeException.class.isInstance(new CouldNotInferComparatorException(list()));
+        boolean isRuntimeException = RuntimeException.class.isInstance(new ListNotSortableWithoutCustomComparatorException(list()));
         assertTrue(isRuntimeException);
     }
 
     @Test
     public void shouldGetMessage() {
         List<Integer> list = list(3, 2, 1);
-        CouldNotInferComparatorException couldNotInferComparatorException = new CouldNotInferComparatorException(list);
-        assertEquals("Could not infer comparator for list <[3, 2, 1]>", couldNotInferComparatorException.getMessage());
+        ListNotSortableWithoutCustomComparatorException listNotSortableWithoutCustomComparatorException = new ListNotSortableWithoutCustomComparatorException(list);
+        assertEquals("List cannot be sorted without custom comparator: <[3, 2, 1]>", listNotSortableWithoutCustomComparatorException.getMessage());
     }
 }

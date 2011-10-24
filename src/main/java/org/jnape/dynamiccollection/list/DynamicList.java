@@ -38,4 +38,6 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> unique();
 
     DynamicList<Element> sort();
+
+    <Comparison extends Comparable<Comparison>>DynamicList<Element> sort(Function<Element, Comparison> comparator);
 }

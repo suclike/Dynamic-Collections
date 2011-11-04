@@ -6,7 +6,12 @@ import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
+import org.jnape.dynamiccollection.list.operation.CartesianProduct;
+import org.jnape.dynamiccollection.list.operation.Concatenation;
+import org.jnape.dynamiccollection.list.operation.Each;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import testsupport.Item;
 
 import java.util.ArrayList;
@@ -17,10 +22,33 @@ import static java.util.Arrays.asList;
 import static org.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static testsupport.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration"})
 public class DynamicArrayListTest {
+
+    @Mock
+    private OperationProvider operationProvider;
+
+    @Mock
+    private Concatenation concatenation;
+
+    @Mock
+    private CartesianProduct cartesianProduct;
+
+    @Mock
+    private Each each;
+
+    @Before
+    public void setUp() {
+        initMocks(this);
+
+        when(operationProvider.concatenation()).thenReturn(concatenation);
+        when(operationProvider.cartesianProduct()).thenReturn(cartesianProduct);
+        when(operationProvider.each()).thenReturn(each);
+    }
 
     @Test
     public void shouldConstructWithoutArgs() {
@@ -109,83 +137,36 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldConcatenateAnotherCollectionAfterLastElement() {
-        DynamicArrayList<Item> a = new DynamicArrayList<Item>(A);
-        DynamicArrayList<Item> bAndC = new DynamicArrayList<Item>(B, C);
-        DynamicArrayList<Item> empty = new DynamicArrayList<Item>();
+    public void shouldDelegateConcat() {
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
+        Collection<Integer> collection = new ArrayList<Integer>();
 
-        assertEquals(new DynamicArrayList<Item>(A, B, C), a.concat(bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C, A), bAndC.concat(a));
-        assertEquals(new DynamicArrayList<Item>(B, C), empty.concat(bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C), bAndC.concat(empty));
+        DynamicList<Integer> expected = new DynamicArrayList<Integer>();
+        when(concatenation.execute(dynamicArrayList, collection)).thenReturn(expected);
+
+        assertSame(expected, dynamicArrayList.concat(collection));
     }
 
     @Test
     @SuppressWarnings({"unchecked"})
-    public void shouldGenerateListOfTuplesRepresentingCartesianProduct() {
-        DynamicArrayList<Item> vowels = new DynamicArrayList<Item>(A);
-        DynamicArrayList<Item> consonants = new DynamicArrayList<Item>(B, C);
+    public void shouldDelegateCartesianProduct() {
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
+        List<Integer> list = new ArrayList<Integer>();
 
-        assertEquals(new DynamicArrayList<DynamicList<Item>>(
-                new DynamicArrayList<Item>(A, B),
-                new DynamicArrayList<Item>(A, C)
-        ), vowels.cartesianProduct(consonants));
+        DynamicList<DynamicList<Integer>> expected = new DynamicArrayList<DynamicList<Integer>>();
+        when(cartesianProduct.execute(dynamicArrayList, list)).thenReturn(expected);
 
-        DynamicArrayList<Integer> evens = new DynamicArrayList<Integer>(2, 4, 6, 8, 10);
-        DynamicArrayList<Integer> odds = new DynamicArrayList<Integer>(1, 3, 5, 7, 9);
-        DynamicArrayList<Integer> empty = new DynamicArrayList<Integer>();
-
-        assertEquals(new DynamicArrayList<DynamicList<Integer>>(
-                new DynamicArrayList<Integer>(2, 1),
-                new DynamicArrayList<Integer>(2, 3),
-                new DynamicArrayList<Integer>(2, 5),
-                new DynamicArrayList<Integer>(2, 7),
-                new DynamicArrayList<Integer>(2, 9),
-                new DynamicArrayList<Integer>(4, 1),
-                new DynamicArrayList<Integer>(4, 3),
-                new DynamicArrayList<Integer>(4, 5),
-                new DynamicArrayList<Integer>(4, 7),
-                new DynamicArrayList<Integer>(4, 9),
-                new DynamicArrayList<Integer>(6, 1),
-                new DynamicArrayList<Integer>(6, 3),
-                new DynamicArrayList<Integer>(6, 5),
-                new DynamicArrayList<Integer>(6, 7),
-                new DynamicArrayList<Integer>(6, 9),
-                new DynamicArrayList<Integer>(8, 1),
-                new DynamicArrayList<Integer>(8, 3),
-                new DynamicArrayList<Integer>(8, 5),
-                new DynamicArrayList<Integer>(8, 7),
-                new DynamicArrayList<Integer>(8, 9),
-                new DynamicArrayList<Integer>(10, 1),
-                new DynamicArrayList<Integer>(10, 3),
-                new DynamicArrayList<Integer>(10, 5),
-                new DynamicArrayList<Integer>(10, 7),
-                new DynamicArrayList<Integer>(10, 9)
-        ), evens.cartesianProduct(odds));
-
-        assertEquals(new DynamicArrayList<DynamicList<Integer>>(), empty.cartesianProduct(evens));
-        assertEquals(new DynamicArrayList<DynamicList<Integer>>(), evens.cartesianProduct(empty));
+        assertSame(expected, dynamicArrayList.cartesianProduct(list));
     }
 
     @Test
-    public void shouldApplyProcedureToEachElement() {
-        final List<Character> letters = new ArrayList<Character>();
+    @SuppressWarnings({"unchecked"})
+    public void shouldDelegateEach() {
+        Procedure procedure = mock(Procedure.class);
+        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
-        Procedure<String> addLetterToList = new Procedure<String>() {
-            @Override
-            public void execute(String string) {
-                for (int i = 0, stringLength = string.length(); i < stringLength; i++)
-                    letters.add(string.charAt(i));
-            }
-        };
-
-        DynamicArrayList<String> words = new DynamicArrayList<String>("The", "rain", "in", "Spain");
-
-        assertSame(words, words.each(addLetterToList));
-        assertEquals(
-                new DynamicArrayList<Character>('T', 'h', 'e', 'r', 'a', 'i', 'n', 'i', 'n', 'S', 'p', 'a', 'i', 'n'),
-                letters
-        );
+        assertSame(dynamicArrayList, dynamicArrayList.each(procedure));
+        verify(each).iterativelyApply(dynamicArrayList, procedure);
     }
 
     @Test

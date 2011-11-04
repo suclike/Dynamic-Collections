@@ -10,8 +10,6 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
 
-    DynamicCollection<? extends DynamicCollection<Element>> cartesianProduct(Collection<Element> collection);
-
     DynamicCollection<Element> each(Procedure<Element> procedure);
 
     DynamicCollection<Element> collect(Function<Element, Boolean> collector);

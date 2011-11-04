@@ -19,9 +19,6 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
-    DynamicList<? extends DynamicList<Element>> cartesianProduct(Collection<Element> collection);
-
-    @Override
     DynamicList<Element> each(Procedure<Element> procedure);
 
     @Override
@@ -38,6 +35,8 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
 
     @Override
     DynamicList<Element> unique();
+
+    DynamicList<? extends DynamicList<Element>> cartesianProduct(List<Element> collection);
 
     DynamicList<Element> reverse();
 

@@ -1,8 +1,6 @@
 package org.jnape.dynamiccollection.list;
 
-import org.jnape.dynamiccollection.operator.CartesianMultiplier;
 import org.jnape.dynamiccollection.operator.*;
-import org.jnape.dynamiccollection.operator.Concatenator;
 
 public class OperationProvider {
 
@@ -22,7 +20,15 @@ public class OperationProvider {
         return new Collector();
     }
 
+    public Reducer reducer() {
+        return new Reducer();
+    }
+
     public Transformer transformer() {
         return new Transformer();
+    }
+
+    public ElementExcluder elementExcluder() {
+        return new ElementExcluder();
     }
 }

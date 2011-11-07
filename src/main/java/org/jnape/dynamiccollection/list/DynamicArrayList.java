@@ -6,9 +6,7 @@ import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import org.jnape.dynamiccollection.operator.CartesianMultiplier;
 import org.jnape.dynamiccollection.operator.*;
-import org.jnape.dynamiccollection.operator.Concatenator;
 
 import java.util.*;
 
@@ -49,42 +47,40 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
     public DynamicList<DynamicCollection<Element>> cartesianProduct(Collection<Element> collection) {
         CartesianMultiplier cartesianMultiplier = operationProvider.cartesianMultiplier();
         return (DynamicList<DynamicCollection<Element>>) cartesianMultiplier.multiply(this, collection);
     }
 
     @Override
-    public DynamicList<Element> each(Procedure<Element> procedure) {
+    public DynamicList<Element> each(Procedure<Element> iterativeProcedure) {
         IterativeExecutor iterativeExecutor = operationProvider.iterativeExecutor();
-        iterativeExecutor.iterativelyExecute(this, procedure);
+        iterativeExecutor.iterativelyExecute(this, iterativeProcedure);
         return this;
     }
 
     @Override
-    public DynamicList<Element> collect(Function<Element, Boolean> sieve) {
+    public DynamicList<Element> collect(Function<Element, Boolean> collectionFunction) {
         Collector collector = operationProvider.collector();
-        return (DynamicList<Element>) collector.collect(this, sieve);
+        return (DynamicList<Element>) collector.collect(this, collectionFunction);
     }
 
     @Override
-    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> function) {
+    public DynamicList<Element> reduce(Function<Element, Boolean> reductionFunction) {
+        Reducer reducer = operationProvider.reducer();
+        return (DynamicList<Element>) reducer.reduce(this, reductionFunction);
+    }
+
+    @Override
+    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformationFunction) {
         Transformer transformer = operationProvider.transformer();
-        return (DynamicList<Transformation>) transformer.transform(this, function);
+        return (DynamicList<Transformation>) transformer.transform(this, transformationFunction);
     }
 
     @Override
-    public DynamicList<Element> without(Element... subtractions) {
-        DynamicList<Element> without = new DynamicArrayList<Element>();
-
-        List<Element> subtractionsList = asList(subtractions);
-
-        for (Element element : this)
-            if (!subtractionsList.contains(element))
-                without.add(element);
-
-        return without;
+    public DynamicList<Element> without(Element... exclusions) {
+        ElementExcluder elementExcluder = operationProvider.elementExcluder();
+        return (DynamicList<Element>) elementExcluder.exclude(this, exclusions);
     }
 
     @Override

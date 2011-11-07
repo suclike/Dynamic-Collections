@@ -1,8 +1,6 @@
 package org.jnape.dynamiccollection.list;
 
-import org.jnape.dynamiccollection.operator.CartesianMultiplier;
 import org.jnape.dynamiccollection.operator.*;
-import org.jnape.dynamiccollection.operator.Concatenator;
 import org.junit.Test;
 
 import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
@@ -22,6 +20,8 @@ public class OperationProviderTest {
         assertReflectionEquals(new CartesianMultiplier(), operationProvider.cartesianMultiplier());
         assertReflectionEquals(new IterativeExecutor(), operationProvider.iterativeExecutor());
         assertReflectionEquals(new Collector(), operationProvider.collector());
+        assertReflectionEquals(new Reducer(), operationProvider.reducer());
         assertReflectionEquals(new Transformer(), operationProvider.transformer());
+        assertReflectionEquals(new ElementExcluder(), operationProvider.elementExcluder());
     }
 }

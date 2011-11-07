@@ -24,8 +24,9 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static testsupport.ItemFixture.*;
 
-@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration"})
+@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
+
 
     @Mock
     private OperationProvider operationProvider;
@@ -45,6 +46,12 @@ public class DynamicArrayListTest {
     @Mock
     private Transformer transformer;
 
+    @Mock
+    private Reducer reducer;
+
+    @Mock
+    private ElementExcluder elementExcluder;
+
     @Before
     public void setUp() {
         initMocks(this);
@@ -54,6 +61,8 @@ public class DynamicArrayListTest {
         when(operationProvider.iterativeExecutor()).thenReturn(iterativeExecutor);
         when(operationProvider.collector()).thenReturn(collector);
         when(operationProvider.transformer()).thenReturn(transformer);
+        when(operationProvider.reducer()).thenReturn(reducer);
+        when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
     }
 
     @Test
@@ -165,7 +174,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    @SuppressWarnings({"unchecked"})
     public void shouldDelegateEach() {
         Procedure procedure = mock(Procedure.class);
         DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
@@ -175,7 +183,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    @SuppressWarnings({"unchecked"})
     public void shouldDelegateCollect() {
         Function function = mock(Function.class);
         DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
@@ -187,7 +194,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    @SuppressWarnings({"unchecked"})
     public void shouldDelegateTransform() {
         Function function = mock(Function.class);
         DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
@@ -199,11 +205,25 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldListWithoutSpecifiedElements() {
-        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C, A, B, C);
+    public void shouldDelegateReduce() {
+        Function function = mock(Function.class);
+        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
-        assertEquals(new DynamicArrayList<Item>(A, B, A, B), items.without(C));
-        assertEquals(new DynamicArrayList<Item>(C, C), items.without(A, B));
+        DynamicList<Object> expected = new DynamicArrayList<Object>();
+        when(reducer.reduce(dynamicArrayList, function)).thenReturn(expected);
+
+        assertSame(expected, dynamicArrayList.reduce(function));
+    }
+
+    @Test
+    public void shouldDelegateWithout() {
+        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+        Object[] exclusions = {};
+
+        DynamicList<Object> expected = new DynamicArrayList<Object>();
+        when(elementExcluder.exclude(dynamicArrayList, exclusions)).thenReturn(expected);
+
+        assertSame(expected, dynamicArrayList.without(exclusions));
     }
 
     @Test

@@ -19,16 +19,19 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
-    DynamicList<Element> each(Procedure<Element> procedure);
+    DynamicList<Element> each(Procedure<Element> iterativeProcedure);
 
     @Override
-    DynamicList<Element> collect(Function<Element, Boolean> collector);
+    DynamicList<Element> collect(Function<Element, Boolean> collectionFunction);
 
     @Override
-    <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer);
+    DynamicList<Element> reduce(Function<Element, Boolean> reductionFunction);
 
     @Override
-    DynamicList<Element> without(Element... subtractions);
+    <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformationFunction);
+
+    @Override
+    DynamicList<Element> without(Element... exclusions);
 
     @Override
     ListPartition<Element> partition(Function<Element, Boolean> sieve);

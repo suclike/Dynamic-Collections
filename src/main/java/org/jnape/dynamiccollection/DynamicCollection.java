@@ -10,13 +10,15 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
 
-    DynamicCollection<Element> each(Procedure<Element> procedure);
+    DynamicCollection<Element> each(Procedure<Element> iterativeProcedure);
 
-    DynamicCollection<Element> collect(Function<Element, Boolean> collector);
+    DynamicCollection<Element> collect(Function<Element, Boolean> collectionFunction);
 
-    <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformer);
+    DynamicCollection<Element> reduce(Function<Element, Boolean> reductionFunction);
 
-    DynamicCollection<Element> without(Element... subtractions);
+    <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformationFunction);
+
+    DynamicCollection<Element> without(Element... exclusions);
 
     Partition<Element> partition(Function<Element, Boolean> sieve);
 

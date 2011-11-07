@@ -42,11 +42,6 @@
             <name>John Napier</name>
             <email>john@jnape.com</email>
         </developer>
-        <developer>
-            <id>wastevens</id>
-            <name>Drew Stevens</name>
-            <email>wastevens@gmail.com</email>
-        </developer>
     </developers>
 
     <properties>

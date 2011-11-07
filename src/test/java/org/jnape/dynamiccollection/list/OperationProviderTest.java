@@ -1,10 +1,8 @@
 package org.jnape.dynamiccollection.list;
 
-import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
-import org.jnape.dynamiccollection.operator.Collector;
-import org.jnape.dynamiccollection.list.operator.Concatenator;
-import org.jnape.dynamiccollection.operator.IterativeExecutor;
-import org.jnape.dynamiccollection.operator.Transformer;
+import org.jnape.dynamiccollection.operator.CartesianMultiplier;
+import org.jnape.dynamiccollection.operator.*;
+import org.jnape.dynamiccollection.operator.Concatenator;
 import org.junit.Test;
 
 import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;

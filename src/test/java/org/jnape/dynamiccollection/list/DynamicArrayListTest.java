@@ -6,11 +6,7 @@ import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
-import org.jnape.dynamiccollection.list.operator.Concatenator;
-import org.jnape.dynamiccollection.operator.Collector;
-import org.jnape.dynamiccollection.operator.IterativeExecutor;
-import org.jnape.dynamiccollection.operator.Transformer;
+import org.jnape.dynamiccollection.operator.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -69,7 +65,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromCollection() {
-        java.util.Collection items = asList(A, B, C);
+        Collection<Item> items = asList(A, B, C);
 
         DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(items);
 
@@ -81,7 +77,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromArray() {
-        Item[] items = new Item[]{C, A};
+        Item[] items = {C, A};
 
         DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(items);
 
@@ -113,7 +109,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldPolymorphToCollection() {
-        java.util.Collection collection = new DynamicArrayList();
+        Collection collection = new DynamicArrayList();
     }
 
     @Test

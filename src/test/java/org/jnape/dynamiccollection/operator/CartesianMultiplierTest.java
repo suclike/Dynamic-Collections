@@ -1,4 +1,4 @@
-package org.jnape.dynamiccollection.list.operator;
+package org.jnape.dynamiccollection.operator;
 
 import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.list.DynamicArrayList;

@@ -6,11 +6,9 @@ import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
-import org.jnape.dynamiccollection.list.operator.Concatenator;
-import org.jnape.dynamiccollection.operator.Collector;
-import org.jnape.dynamiccollection.operator.IterativeExecutor;
-import org.jnape.dynamiccollection.operator.Transformer;
+import org.jnape.dynamiccollection.operator.CartesianMultiplier;
+import org.jnape.dynamiccollection.operator.*;
+import org.jnape.dynamiccollection.operator.Concatenator;
 
 import java.util.*;
 

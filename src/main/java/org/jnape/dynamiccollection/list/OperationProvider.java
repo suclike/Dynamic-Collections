@@ -1,20 +1,30 @@
 package org.jnape.dynamiccollection.list;
 
-import org.jnape.dynamiccollection.list.operation.CartesianProduct;
-import org.jnape.dynamiccollection.list.operation.Concatenation;
-import org.jnape.dynamiccollection.list.operation.Each;
+import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
+import org.jnape.dynamiccollection.list.operator.Concatenator;
+import org.jnape.dynamiccollection.operator.Collector;
+import org.jnape.dynamiccollection.operator.IterativeExecutor;
+import org.jnape.dynamiccollection.operator.Transformer;
 
 public class OperationProvider {
 
-    public Concatenation concatenation() {
-        return new Concatenation();
+    public Concatenator concatenator() {
+        return new Concatenator();
     }
 
-    public CartesianProduct cartesianProduct() {
-        return new CartesianProduct();
+    public CartesianMultiplier cartesianMultiplier() {
+        return new CartesianMultiplier();
     }
 
-    public Each each() {
-        return new Each();
+    public IterativeExecutor iterativeExecutor() {
+        return new IterativeExecutor();
+    }
+
+    public Collector collector() {
+        return new Collector();
+    }
+
+    public Transformer transformer() {
+        return new Transformer();
     }
 }

@@ -6,9 +6,11 @@ import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import org.jnape.dynamiccollection.list.operation.CartesianProduct;
-import org.jnape.dynamiccollection.list.operation.Concatenation;
-import org.jnape.dynamiccollection.list.operation.Each;
+import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
+import org.jnape.dynamiccollection.list.operator.Concatenator;
+import org.jnape.dynamiccollection.operator.Collector;
+import org.jnape.dynamiccollection.operator.IterativeExecutor;
+import org.jnape.dynamiccollection.operator.Transformer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -33,21 +35,29 @@ public class DynamicArrayListTest {
     private OperationProvider operationProvider;
 
     @Mock
-    private Concatenation concatenation;
+    private Concatenator concatenator;
 
     @Mock
-    private CartesianProduct cartesianProduct;
+    private CartesianMultiplier cartesianMultiplier;
 
     @Mock
-    private Each each;
+    private IterativeExecutor iterativeExecutor;
+
+    @Mock
+    private Collector collector;
+
+    @Mock
+    private Transformer transformer;
 
     @Before
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.concatenation()).thenReturn(concatenation);
-        when(operationProvider.cartesianProduct()).thenReturn(cartesianProduct);
-        when(operationProvider.each()).thenReturn(each);
+        when(operationProvider.concatenator()).thenReturn(concatenator);
+        when(operationProvider.cartesianMultiplier()).thenReturn(cartesianMultiplier);
+        when(operationProvider.iterativeExecutor()).thenReturn(iterativeExecutor);
+        when(operationProvider.collector()).thenReturn(collector);
+        when(operationProvider.transformer()).thenReturn(transformer);
     }
 
     @Test
@@ -59,7 +69,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromCollection() {
-        Collection<Item> items = asList(A, B, C);
+        java.util.Collection items = asList(A, B, C);
 
         DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(items);
 
@@ -103,7 +113,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldPolymorphToCollection() {
-        Collection collection = new DynamicArrayList();
+        java.util.Collection collection = new DynamicArrayList();
     }
 
     @Test
@@ -142,63 +152,54 @@ public class DynamicArrayListTest {
         Collection<Integer> collection = new ArrayList<Integer>();
 
         DynamicList<Integer> expected = new DynamicArrayList<Integer>();
-        when(concatenation.execute(dynamicArrayList, collection)).thenReturn(expected);
+        when(concatenator.concatenate(dynamicArrayList, collection)).thenReturn(expected);
 
         assertSame(expected, dynamicArrayList.concat(collection));
     }
 
     @Test
-    @SuppressWarnings({"unchecked"})
     public void shouldDelegateCartesianProduct() {
         DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
-        List<Integer> list = new ArrayList<Integer>();
+        Collection<Integer> collection = new ArrayList<Integer>();
 
-        DynamicList<DynamicList<Integer>> expected = new DynamicArrayList<DynamicList<Integer>>();
-        when(cartesianProduct.execute(dynamicArrayList, list)).thenReturn(expected);
+        DynamicList<DynamicCollection<Integer>> expected = new DynamicArrayList<DynamicCollection<Integer>>();
+        when(cartesianMultiplier.multiply(dynamicArrayList, collection)).thenReturn(expected);
 
-        assertSame(expected, dynamicArrayList.cartesianProduct(list));
+        assertSame(expected, dynamicArrayList.cartesianProduct(collection));
     }
 
     @Test
     @SuppressWarnings({"unchecked"})
     public void shouldDelegateEach() {
         Procedure procedure = mock(Procedure.class);
-        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
         assertSame(dynamicArrayList, dynamicArrayList.each(procedure));
-        verify(each).iterativelyApply(dynamicArrayList, procedure);
+        verify(iterativeExecutor).iterativelyExecute(dynamicArrayList, procedure);
     }
 
     @Test
-    public void shouldCollectSpecificElements() {
-        Function<Integer, Boolean> evenNumbers = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer % 2 == 0;
-            }
-        };
+    @SuppressWarnings({"unchecked"})
+    public void shouldDelegateCollect() {
+        Function function = mock(Function.class);
+        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
-        DynamicArrayList<Integer> integers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
-        DynamicArrayList<Integer> moreIntegers = new DynamicArrayList<Integer>(10, 11, 12, 13, 14, 15, 16);
+        DynamicList<Object> expected = new DynamicArrayList<Object>();
+        when(collector.collect(dynamicArrayList, function)).thenReturn(expected);
 
-        assertEquals(new DynamicArrayList<Integer>(2, 4), integers.collect(evenNumbers));
-        assertEquals(new DynamicArrayList<Integer>(10, 12, 14, 16), moreIntegers.collect(evenNumbers));
+        assertSame(expected, dynamicArrayList.collect(function));
     }
 
     @Test
-    public void shouldTransformElementsToDifferentType() {
-        Function<Number, String> intoStrings = new Function<Number, String>() {
-            @Override
-            public String apply(Number number) {
-                return number.toString();
-            }
-        };
+    @SuppressWarnings({"unchecked"})
+    public void shouldDelegateTransform() {
+        Function function = mock(Function.class);
+        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
-        DynamicArrayList<Number> numbers = new DynamicArrayList<Number>(1, 2d, 3.5f);
-        DynamicArrayList<Number> moreNumbers = new DynamicArrayList<Number>(1842.12d, 220, 1l);
+        DynamicList<Object> expected = new DynamicArrayList<Object>();
+        when(transformer.transform(dynamicArrayList, function)).thenReturn(expected);
 
-        assertEquals(new DynamicArrayList<String>("1", "2.0", "3.5"), numbers.transform(intoStrings));
-        assertEquals(new DynamicArrayList<String>("1842.12", "220", "1"), moreNumbers.transform(intoStrings));
+        assertSame(expected, dynamicArrayList.transform(function));
     }
 
     @Test

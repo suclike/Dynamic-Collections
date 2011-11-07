@@ -1,13 +1,16 @@
 package org.jnape.dynamiccollection.list;
 
+import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.datatype.ListPartition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import org.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import org.jnape.dynamiccollection.list.operation.CartesianProduct;
-import org.jnape.dynamiccollection.list.operation.Concatenation;
-import org.jnape.dynamiccollection.list.operation.Each;
+import org.jnape.dynamiccollection.list.operator.CartesianMultiplier;
+import org.jnape.dynamiccollection.list.operator.Concatenator;
+import org.jnape.dynamiccollection.operator.Collector;
+import org.jnape.dynamiccollection.operator.IterativeExecutor;
+import org.jnape.dynamiccollection.operator.Transformer;
 
 import java.util.*;
 
@@ -26,7 +29,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         operationProvider = new OperationProvider();
     }
 
-    public DynamicArrayList(Collection<? extends Element> elements) {
+    public DynamicArrayList(Collection<Element> elements) {
         super(elements);
         operationProvider = new OperationProvider();
     }
@@ -43,43 +46,34 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
-        Concatenation concatenation = operationProvider.concatenation();
-        return concatenation.execute(this, collection);
+        Concatenator concatenator = operationProvider.concatenator();
+        return (DynamicList<Element>) concatenator.concatenate(this, collection);
     }
 
     @Override
     @SuppressWarnings({"unchecked"})
-    public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
-        CartesianProduct cartesianProduct = operationProvider.cartesianProduct();
-        return cartesianProduct.execute(this, collection);
+    public DynamicList<DynamicCollection<Element>> cartesianProduct(Collection<Element> collection) {
+        CartesianMultiplier cartesianMultiplier = operationProvider.cartesianMultiplier();
+        return (DynamicList<DynamicCollection<Element>>) cartesianMultiplier.multiply(this, collection);
     }
 
     @Override
     public DynamicList<Element> each(Procedure<Element> procedure) {
-        Each each = operationProvider.each();
-        each.iterativelyApply(this, procedure);
+        IterativeExecutor iterativeExecutor = operationProvider.iterativeExecutor();
+        iterativeExecutor.iterativelyExecute(this, procedure);
         return this;
     }
 
     @Override
-    public DynamicList<Element> collect(Function<Element, Boolean> collector) {
-        DynamicList<Element> collected = new DynamicArrayList<Element>();
-
-        for (Element element : this)
-            if (collector.apply(element))
-                collected.add(element);
-
-        return collected;
+    public DynamicList<Element> collect(Function<Element, Boolean> sieve) {
+        Collector collector = operationProvider.collector();
+        return (DynamicList<Element>) collector.collect(this, sieve);
     }
 
     @Override
-    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer) {
-        DynamicList<Transformation> transformed = new DynamicArrayList<Transformation>();
-
-        for (Element element : this)
-            transformed.add(transformer.apply(element));
-
-        return transformed;
+    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> function) {
+        Transformer transformer = operationProvider.transformer();
+        return (DynamicList<Transformation>) transformer.transform(this, function);
     }
 
     @Override

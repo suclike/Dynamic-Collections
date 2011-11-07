@@ -36,7 +36,7 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     @Override
     DynamicList<Element> unique();
 
-    DynamicList<? extends DynamicList<Element>> cartesianProduct(List<Element> collection);
+    DynamicList<DynamicCollection<Element>> cartesianProduct(Collection<Element> collection);
 
     DynamicList<Element> reverse();
 

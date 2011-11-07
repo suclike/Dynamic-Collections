@@ -1,4 +1,4 @@
-package org.jnape.dynamiccollection.list.operation;
+package org.jnape.dynamiccollection.operator;
 
 import org.jnape.dynamiccollection.DynamicCollection;
 import org.jnape.dynamiccollection.lambda.Procedure;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class EachTest {
+public class IterativeExecutorTest {
 
     @Mock
     private Procedure<Integer> procedure;
@@ -24,15 +24,15 @@ public class EachTest {
 
     @Test
     public void shouldConstruct() {
-        new Each();
+        new IterativeExecutor();
     }
 
     @Test
-    public void shouldIterativelyApplyFunctionToEachElementInDynamicCollection() {
-        Each each = new Each();
+    public void shouldIterativelyExecuteProcedureOnEachElementInDynamicCollection() {
+        IterativeExecutor iterativeExecutor = new IterativeExecutor();
         DynamicCollection<Integer> oneTwoThree = new DynamicArrayList<Integer>(1, 2, 3);
 
-        each.iterativelyApply(oneTwoThree, procedure);
+        iterativeExecutor.iterativelyExecute(oneTwoThree, procedure);
 
         InOrder inOrder = inOrder(procedure);
         inOrder.verify(procedure).execute(1);
@@ -43,10 +43,10 @@ public class EachTest {
 
     @Test
     public void shouldDoNothingForEmptyDynamicCollection() {
-        Each each = new Each();
+        IterativeExecutor iterativeExecutor = new IterativeExecutor();
         DynamicCollection<Integer> emptyCollection = new DynamicArrayList<Integer>();
 
-        each.iterativelyApply(emptyCollection, procedure);
+        iterativeExecutor.iterativelyExecute(emptyCollection, procedure);
 
         verifyZeroInteractions(procedure);
     }

@@ -19,7 +19,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TransformerTest {
 
     @Mock
-    private Function<Integer, String> function;
+    private Function<Integer, String> transformationFunction;
 
     @Before
     public void setUp() {
@@ -37,13 +37,13 @@ public class TransformerTest {
 
         Collection<Integer> collection = asList(1, 2, 3);
 
-        when(function.apply(1)).thenReturn("1");
-        when(function.apply(2)).thenReturn("2");
-        when(function.apply(3)).thenReturn("3");
+        when(transformationFunction.apply(1)).thenReturn("1");
+        when(transformationFunction.apply(2)).thenReturn("2");
+        when(transformationFunction.apply(3)).thenReturn("3");
 
         DynamicCollection<String> expected = new DynamicArrayList<String>("1", "2", "3");
 
-        assertEquals(expected, transformer.transform(collection, function));
+        assertEquals(expected, transformer.transform(collection, transformationFunction));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TransformerTest {
         Transformer transformer = new Transformer();
         Collection<Integer> emptyCollection = new ArrayList<Integer>();
 
-        transformer.transform(emptyCollection, function);
-        verifyZeroInteractions(function);
+        transformer.transform(emptyCollection, transformationFunction);
+        verifyZeroInteractions(transformationFunction);
     }
 }

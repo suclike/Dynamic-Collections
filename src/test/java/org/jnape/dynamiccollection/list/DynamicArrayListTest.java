@@ -1,7 +1,7 @@
 package org.jnape.dynamiccollection.list;
 
 import org.jnape.dynamiccollection.DynamicCollection;
-import org.jnape.dynamiccollection.datatype.ListPartition;
+import org.jnape.dynamiccollection.datatype.Partition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -26,7 +27,6 @@ import static testsupport.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
-
 
     @Mock
     private OperationProvider operationProvider;
@@ -52,6 +52,9 @@ public class DynamicArrayListTest {
     @Mock
     private ElementExcluder elementExcluder;
 
+    @Mock
+    private Partitioner partitioner;
+
     @Before
     public void setUp() {
         initMocks(this);
@@ -63,6 +66,7 @@ public class DynamicArrayListTest {
         when(operationProvider.transformer()).thenReturn(transformer);
         when(operationProvider.reducer()).thenReturn(reducer);
         when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
+        when(operationProvider.partitioner()).thenReturn(partitioner);
     }
 
     @Test
@@ -227,24 +231,14 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldPartitionElementsIntoTruesAndFalses() {
-        Function<Integer, Boolean> intoEvensAndOdds = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer % 2 == 0;
-            }
-        };
+    public void shouldDelegatePartition() {
+        Function function = mock(Function.class);
+        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
-        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        DynamicArrayList<Integer> elevenThroughFifteen = new DynamicArrayList<Integer>(11, 12, 13, 14, 15);
+        Partition<Object> expected = new Partition<Object>(emptyList(), emptyList());
+        when(partitioner.partition(dynamicArrayList, function)).thenReturn(expected);
 
-        ListPartition<Integer> oneThroughTenPartition = oneThroughTen.partition(intoEvensAndOdds);
-        assertEquals(new DynamicArrayList<Integer>(2, 4, 6, 8, 10), oneThroughTenPartition.trues());
-        assertEquals(new DynamicArrayList<Integer>(1, 3, 5, 7, 9), oneThroughTenPartition.falses());
-
-        ListPartition<Integer> elevenThroughFifteenPartition = elevenThroughFifteen.partition(intoEvensAndOdds);
-        assertEquals(new DynamicArrayList<Integer>(12, 14), elevenThroughFifteenPartition.trues());
-        assertEquals(new DynamicArrayList<Integer>(11, 13, 15), elevenThroughFifteenPartition.falses());
+        assertSame(expected, dynamicArrayList.partition(function));
     }
 
     @Test

@@ -18,7 +18,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ReducerTest {
 
     @Mock
-    private Function<Character, Boolean> function;
+    private Function<Character, Boolean> reductionFunction;
 
     @Before
     public void setUp() {
@@ -36,12 +36,12 @@ public class ReducerTest {
 
         Collection<Character> letters = asList('a', 'b', 'c');
 
-        when(function.apply('a')).thenReturn(true);
-        when(function.apply('b')).thenReturn(false);
-        when(function.apply('c')).thenReturn(false);
+        when(reductionFunction.apply('a')).thenReturn(true);
+        when(reductionFunction.apply('b')).thenReturn(false);
+        when(reductionFunction.apply('c')).thenReturn(false);
 
         DynamicCollection<Character> consonants = new DynamicArrayList<Character>('b', 'c');
-        assertEquals(consonants, reducer.reduce(letters, function));
+        assertEquals(consonants, reducer.reduce(letters, reductionFunction));
     }
 
     @Test
@@ -50,9 +50,9 @@ public class ReducerTest {
 
         Collection<Character> letters = asList('a', 'e', 'i', 'o', 'u');
 
-        when(function.apply(anyChar())).thenReturn(true);
+        when(reductionFunction.apply(anyChar())).thenReturn(true);
 
         DynamicCollection<Character> empty = new DynamicArrayList<Character>();
-        assertEquals(empty, reducer.reduce(letters, function));
+        assertEquals(empty, reducer.reduce(letters, reductionFunction));
     }
 }

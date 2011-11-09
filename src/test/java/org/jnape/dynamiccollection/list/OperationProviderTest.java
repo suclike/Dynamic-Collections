@@ -23,5 +23,6 @@ public class OperationProviderTest {
         assertReflectionEquals(new Reducer(), operationProvider.reducer());
         assertReflectionEquals(new Transformer(), operationProvider.transformer());
         assertReflectionEquals(new ElementExcluder(), operationProvider.elementExcluder());
+        assertReflectionEquals(new Partitioner(), operationProvider.partitioner());
     }
 }

@@ -1,7 +1,7 @@
 package org.jnape.dynamiccollection.list;
 
 import org.jnape.dynamiccollection.DynamicCollection;
-import org.jnape.dynamiccollection.datatype.ListPartition;
+import org.jnape.dynamiccollection.datatype.Partition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
@@ -84,14 +84,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public ListPartition<Element> partition(Function<Element, Boolean> sieve) {
-        List<Element> trues = new DynamicArrayList<Element>();
-        List<Element> falses = new DynamicArrayList<Element>();
-
-        for (Element element : this)
-            (sieve.apply(element) ? trues : falses).add(element);
-
-        return new ListPartition<Element>(trues, falses);
+    public Partition<Element> partition(Function<Element, Boolean> partitionFunction) {
+        Partitioner partitioner = operationProvider.partitioner();
+        return partitioner.partition(this, partitionFunction);
     }
 
     @Override

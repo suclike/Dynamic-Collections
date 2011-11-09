@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public class Reducer {
 
-    public <Element> DynamicCollection<Element> reduce(Collection<Element> collection, Function<Element, Boolean> function) {
+    public <Element> DynamicCollection<Element> reduce(Collection<Element> collection, Function<Element, Boolean> reductionFunction) {
         DynamicCollection<Element> reduced = new DynamicArrayList<Element>();
 
         for (Element element : collection)
-            if (!function.apply(element))
+            if (!reductionFunction.apply(element))
                 reduced.add(element);
 
         return reduced;

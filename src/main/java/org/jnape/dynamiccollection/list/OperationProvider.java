@@ -31,4 +31,8 @@ public class OperationProvider {
     public ElementExcluder elementExcluder() {
         return new ElementExcluder();
     }
+
+    public Partitioner partitioner() {
+        return new Partitioner();
+    }
 }

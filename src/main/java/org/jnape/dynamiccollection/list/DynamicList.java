@@ -1,7 +1,7 @@
 package org.jnape.dynamiccollection.list;
 
 import org.jnape.dynamiccollection.DynamicCollection;
-import org.jnape.dynamiccollection.datatype.ListPartition;
+import org.jnape.dynamiccollection.datatype.Partition;
 import org.jnape.dynamiccollection.lambda.Function;
 import org.jnape.dynamiccollection.lambda.Procedure;
 import org.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
@@ -34,7 +34,7 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> without(Element... exclusions);
 
     @Override
-    ListPartition<Element> partition(Function<Element, Boolean> sieve);
+    Partition<Element> partition(Function<Element, Boolean> sieve);
 
     @Override
     DynamicList<Element> unique();

@@ -129,8 +129,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
             }
         };
 
-        Collections.sort(this, internalComparator);
-        return this;
+        DynamicList<Element> sorted = new DynamicArrayList<Element>(this);
+        Collections.sort(sorted, internalComparator);
+        return sorted;
     }
 
     @Override

@@ -44,7 +44,7 @@
 
     <distributionManagement>
         <site>
-            <id>www.jnape.com</id>
+            <id>jnape</id>
             <url>scp://${site.url}</url>
         </site>
     </distributionManagement>

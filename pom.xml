@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +11,7 @@
 
     <groupId>com.jnape.dynamic-collections</groupId>
     <artifactId>dynamic-collections</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>Dynamic Collections</name>
@@ -43,6 +42,13 @@
             <email>john@jnape.com</email>
         </developer>
     </developers>
+
+    <distributionManagement>
+        <site>
+            <id>www.jnape.com</id>
+            <url>scp://${site.url}</url>
+        </site>
+    </distributionManagement>
 
     <properties>
         <junit.version>4.8.2</junit.version>
@@ -128,12 +134,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <site>
-            <id>www.jnape.com</id>
-            <url>scp://jnape.com/home/endelo/jnape.com/oss/dynamic-collections</url>
-        </site>
-    </distributionManagement>
 
 </project>

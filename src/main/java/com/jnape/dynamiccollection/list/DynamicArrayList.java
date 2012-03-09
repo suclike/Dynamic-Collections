@@ -136,14 +136,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public Element first() throws ListWasEmptyException {
-        ensureNotEmpty();
-        return get(0);
+        return safeGet(0);
     }
 
     @Override
     public Element last() throws ListWasEmptyException {
-        ensureNotEmpty();
-        return get(size() - 1);
+        return safeGet(size() - 1);
     }
 
     @Override
@@ -156,9 +154,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return sortByNumericValue(calculator).first();
     }
 
-    private void ensureNotEmpty() {
+    private Element safeGet(int index) {
         if (isEmpty())
             throw new ListWasEmptyException();
+
+        return get(index);
     }
 
     private DynamicList<Element> sortByNumericValue(final Function<Element, Integer> calculator) {

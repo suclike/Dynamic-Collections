@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
@@ -359,5 +359,11 @@ public class DynamicArrayListTest {
         };
 
         assertEquals((Integer) 1, new DynamicArrayList<Integer>(1, 2, 3, 4, 5).min(integerValue));
+    }
+
+    @Test
+    public void shouldJoinElementsIntoStringWithCombiner() {
+        assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
+        assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
     }
 }

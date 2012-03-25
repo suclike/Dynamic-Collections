@@ -54,4 +54,6 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     Element max(Function<Element, Integer> calculator);
 
     Element min(Function<Element, Integer> calculator);
+    
+    String join(String combiner);
 }

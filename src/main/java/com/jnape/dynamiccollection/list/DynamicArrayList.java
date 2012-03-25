@@ -156,6 +156,19 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return sortByNumericValue(calculator).first();
     }
 
+    @Override
+    public String join(String combiner) {
+        StringBuilder joined = new StringBuilder();
+
+        for (int i = 0, size = size(); i < size; i++) {
+            joined.append(get(i));
+            if (i < size - 1)
+                joined.append(combiner);
+        }
+
+        return joined.toString();
+    }
+
     private void ensureNotEmpty() {
         if (isEmpty())
             throw new ListWasEmptyException();

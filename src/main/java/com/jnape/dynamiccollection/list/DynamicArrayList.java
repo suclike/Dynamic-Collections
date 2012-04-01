@@ -66,9 +66,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> reduce(Function<Element, Boolean> reductionFunction) {
-        Reducer reducer = operationProvider.reducer();
-        return (DynamicList<Element>) reducer.reduce(this, reductionFunction);
+    public DynamicList<Element> reject(Function<Element, Boolean> rejectionFunction) {
+        Rejector rejector = operationProvider.rejector();
+        return (DynamicList<Element>) rejector.reject(this, rejectionFunction);
     }
 
     @Override

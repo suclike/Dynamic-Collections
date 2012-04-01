@@ -25,7 +25,7 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     DynamicList<Element> collect(Function<Element, Boolean> collectionFunction);
 
     @Override
-    DynamicList<Element> reduce(Function<Element, Boolean> reductionFunction);
+    DynamicList<Element> reject(Function<Element, Boolean> rejectionFunction);
 
     @Override
     <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformationFunction);
@@ -54,6 +54,6 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     Element max(Function<Element, Integer> calculator);
 
     Element min(Function<Element, Integer> calculator);
-    
+
     String join(String combiner);
 }

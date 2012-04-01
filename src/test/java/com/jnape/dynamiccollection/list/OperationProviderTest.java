@@ -20,7 +20,7 @@ public class OperationProviderTest {
         assertReflectionEquals(new CartesianMultiplier(), operationProvider.cartesianMultiplier());
         assertReflectionEquals(new IterativeExecutor(), operationProvider.iterativeExecutor());
         assertReflectionEquals(new Collector(), operationProvider.collector());
-        assertReflectionEquals(new Reducer(), operationProvider.reducer());
+        assertReflectionEquals(new Rejector(), operationProvider.rejector());
         assertReflectionEquals(new Transformer(), operationProvider.transformer());
         assertReflectionEquals(new ElementExcluder(), operationProvider.elementExcluder());
         assertReflectionEquals(new Partitioner(), operationProvider.partitioner());

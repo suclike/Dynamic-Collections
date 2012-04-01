@@ -47,7 +47,7 @@ public class DynamicArrayListTest {
     private Transformer transformer;
 
     @Mock
-    private Reducer reducer;
+    private Rejector rejector;
 
     @Mock
     private ElementExcluder elementExcluder;
@@ -64,7 +64,7 @@ public class DynamicArrayListTest {
         when(operationProvider.iterativeExecutor()).thenReturn(iterativeExecutor);
         when(operationProvider.collector()).thenReturn(collector);
         when(operationProvider.transformer()).thenReturn(transformer);
-        when(operationProvider.reducer()).thenReturn(reducer);
+        when(operationProvider.rejector()).thenReturn(rejector);
         when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
         when(operationProvider.partitioner()).thenReturn(partitioner);
     }
@@ -209,14 +209,14 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldDelegateReduce() {
+    public void shouldDelegateReject() {
         Function function = mock(Function.class);
         DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
 
         DynamicList<Object> expected = new DynamicArrayList<Object>();
-        when(reducer.reduce(dynamicArrayList, function)).thenReturn(expected);
+        when(rejector.reject(dynamicArrayList, function)).thenReturn(expected);
 
-        assertSame(expected, dynamicArrayList.reduce(function));
+        assertSame(expected, dynamicArrayList.reject(function));
     }
 
     @Test

@@ -20,8 +20,8 @@ public class OperationProvider {
         return new Collector();
     }
 
-    public Reducer reducer() {
-        return new Reducer();
+    public Rejector rejector() {
+        return new Rejector();
     }
 
     public Transformer transformer() {

@@ -14,7 +14,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> collect(Function<Element, Boolean> collectionFunction);
 
-    DynamicCollection<Element> reduce(Function<Element, Boolean> reductionFunction);
+    DynamicCollection<Element> reject(Function<Element, Boolean> rejectionFunction);
 
     <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformationFunction);
 

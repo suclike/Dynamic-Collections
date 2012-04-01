@@ -15,10 +15,9 @@ import static org.mockito.Matchers.anyChar;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ReducerTest {
+public class RejectorTest {
 
-    @Mock
-    private Function<Character, Boolean> reductionFunction;
+    @Mock private Function<Character, Boolean> rejectorFunction;
 
     @Before
     public void setUp() {
@@ -27,32 +26,32 @@ public class ReducerTest {
 
     @Test
     public void shouldConstruct() {
-        new Reducer();
+        new Rejector();
     }
 
     @Test
-    public void shouldReduceCollectionToNonMatchingElements() {
-        Reducer reducer = new Reducer();
+    public void shouldReturnCollectionWithoutRejectedElements() {
+        Rejector rejector = new Rejector();
 
         Collection<Character> letters = asList('a', 'b', 'c');
 
-        when(reductionFunction.apply('a')).thenReturn(true);
-        when(reductionFunction.apply('b')).thenReturn(false);
-        when(reductionFunction.apply('c')).thenReturn(false);
+        when(rejectorFunction.apply('a')).thenReturn(true);
+        when(rejectorFunction.apply('b')).thenReturn(false);
+        when(rejectorFunction.apply('c')).thenReturn(false);
 
         DynamicCollection<Character> consonants = new DynamicArrayList<Character>('b', 'c');
-        assertEquals(consonants, reducer.reduce(letters, reductionFunction));
+        assertEquals(consonants, rejector.reject(letters, rejectorFunction));
     }
 
     @Test
-    public void shouldReduceCollectionToNothingIfLogical() {
-        Reducer reducer = new Reducer();
+    public void shouldReturnEmptyCollectionIfAllElementsRejected() {
+        Rejector rejector = new Rejector();
 
         Collection<Character> letters = asList('a', 'e', 'i', 'o', 'u');
 
-        when(reductionFunction.apply(anyChar())).thenReturn(true);
+        when(rejectorFunction.apply(anyChar())).thenReturn(true);
 
         DynamicCollection<Character> empty = new DynamicArrayList<Character>();
-        assertEquals(empty, reducer.reduce(letters, reductionFunction));
+        assertEquals(empty, rejector.reject(letters, rejectorFunction));
     }
 }

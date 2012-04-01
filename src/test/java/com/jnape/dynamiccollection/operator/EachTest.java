@@ -1,27 +1,29 @@
 package com.jnape.dynamiccollection.operator;
 
-import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collection;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IterativelyExecuteTest {
+public class EachTest {
 
     @Mock private Procedure<Integer> procedure;
 
     @Test
-    public void shouldIterativelyExecuteProcedureOnEachElementInDynamicCollection() {
-        DynamicCollection<Integer> oneTwoThree = new DynamicArrayList<Integer>(1, 2, 3);
+    public void shouldExecuteProcedureOnEachElementInCollection() {
+        Collection<Integer> oneTwoThree = asList(1, 2, 3);
 
-        IterativelyExecute.iterativelyExecute(oneTwoThree, procedure);
+        Each.each(oneTwoThree, procedure);
 
         InOrder inOrder = inOrder(procedure);
         inOrder.verify(procedure).execute(1);
@@ -31,10 +33,10 @@ public class IterativelyExecuteTest {
     }
 
     @Test
-    public void shouldDoNothingForEmptyDynamicCollection() {
-        DynamicCollection<Integer> emptyCollection = new DynamicArrayList<Integer>();
+    public void shouldDoNothingForEmptyCollection() {
+        Collection<Integer> emptyCollection = emptyList();
 
-        IterativelyExecute.iterativelyExecute(emptyCollection, procedure);
+        Each.each(emptyCollection, procedure);
 
         verifyZeroInteractions(procedure);
     }

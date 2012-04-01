@@ -4,9 +4,9 @@ import com.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.Collection;
 
-public class IterativelyExecute {
+public class Each {
 
-    public static <Element> void iterativelyExecute(Collection<Element> collection, Procedure<Element> procedure) {
+    public static <Element> void each(Collection<Element> collection, Procedure<Element> procedure) {
         for (Element element : collection)
             procedure.execute(element);
     }

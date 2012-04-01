@@ -41,7 +41,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> each(Procedure<Element> procedure) {
-        IterativelyExecute.iterativelyExecute(this, procedure);
+        Each.each(this, procedure);
         return this;
     }
 
@@ -62,8 +62,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> without(Element... exclusions) {
-        ElementExcluder elementExcluder = operationProvider.elementExcluder();
-        return (DynamicList<Element>) elementExcluder.exclude(this, exclusions);
+        return (DynamicList<Element>) Without.without(this, exclusions);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import com.jnape.dynamiccollection.operator.ElementExcluder;
 import com.jnape.dynamiccollection.operator.Folder;
 import com.jnape.dynamiccollection.operator.Partitioner;
 import org.junit.Before;
@@ -36,9 +35,6 @@ public class DynamicArrayListTest {
     private OperationProvider operationProvider;
 
     @Mock
-    private ElementExcluder elementExcluder;
-
-    @Mock
     private Partitioner partitioner;
 
     @Mock
@@ -48,7 +44,6 @@ public class DynamicArrayListTest {
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
         when(operationProvider.partitioner()).thenReturn(partitioner);
         when(operationProvider.folder()).thenReturn(folder);
     }
@@ -120,26 +115,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldReturnDynamicListForSubList() {
-        DynamicList<Item> items = new DynamicArrayList<Item>(A, B, C);
-        DynamicList<Item> subList = items.subList(0, items.size());
-    }
-
-    @Test
-    public void shouldSubList() {
-        List<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
-
-        assertEquals(new DynamicArrayList<Integer>(), numbers.subList(0, 0));
-        assertEquals(new DynamicArrayList<Integer>(1, 2, 3), numbers.subList(0, 3));
-        assertEquals(new DynamicArrayList<Integer>(3, 4, 5), numbers.subList(2, 5));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenSubListGivenNegativeToIndex() {
-        new DynamicArrayList<Item>(A, B, C).subList(0, -1);
-    }
-
-    @Test
     public void shouldConcatAnotherCollection() {
         DynamicArrayList<Integer> oneThroughThree = new DynamicArrayList<Integer>(1, 2, 3);
         Collection<Integer> fourAndFive = list(4, 5);
@@ -153,38 +128,6 @@ public class DynamicArrayListTest {
                 list("a", "b", "c", "d", "e", "f", "g"),
                 aAndB.concat(cThroughG)
         );
-    }
-
-    @Test
-    public void shouldComputeCartesianProduct() {
-        DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
-        List<String> lastNames = list("West", "Barker", "Kaufman");
-
-        DynamicList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
-                list("Adam", "West"),
-                list("Adam", "Barker"),
-                list("Adam", "Kaufman"),
-                list("Bob", "West"),
-                list("Bob", "Barker"),
-                list("Bob", "Kaufman"),
-                list("Charlie", "West"),
-                list("Charlie", "Barker"),
-                list("Charlie", "Kaufman")
-        );
-
-        assertEquals(permutedNames, firstNames.cartesianProduct(lastNames));
-
-        DynamicArrayList<Integer> oddNumbers = new DynamicArrayList<Integer>(1, 3);
-        List<Integer> evenNumbers = list(2, 4);
-
-        DynamicList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
-                list(1, 2),
-                list(1, 4),
-                list(3, 2),
-                list(3, 4)
-        );
-
-        assertEquals(permutedNumbers, oddNumbers.cartesianProduct(evenNumbers));
     }
 
     @Test
@@ -283,14 +226,14 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldDelegateWithout() {
-        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
-        Object[] exclusions = {};
+    public void shouldCreateDynamicCollectionWithoutElements() {
+        DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
+        DynamicList<Character> bAndC = list('b', 'c');
+        assertEquals(bAndC, aThroughE.without('a', 'd', 'e'));
 
-        DynamicList<Object> expected = new DynamicArrayList<Object>();
-        when(elementExcluder.exclude(dynamicArrayList, exclusions)).thenReturn(expected);
-
-        assertSame(expected, dynamicArrayList.without(exclusions));
+        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        DynamicList<Integer> empty = list();
+        assertEquals(empty, oneThroughTen.without(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 
     @Test
@@ -313,6 +256,52 @@ public class DynamicArrayListTest {
 
         assertEquals(new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
         assertEquals(new DynamicArrayList<Integer>(12, 42, 38, 62, 25, 59), ages.unique());
+    }
+
+    @Test
+    public void shouldSubList() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+        assertEquals(list(), numbers.subList(0, 0));
+        assertEquals(list(1, 2, 3), numbers.subList(0, 3));
+        assertEquals(list(3, 4, 5), numbers.subList(2, 5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenSubListGivenNegativeToIndex() {
+        new DynamicArrayList<Integer>(1, 2, 3).subList(0, -1);
+    }
+
+    @Test
+    public void shouldComputeCartesianProduct() {
+        DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
+        List<String> lastNames = list("West", "Barker", "Kaufman");
+
+        DynamicList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
+                list("Adam", "West"),
+                list("Adam", "Barker"),
+                list("Adam", "Kaufman"),
+                list("Bob", "West"),
+                list("Bob", "Barker"),
+                list("Bob", "Kaufman"),
+                list("Charlie", "West"),
+                list("Charlie", "Barker"),
+                list("Charlie", "Kaufman")
+        );
+
+        assertEquals(permutedNames, firstNames.cartesianProduct(lastNames));
+
+        DynamicArrayList<Integer> oddNumbers = new DynamicArrayList<Integer>(1, 3);
+        List<Integer> evenNumbers = list(2, 4);
+
+        DynamicList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
+                list(1, 2),
+                list(1, 4),
+                list(3, 2),
+                list(3, 4)
+        );
+
+        assertEquals(permutedNumbers, oddNumbers.cartesianProduct(evenNumbers));
     }
 
     @Test

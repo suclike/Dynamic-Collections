@@ -6,9 +6,9 @@ import com.jnape.dynamiccollection.list.DynamicArrayList;
 
 import java.util.Collection;
 
-public class Transformer {
+public class Transform {
 
-    public <Element, Transformation> DynamicCollection<Transformation> transform(Collection<Element> collection, Function<Element, Transformation> transformationFunction) {
+    public static <Element, Transformation> DynamicCollection<Transformation> transform(Collection<Element> collection, Function<Element, Transformation> transformationFunction) {
         DynamicCollection<Transformation> transformation = new DynamicArrayList<Transformation>();
 
         for (Element element : collection)

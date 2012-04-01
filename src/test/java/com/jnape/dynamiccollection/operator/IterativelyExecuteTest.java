@@ -13,7 +13,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IterativeExecutorTest {
+public class IterativelyExecuteTest {
 
     @Mock private Procedure<Integer> procedure;
 
@@ -21,7 +21,7 @@ public class IterativeExecutorTest {
     public void shouldIterativelyExecuteProcedureOnEachElementInDynamicCollection() {
         DynamicCollection<Integer> oneTwoThree = new DynamicArrayList<Integer>(1, 2, 3);
 
-        IterativeExecutor.iterativelyExecute(oneTwoThree, procedure);
+        IterativelyExecute.iterativelyExecute(oneTwoThree, procedure);
 
         InOrder inOrder = inOrder(procedure);
         inOrder.verify(procedure).execute(1);
@@ -34,7 +34,7 @@ public class IterativeExecutorTest {
     public void shouldDoNothingForEmptyDynamicCollection() {
         DynamicCollection<Integer> emptyCollection = new DynamicArrayList<Integer>();
 
-        IterativeExecutor.iterativelyExecute(emptyCollection, procedure);
+        IterativelyExecute.iterativelyExecute(emptyCollection, procedure);
 
         verifyZeroInteractions(procedure);
     }

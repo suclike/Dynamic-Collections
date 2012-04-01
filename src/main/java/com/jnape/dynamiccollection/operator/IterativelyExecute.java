@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.Collection;
 
-public class IterativeExecutor {
+public class IterativelyExecute {
 
     public static <Element> void iterativelyExecute(Collection<Element> collection, Procedure<Element> procedure) {
         for (Element element : collection)

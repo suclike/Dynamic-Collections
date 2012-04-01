@@ -3,9 +3,10 @@ package com.jnape.dynamiccollection.operator;
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.list.DynamicArrayList;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,44 +15,30 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-public class TransformerTest {
+@RunWith(MockitoJUnitRunner.class)
+public class TransformTest {
 
-    @Mock
-    private Function<Integer, String> transformationFunction;
-
-    @Before
-    public void setUp() {
-        initMocks(this);
-    }
-
-    @Test
-    public void shouldConstruct() {
-        new Transformer();
-    }
+    @Mock private Function<Integer, String> transformer;
 
     @Test
     public void shouldTransformDynamicCollection() {
-        Transformer transformer = new Transformer();
-
         Collection<Integer> collection = asList(1, 2, 3);
 
-        when(transformationFunction.apply(1)).thenReturn("1");
-        when(transformationFunction.apply(2)).thenReturn("2");
-        when(transformationFunction.apply(3)).thenReturn("3");
+        when(transformer.apply(1)).thenReturn("1");
+        when(transformer.apply(2)).thenReturn("2");
+        when(transformer.apply(3)).thenReturn("3");
 
         DynamicCollection<String> expected = new DynamicArrayList<String>("1", "2", "3");
 
-        assertEquals(expected, transformer.transform(collection, transformationFunction));
+        assertEquals(expected, Transform.transform(collection, transformer));
     }
 
     @Test
     public void shouldDoNothingForEmptyCollection() {
-        Transformer transformer = new Transformer();
         Collection<Integer> emptyCollection = new ArrayList<Integer>();
 
-        transformer.transform(emptyCollection, transformationFunction);
-        verifyZeroInteractions(transformationFunction);
+        Transform.transform(emptyCollection, transformer);
+        verifyZeroInteractions(transformer);
     }
 }

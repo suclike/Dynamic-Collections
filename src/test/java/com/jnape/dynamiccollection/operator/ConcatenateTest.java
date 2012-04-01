@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.ItemFixture.*;
 
-public class ConcatenatorTest {
+public class ConcatenateTest {
 
     @Test
     public void shouldConcatenateTwoCollectionsAndReturnDynamicList() {
@@ -19,9 +19,9 @@ public class ConcatenatorTest {
         Collection<Item> bAndC = asList(B, C);
         Collection<Item> empty = new ArrayList<Item>();
 
-        assertEquals(new DynamicArrayList<Item>(A, B, C), Concatenator.concatenate(a, bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C, A), Concatenator.concatenate(bAndC, a));
-        assertEquals(new DynamicArrayList<Item>(B, C), Concatenator.concatenate(empty, bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C), Concatenator.concatenate(bAndC, empty));
+        assertEquals(new DynamicArrayList<Item>(A, B, C), Concatenate.concatenate(a, bAndC));
+        assertEquals(new DynamicArrayList<Item>(B, C, A), Concatenate.concatenate(bAndC, a));
+        assertEquals(new DynamicArrayList<Item>(B, C), Concatenate.concatenate(empty, bAndC));
+        assertEquals(new DynamicArrayList<Item>(B, C), Concatenate.concatenate(bAndC, empty));
     }
 }

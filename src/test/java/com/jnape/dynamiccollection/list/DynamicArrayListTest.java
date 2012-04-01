@@ -7,7 +7,10 @@ import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import com.jnape.dynamiccollection.operator.*;
+import com.jnape.dynamiccollection.operator.ElementExcluder;
+import com.jnape.dynamiccollection.operator.Folder;
+import com.jnape.dynamiccollection.operator.Partitioner;
+import com.jnape.dynamiccollection.operator.Rejector;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -34,12 +37,6 @@ public class DynamicArrayListTest {
     private OperationProvider operationProvider;
 
     @Mock
-    private Collector collector;
-
-    @Mock
-    private Transformer transformer;
-
-    @Mock
     private Rejector rejector;
 
     @Mock
@@ -55,8 +52,6 @@ public class DynamicArrayListTest {
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.collector()).thenReturn(collector);
-        when(operationProvider.transformer()).thenReturn(transformer);
         when(operationProvider.rejector()).thenReturn(rejector);
         when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
         when(operationProvider.partitioner()).thenReturn(partitioner);
@@ -151,17 +146,17 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldConcatAnotherCollection() {
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(1, 2, 3);
-        Collection<Integer> collection = list(4, 5);
+        DynamicArrayList<Integer> oneThroughThree = new DynamicArrayList<Integer>(1, 2, 3);
+        Collection<Integer> fourAndFive = list(4, 5);
 
-        assertEquals(new DynamicArrayList(1, 2, 3, 4, 5), dynamicArrayList.concat(collection));
+        assertEquals(list(1, 2, 3, 4, 5), oneThroughThree.concat(fourAndFive));
 
-        DynamicArrayList<String> anotherDynamicArrayList = new DynamicArrayList<String>("a", "b");
-        Collection<String> anotherCollection = list("c", "d", "e", "f", "g");
+        DynamicArrayList<String> aAndB = new DynamicArrayList<String>("a", "b");
+        Collection<String> cThroughG = list("c", "d", "e", "f", "g");
 
         assertEquals(
-                new DynamicArrayList<String>("a", "b", "c", "d", "e", "f", "g"),
-                anotherDynamicArrayList.concat(anotherCollection)
+                list("a", "b", "c", "d", "e", "f", "g"),
+                aAndB.concat(cThroughG)
         );
     }
 
@@ -170,7 +165,7 @@ public class DynamicArrayListTest {
         DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
         List<String> lastNames = list("West", "Barker", "Kaufman");
 
-        DynamicArrayList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
+        DynamicList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
                 list("Adam", "West"),
                 list("Adam", "Barker"),
                 list("Adam", "Kaufman"),
@@ -187,7 +182,7 @@ public class DynamicArrayListTest {
         DynamicArrayList<Integer> oddNumbers = new DynamicArrayList<Integer>(1, 3);
         List<Integer> evenNumbers = list(2, 4);
 
-        DynamicArrayList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
+        DynamicList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
                 list(1, 2),
                 list(1, 4),
                 list(3, 2),
@@ -199,7 +194,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldExecuteProcedureOnEachElement() {
-        DynamicArrayList<String> dynamicArrayList = new DynamicArrayList<String>("The", "rain", "in", "Spain");
+        DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
         final List<String> allCaps = list();
 
@@ -210,30 +205,60 @@ public class DynamicArrayListTest {
             }
         };
 
-        assertSame(dynamicArrayList, dynamicArrayList.each(addUpperCasedToAllCaps));
+        assertSame(theRainInSpain, theRainInSpain.each(addUpperCasedToAllCaps));
         assertEquals(list("THE", "RAIN", "IN", "SPAIN"), allCaps);
     }
 
     @Test
-    public void shouldDelegateCollect() {
-        Function function = mock(Function.class);
-        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+    public void shouldCollectElements() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        Function<Integer, Boolean> greaterThanThree = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer > 3;
+            }
+        };
 
-        DynamicList<Object> expected = new DynamicArrayList<Object>();
-        when(collector.collect(dynamicArrayList, function)).thenReturn(expected);
+        DynamicList<Integer> fourAndFive = list(4, 5);
+        assertEquals(fourAndFive, oneThroughFive.collect(greaterThanThree));
 
-        assertSame(expected, dynamicArrayList.collect(function));
+
+        DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
+        Function<Character, Boolean> vowels = new Function<Character, Boolean>() {
+            @Override
+            public Boolean apply(Character character) {
+                return list('a', 'e', 'i', 'o', 'u').contains(character);
+            }
+        };
+
+        DynamicList<Character> aAndE = list('a', 'e');
+        assertEquals(aAndE, aThroughE.collect(vowels));
     }
 
     @Test
-    public void shouldDelegateTransform() {
-        Function function = mock(Function.class);
-        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+    public void shouldTransformElements() {
+        DynamicArrayList<String> prepositions = new DynamicArrayList<String>("Aboard", "About", "Above", "Across");
+        Function<String, Object> intoWordLength = new Function<String, Object>() {
+            @Override
+            public Object apply(String word) {
+                return word.length();
+            }
+        };
 
-        DynamicList<Object> expected = new DynamicArrayList<Object>();
-        when(transformer.transform(dynamicArrayList, function)).thenReturn(expected);
+        DynamicList<Integer> transformation = list(6, 5, 5, 6);
+        assertEquals(transformation, prepositions.transform(intoWordLength));
 
-        assertSame(expected, dynamicArrayList.transform(function));
+
+        DynamicArrayList<Double> perfectSquares = new DynamicArrayList<Double>(1d, 4d, 9d, 16d, 25d);
+        Function<Double, Double> squareRoot = new Function<Double, Double>() {
+            @Override
+            public Double apply(Double perfectSquare) {
+                return Math.sqrt(perfectSquare);
+            }
+        };
+
+        DynamicList<Double> squareRoots = list(1d, 2d, 3d, 4d, 5d);
+        assertEquals(squareRoots, perfectSquares.transform(squareRoot));
     }
 
     @Test

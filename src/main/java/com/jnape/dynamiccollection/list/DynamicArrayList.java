@@ -42,24 +42,18 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
-        return (DynamicList<Element>) Concatenator.concatenate(this, collection);
+        return (DynamicList<Element>) Concatenate.concatenate(this, collection);
     }
 
     @Override
-    public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
-        return CartesianMultiplier.multiply(this, collection);
-    }
-
-    @Override
-    public DynamicList<Element> each(Procedure<Element> iterativeProcedure) {
-        IterativeExecutor.iterativelyExecute(this, iterativeProcedure);
+    public DynamicList<Element> each(Procedure<Element> procedure) {
+        IterativelyExecute.iterativelyExecute(this, procedure);
         return this;
     }
 
     @Override
-    public DynamicList<Element> collect(Function<Element, Boolean> collectionFunction) {
-        Collector collector = operationProvider.collector();
-        return (DynamicList<Element>) collector.collect(this, collectionFunction);
+    public DynamicList<Element> collect(Function<Element, Boolean> collector) {
+        return (DynamicList<Element>) Collect.collect(this, collector);
     }
 
     @Override
@@ -69,9 +63,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformationFunction) {
-        Transformer transformer = operationProvider.transformer();
-        return (DynamicList<Transformation>) transformer.transform(this, transformationFunction);
+    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer) {
+        return (DynamicList<Transformation>) Transform.transform(this, transformer);
     }
 
     @Override
@@ -95,6 +88,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
                 unique.add(element);
 
         return unique;
+    }
+
+    @Override
+    public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
+        return CartesianMultiplier.multiply(this, collection);
     }
 
     @Override

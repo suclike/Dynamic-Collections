@@ -1,23 +1,14 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.operator.*;
+import com.jnape.dynamiccollection.operator.ElementExcluder;
+import com.jnape.dynamiccollection.operator.Folder;
+import com.jnape.dynamiccollection.operator.Partitioner;
+import com.jnape.dynamiccollection.operator.Rejector;
 
 public class OperationProvider {
 
-    public CartesianMultiplier cartesianMultiplier() {
-        return new CartesianMultiplier();
-    }
-
-    public Collector collector() {
-        return new Collector();
-    }
-
     public Rejector rejector() {
         return new Rejector();
-    }
-
-    public Transformer transformer() {
-        return new Transformer();
     }
 
     public ElementExcluder elementExcluder() {

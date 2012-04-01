@@ -5,7 +5,7 @@ import com.jnape.dynamiccollection.list.DynamicArrayList;
 
 import java.util.Collection;
 
-public class Concatenator {
+public class Concatenate {
 
     public static <Element> DynamicCollection<Element> concatenate(Collection<Element> collection1, Collection<Element> collection2) {
         DynamicCollection<Element> concatenation = new DynamicArrayList<Element>();

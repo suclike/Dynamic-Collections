@@ -22,22 +22,16 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static testsupport.ItemFixture.*;
-import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
 
     @Mock
     private OperationProvider operationProvider;
-
-    @Mock
-    private CartesianMultiplier cartesianMultiplier;
-
-    @Mock
-    private IterativeExecutor iterativeExecutor;
 
     @Mock
     private Collector collector;
@@ -61,8 +55,6 @@ public class DynamicArrayListTest {
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.cartesianMultiplier()).thenReturn(cartesianMultiplier);
-        when(operationProvider.iterativeExecutor()).thenReturn(iterativeExecutor);
         when(operationProvider.collector()).thenReturn(collector);
         when(operationProvider.transformer()).thenReturn(transformer);
         when(operationProvider.rejector()).thenReturn(rejector);
@@ -158,39 +150,68 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldDelegateConcat() {
+    public void shouldConcatAnotherCollection() {
         DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(1, 2, 3);
         Collection<Integer> collection = list(4, 5);
 
-        assertReflectionEquals(new DynamicArrayList(1, 2, 3, 4, 5), dynamicArrayList.concat(collection));
+        assertEquals(new DynamicArrayList(1, 2, 3, 4, 5), dynamicArrayList.concat(collection));
 
         DynamicArrayList<String> anotherDynamicArrayList = new DynamicArrayList<String>("a", "b");
         Collection<String> anotherCollection = list("c", "d", "e", "f", "g");
 
-        assertReflectionEquals(
+        assertEquals(
                 new DynamicArrayList<String>("a", "b", "c", "d", "e", "f", "g"),
                 anotherDynamicArrayList.concat(anotherCollection)
         );
     }
 
     @Test
-    public void shouldDelegateCartesianProduct() {
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
-        Collection<Integer> collection = new ArrayList<Integer>();
+    public void shouldComputeCartesianProduct() {
+        DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
+        List<String> lastNames = list("West", "Barker", "Kaufman");
 
-        DynamicList<DynamicCollection<Integer>> expected = new DynamicArrayList<DynamicCollection<Integer>>();
-        when(cartesianMultiplier.multiply(dynamicArrayList, collection)).thenReturn(expected);
+        DynamicArrayList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
+                list("Adam", "West"),
+                list("Adam", "Barker"),
+                list("Adam", "Kaufman"),
+                list("Bob", "West"),
+                list("Bob", "Barker"),
+                list("Bob", "Kaufman"),
+                list("Charlie", "West"),
+                list("Charlie", "Barker"),
+                list("Charlie", "Kaufman")
+        );
 
-        assertSame(expected, dynamicArrayList.cartesianProduct(collection));
+        assertEquals(permutedNames, firstNames.cartesianProduct(lastNames));
+
+        DynamicArrayList<Integer> oddNumbers = new DynamicArrayList<Integer>(1, 3);
+        List<Integer> evenNumbers = list(2, 4);
+
+        DynamicArrayList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
+                list(1, 2),
+                list(1, 4),
+                list(3, 2),
+                list(3, 4)
+        );
+
+        assertEquals(permutedNumbers, oddNumbers.cartesianProduct(evenNumbers));
     }
 
     @Test
-    public void shouldDelegateEach() {
-        Procedure procedure = mock(Procedure.class);
-        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+    public void shouldExecuteProcedureOnEachElement() {
+        DynamicArrayList<String> dynamicArrayList = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        assertSame(dynamicArrayList, dynamicArrayList.each(procedure));
-        verify(iterativeExecutor).iterativelyExecute(dynamicArrayList, procedure);
+        final List<String> allCaps = list();
+
+        Procedure<String> addUpperCasedToAllCaps = new Procedure<String>() {
+            @Override
+            public void execute(String word) {
+                allCaps.add(word.toUpperCase());
+            }
+        };
+
+        assertSame(dynamicArrayList, dynamicArrayList.each(addUpperCasedToAllCaps));
+        assertEquals(list("THE", "RAIN", "IN", "SPAIN"), allCaps);
     }
 
     @Test

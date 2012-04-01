@@ -1,6 +1,5 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
@@ -47,15 +46,13 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<DynamicCollection<Element>> cartesianProduct(Collection<Element> collection) {
-        CartesianMultiplier cartesianMultiplier = operationProvider.cartesianMultiplier();
-        return (DynamicList<DynamicCollection<Element>>) cartesianMultiplier.multiply(this, collection);
+    public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
+        return CartesianMultiplier.multiply(this, collection);
     }
 
     @Override
     public DynamicList<Element> each(Procedure<Element> iterativeProcedure) {
-        IterativeExecutor iterativeExecutor = operationProvider.iterativeExecutor();
-        iterativeExecutor.iterativelyExecute(this, iterativeProcedure);
+        IterativeExecutor.iterativelyExecute(this, iterativeProcedure);
         return this;
     }
 

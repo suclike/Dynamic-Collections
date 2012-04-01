@@ -6,28 +6,21 @@ import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 import testsupport.Item;
 
-import java.util.Collection;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.ItemFixture.*;
 
-@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "unchecked"})
+@SuppressWarnings("unchecked")
 public class CartesianMultiplierTest {
 
     @Test
-    public void shouldConstruct() {
-        new CartesianMultiplier();
-    }
-
-    @Test
     public void shouldComputeCartesianProductOfTwoLists() {
-        CartesianMultiplier cartesianMultiplier = new CartesianMultiplier();
+        List<Integer> evens = asList(2, 4, 6, 8, 10);
+        List<Integer> odds = asList(1, 3, 5, 7, 9);
 
-        Collection<Integer> evens = asList(2, 4, 6, 8, 10);
-        Collection<Integer> odds = asList(1, 3, 5, 7, 9);
-
-        DynamicCollection<DynamicCollection<Integer>> evensTimesOdds = new DynamicArrayList<DynamicCollection<Integer>>(
+        DynamicList<DynamicList<Integer>> evensTimesOdds = new DynamicArrayList<DynamicList<Integer>>(
                 new DynamicArrayList<Integer>(2, 1),
                 new DynamicArrayList<Integer>(2, 3),
                 new DynamicArrayList<Integer>(2, 5),
@@ -55,17 +48,15 @@ public class CartesianMultiplierTest {
                 new DynamicArrayList<Integer>(10, 9)
         );
 
-        assertEquals(evensTimesOdds, cartesianMultiplier.multiply(evens, odds));
+        assertEquals(evensTimesOdds, CartesianMultiplier.multiply(evens, odds));
     }
 
     @Test
     public void shouldComputeProductOfEmptyListAndPopulatedList() {
-        CartesianMultiplier cartesianMultiplier = new CartesianMultiplier();
-
         DynamicList<Item> letters = new DynamicArrayList<Item>(A, B, C);
         DynamicList<Item> empty = new DynamicArrayList<Item>();
 
-        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), cartesianMultiplier.multiply(empty, letters));
-        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), cartesianMultiplier.multiply(letters, empty));
+        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianMultiplier.multiply(empty, letters));
+        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianMultiplier.multiply(letters, empty));
     }
 }

@@ -8,10 +8,6 @@ public class OperationProvider {
         return new CartesianMultiplier();
     }
 
-    public IterativeExecutor iterativeExecutor() {
-        return new IterativeExecutor();
-    }
-
     public Collector collector() {
         return new Collector();
     }

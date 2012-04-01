@@ -17,7 +17,6 @@ public class OperationProviderTest {
         OperationProvider operationProvider = new OperationProvider();
 
         assertReflectionEquals(new CartesianMultiplier(), operationProvider.cartesianMultiplier());
-        assertReflectionEquals(new IterativeExecutor(), operationProvider.iterativeExecutor());
         assertReflectionEquals(new Collector(), operationProvider.collector());
         assertReflectionEquals(new Rejector(), operationProvider.rejector());
         assertReflectionEquals(new Transformer(), operationProvider.transformer());

@@ -4,10 +4,6 @@ import com.jnape.dynamiccollection.operator.*;
 
 public class OperationProvider {
 
-    public Concatenator concatenator() {
-        return new Concatenator();
-    }
-
     public CartesianMultiplier cartesianMultiplier() {
         return new CartesianMultiplier();
     }

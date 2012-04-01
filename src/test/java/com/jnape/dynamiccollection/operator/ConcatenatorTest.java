@@ -14,21 +14,14 @@ import static testsupport.ItemFixture.*;
 public class ConcatenatorTest {
 
     @Test
-    public void shouldConstruct() {
-        new Concatenator();
-    }
-
-    @Test
     public void shouldConcatenateTwoCollectionsAndReturnDynamicList() {
-        Concatenator concatenator = new Concatenator();
-
         Collection<Item> a = asList(A);
         Collection<Item> bAndC = asList(B, C);
         Collection<Item> empty = new ArrayList<Item>();
 
-        assertEquals(new DynamicArrayList<Item>(A, B, C), concatenator.concatenate(a, bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C, A), concatenator.concatenate(bAndC, a));
-        assertEquals(new DynamicArrayList<Item>(B, C), concatenator.concatenate(empty, bAndC));
-        assertEquals(new DynamicArrayList<Item>(B, C), concatenator.concatenate(bAndC, empty));
+        assertEquals(new DynamicArrayList<Item>(A, B, C), Concatenator.concatenate(a, bAndC));
+        assertEquals(new DynamicArrayList<Item>(B, C, A), Concatenator.concatenate(bAndC, a));
+        assertEquals(new DynamicArrayList<Item>(B, C), Concatenator.concatenate(empty, bAndC));
+        assertEquals(new DynamicArrayList<Item>(B, C), Concatenator.concatenate(bAndC, empty));
     }
 }

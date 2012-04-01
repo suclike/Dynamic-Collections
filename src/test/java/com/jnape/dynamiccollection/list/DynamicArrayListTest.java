@@ -25,15 +25,13 @@ import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static testsupport.ItemFixture.*;
+import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
 
     @Mock
     private OperationProvider operationProvider;
-
-    @Mock
-    private Concatenator concatenator;
 
     @Mock
     private CartesianMultiplier cartesianMultiplier;
@@ -58,12 +56,11 @@ public class DynamicArrayListTest {
 
     @Mock
     private Folder folder;
-    
+
     @Before
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.concatenator()).thenReturn(concatenator);
         when(operationProvider.cartesianMultiplier()).thenReturn(cartesianMultiplier);
         when(operationProvider.iterativeExecutor()).thenReturn(iterativeExecutor);
         when(operationProvider.collector()).thenReturn(collector);
@@ -162,13 +159,18 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldDelegateConcat() {
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
-        Collection<Integer> collection = new ArrayList<Integer>();
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(1, 2, 3);
+        Collection<Integer> collection = list(4, 5);
 
-        DynamicList<Integer> expected = new DynamicArrayList<Integer>();
-        when(concatenator.concatenate(dynamicArrayList, collection)).thenReturn(expected);
+        assertReflectionEquals(new DynamicArrayList(1, 2, 3, 4, 5), dynamicArrayList.concat(collection));
 
-        assertSame(expected, dynamicArrayList.concat(collection));
+        DynamicArrayList<String> anotherDynamicArrayList = new DynamicArrayList<String>("a", "b");
+        Collection<String> anotherCollection = list("c", "d", "e", "f", "g");
+
+        assertReflectionEquals(
+                new DynamicArrayList<String>("a", "b", "c", "d", "e", "f", "g"),
+                anotherDynamicArrayList.concat(anotherCollection)
+        );
     }
 
     @Test
@@ -371,7 +373,7 @@ public class DynamicArrayListTest {
         assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
         assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
     }
-    
+
     @Test
     public void shouldDelegateFoldRight() {
         DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
@@ -383,7 +385,7 @@ public class DynamicArrayListTest {
 
         assertSame(expected, dynamicArrayList.foldRight(startingAccumulation, accumulator));
     }
-    
+
     @Test
     public void shouldDelegateFoldLeft() {
         DynamicArrayList<String> dynamicArrayList = new DynamicArrayList<String>(operationProvider);

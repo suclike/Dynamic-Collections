@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class Concatenator {
 
-    public <Element> DynamicCollection<Element> concatenate(Collection<Element> collection1, Collection<Element> collection2) {
+    public static <Element> DynamicCollection<Element> concatenate(Collection<Element> collection1, Collection<Element> collection2) {
         DynamicCollection<Element> concatenation = new DynamicArrayList<Element>();
 
         concatenation.addAll(collection1);

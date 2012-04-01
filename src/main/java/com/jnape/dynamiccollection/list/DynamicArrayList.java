@@ -11,8 +11,6 @@ import com.jnape.dynamiccollection.operator.*;
 
 import java.util.*;
 
-import static java.util.Arrays.asList;
-
 public class DynamicArrayList<Element> extends ArrayList<Element> implements DynamicList<Element> {
 
     private final OperationProvider operationProvider;
@@ -32,7 +30,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     public DynamicArrayList(Element... elements) {
-        this(asList(elements));
+        super();
+        Collections.addAll(this, elements);
+        operationProvider = new OperationProvider();
     }
 
     @Override
@@ -43,8 +43,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
-        Concatenator concatenator = operationProvider.concatenator();
-        return (DynamicList<Element>) concatenator.concatenate(this, collection);
+        return (DynamicList<Element>) Concatenator.concatenate(this, collection);
     }
 
     @Override

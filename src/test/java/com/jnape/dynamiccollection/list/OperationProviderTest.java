@@ -16,7 +16,6 @@ public class OperationProviderTest {
     public void shouldProvideExpectedOperations() {
         OperationProvider operationProvider = new OperationProvider();
 
-        assertReflectionEquals(new Concatenator(), operationProvider.concatenator());
         assertReflectionEquals(new CartesianMultiplier(), operationProvider.cartesianMultiplier());
         assertReflectionEquals(new IterativeExecutor(), operationProvider.iterativeExecutor());
         assertReflectionEquals(new Collector(), operationProvider.collector());

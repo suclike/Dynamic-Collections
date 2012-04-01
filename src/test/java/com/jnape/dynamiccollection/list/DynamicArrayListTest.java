@@ -10,7 +10,6 @@ import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operator.ElementExcluder;
 import com.jnape.dynamiccollection.operator.Folder;
 import com.jnape.dynamiccollection.operator.Partitioner;
-import com.jnape.dynamiccollection.operator.Rejector;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -37,9 +36,6 @@ public class DynamicArrayListTest {
     private OperationProvider operationProvider;
 
     @Mock
-    private Rejector rejector;
-
-    @Mock
     private ElementExcluder elementExcluder;
 
     @Mock
@@ -52,7 +48,6 @@ public class DynamicArrayListTest {
     public void setUp() {
         initMocks(this);
 
-        when(operationProvider.rejector()).thenReturn(rejector);
         when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
         when(operationProvider.partitioner()).thenReturn(partitioner);
         when(operationProvider.folder()).thenReturn(folder);
@@ -236,6 +231,32 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldRejectElements() {
+        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Function<Integer, Boolean> oddNumbers = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 != 0;
+            }
+        };
+
+        DynamicList<Integer> twoFourSixEightTen = list(2, 4, 6, 8, 10);
+        assertEquals(twoFourSixEightTen, oneThroughTen.reject(oddNumbers));
+
+
+        DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
+        Function<String, Boolean> wordsGreaterThanThreeCharacters = new Function<String, Boolean>() {
+            @Override
+            public Boolean apply(String word) {
+                return word.length() > 3;
+            }
+        };
+
+        DynamicList<String> theAndIn = list("The", "in");
+        assertEquals(theAndIn, theRainInSpain.reject(wordsGreaterThanThreeCharacters));
+    }
+
+    @Test
     public void shouldTransformElements() {
         DynamicArrayList<String> prepositions = new DynamicArrayList<String>("Aboard", "About", "Above", "Across");
         Function<String, Object> intoWordLength = new Function<String, Object>() {
@@ -259,17 +280,6 @@ public class DynamicArrayListTest {
 
         DynamicList<Double> squareRoots = list(1d, 2d, 3d, 4d, 5d);
         assertEquals(squareRoots, perfectSquares.transform(squareRoot));
-    }
-
-    @Test
-    public void shouldDelegateReject() {
-        Function function = mock(Function.class);
-        DynamicArrayList<?> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
-
-        DynamicList<Object> expected = new DynamicArrayList<Object>();
-        when(rejector.reject(dynamicArrayList, function)).thenReturn(expected);
-
-        assertSame(expected, dynamicArrayList.reject(function));
     }
 
     @Test

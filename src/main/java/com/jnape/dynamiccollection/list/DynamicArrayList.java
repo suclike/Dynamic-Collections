@@ -35,12 +35,6 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> subList(int fromIndex, int toIndex) {
-        List<Element> subList = super.subList(fromIndex, toIndex);
-        return new DynamicArrayList<Element>(subList);
-    }
-
-    @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
         return (DynamicList<Element>) Concatenate.concatenate(this, collection);
     }
@@ -57,9 +51,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> reject(Function<Element, Boolean> rejectionFunction) {
-        Rejector rejector = operationProvider.rejector();
-        return (DynamicList<Element>) rejector.reject(this, rejectionFunction);
+    public DynamicList<Element> reject(Function<Element, Boolean> rejector) {
+        return (DynamicList<Element>) Reject.reject(this, rejector);
     }
 
     @Override
@@ -91,25 +84,26 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<Element> subList(int fromIndex, int toIndex) {
+        List<Element> subList = super.subList(fromIndex, toIndex);
+        return new DynamicArrayList<Element>(subList);
+    }
+
+    @Override
     public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
         return CartesianMultiplier.multiply(this, collection);
     }
 
     @Override
-    public DynamicList<Element> reverse() {
-        Collections.reverse(this);
-        return this;
+    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        Folder folder = operationProvider.folder();
+        return folder.foldRight(this, startingAccumulation, accumulator);
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
-    public DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException {
-        try {
-            Collections.sort((List<Comparable>) this);
-            return this;
-        } catch (ClassCastException notComparable) {
-            throw new ListNotSortableWithoutCustomComparatorException(this);
-        }
+    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        Folder folder = operationProvider.folder();
+        return folder.foldLeft(this, startingAccumulation, accumulator);
     }
 
     @Override
@@ -130,23 +124,20 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Element first() throws ListWasEmptyException {
-        return safeGet(0);
+    @SuppressWarnings({"unchecked"})
+    public DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException {
+        try {
+            Collections.sort((List<Comparable>) this);
+            return this;
+        } catch (ClassCastException notComparable) {
+            throw new ListNotSortableWithoutCustomComparatorException(this);
+        }
     }
 
     @Override
-    public Element last() throws ListWasEmptyException {
-        return safeGet(size() - 1);
-    }
-
-    @Override
-    public Element max(final Function<Element, Integer> calculator) {
-        return sortByNumericValue(calculator).last();
-    }
-
-    @Override
-    public Element min(Function<Element, Integer> calculator) {
-        return sortByNumericValue(calculator).first();
+    public DynamicList<Element> reverse() {
+        Collections.reverse(this);
+        return this;
     }
 
     @Override
@@ -163,15 +154,23 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        Folder folder = operationProvider.folder();
-        return folder.foldRight(this, startingAccumulation, accumulator);
+    public Element first() throws ListWasEmptyException {
+        return safeGet(0);
     }
 
     @Override
-    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        Folder folder = operationProvider.folder();
-        return folder.foldLeft(this, startingAccumulation, accumulator);
+    public Element last() throws ListWasEmptyException {
+        return safeGet(size() - 1);
+    }
+
+    @Override
+    public Element min(Function<Element, Integer> calculator) {
+        return sortByNumericValue(calculator).first();
+    }
+
+    @Override
+    public Element max(final Function<Element, Integer> calculator) {
+        return sortByNumericValue(calculator).last();
     }
 
     private Element safeGet(int index) {

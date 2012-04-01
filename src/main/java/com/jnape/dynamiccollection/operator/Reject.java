@@ -6,9 +6,9 @@ import com.jnape.dynamiccollection.list.DynamicArrayList;
 
 import java.util.Collection;
 
-public class Rejector {
+public class Reject {
 
-    public <Element> DynamicCollection<Element> reject(Collection<Element> collection, Function<Element, Boolean> rejectionFunction) {
+    public static <Element> DynamicCollection<Element> reject(Collection<Element> collection, Function<Element, Boolean> rejectionFunction) {
         DynamicCollection<Element> notRejected = new DynamicArrayList<Element>();
 
         for (Element element : collection)

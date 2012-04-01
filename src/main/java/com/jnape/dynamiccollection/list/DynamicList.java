@@ -11,54 +11,54 @@ import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import java.util.Collection;
 import java.util.List;
 
-public interface DynamicList<Element> extends List<Element>, DynamicCollection<Element> {
-
-    @Override
-    DynamicList<Element> subList(int fromIndex, int toIndex);
+public interface DynamicList<Element> extends DynamicCollection<Element>, List<Element> {
 
     @Override
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
-    DynamicList<Element> each(Procedure<Element> iterativeProcedure);
+    DynamicList<Element> each(Procedure<Element> procedure);
 
     @Override
-    DynamicList<Element> collect(Function<Element, Boolean> collectionFunction);
+    DynamicList<Element> collect(Function<Element, Boolean> collector);
 
     @Override
-    DynamicList<Element> reject(Function<Element, Boolean> rejectionFunction);
+    DynamicList<Element> reject(Function<Element, Boolean> rejector);
 
     @Override
-    <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformationFunction);
+    <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer);
 
     @Override
     DynamicList<Element> without(Element... exclusions);
 
     @Override
-    Partition<Element> partition(Function<Element, Boolean> sieve);
+    Partition<Element> partition(Function<Element, Boolean> partitioner);
 
     @Override
     DynamicList<Element> unique();
 
+    @Override
+    DynamicList<Element> subList(int fromIndex, int toIndex);
+
     DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection);
 
-    DynamicList<Element> reverse();
+    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
+
+    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
+
+    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<Element, Comparison> comparator);
 
     DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException;
 
-    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<Element, Comparison> comparator);
+    DynamicList<Element> reverse();
+
+    String join(String combiner);
 
     Element first() throws ListWasEmptyException;
 
     Element last() throws ListWasEmptyException;
 
-    Element max(Function<Element, Integer> calculator);
-
     Element min(Function<Element, Integer> calculator);
 
-    String join(String combiner);
-
-    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
-
-    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
+    Element max(Function<Element, Integer> calculator);
 }

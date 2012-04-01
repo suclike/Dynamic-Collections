@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.list;
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
@@ -56,4 +57,8 @@ public interface DynamicList<Element> extends List<Element>, DynamicCollection<E
     Element min(Function<Element, Integer> calculator);
 
     String join(String combiner);
+
+    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
+
+    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator);
 }

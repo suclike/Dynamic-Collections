@@ -35,4 +35,8 @@ public class OperationProvider {
     public Partitioner partitioner() {
         return new Partitioner();
     }
+
+    public Folder folder() {
+        return new Folder();
+    }
 }

@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.list;
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
@@ -55,6 +56,9 @@ public class DynamicArrayListTest {
     @Mock
     private Partitioner partitioner;
 
+    @Mock
+    private Folder folder;
+    
     @Before
     public void setUp() {
         initMocks(this);
@@ -67,6 +71,7 @@ public class DynamicArrayListTest {
         when(operationProvider.rejector()).thenReturn(rejector);
         when(operationProvider.elementExcluder()).thenReturn(elementExcluder);
         when(operationProvider.partitioner()).thenReturn(partitioner);
+        when(operationProvider.folder()).thenReturn(folder);
     }
 
     @Test
@@ -365,5 +370,29 @@ public class DynamicArrayListTest {
     public void shouldJoinElementsIntoStringWithCombiner() {
         assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
         assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
+    }
+    
+    @Test
+    public void shouldDelegateFoldRight() {
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
+        String startingAccumulation = "";
+        HigherOrderFunction accumulator = mock(HigherOrderFunction.class);
+
+        String expected = "mocked";
+        when(folder.foldRight(dynamicArrayList, startingAccumulation, accumulator)).thenReturn(expected);
+
+        assertSame(expected, dynamicArrayList.foldRight(startingAccumulation, accumulator));
+    }
+    
+    @Test
+    public void shouldDelegateFoldLeft() {
+        DynamicArrayList<String> dynamicArrayList = new DynamicArrayList<String>(operationProvider);
+        Integer startAccumulation = 0;
+        HigherOrderFunction accumulator = mock(HigherOrderFunction.class);
+
+        Integer expected = 10;
+        when(folder.foldLeft(dynamicArrayList, startAccumulation, accumulator)).thenReturn(expected);
+
+        assertSame(expected, dynamicArrayList.foldLeft(startAccumulation, accumulator));
     }
 }

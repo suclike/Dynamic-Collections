@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.list;
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
@@ -166,7 +167,19 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
         return joined.toString();
     }
-    
+
+    @Override
+    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        Folder folder = operationProvider.folder();
+        return folder.foldRight(this, startingAccumulation, accumulator);
+    }
+
+    @Override
+    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        Folder folder = operationProvider.folder();
+        return folder.foldLeft(this, startingAccumulation, accumulator);
+    }
+
     private Element safeGet(int index) {
         if (isEmpty())
             throw new ListWasEmptyException();
@@ -184,4 +197,6 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
         return sort(byNumericValue);
     }
+
+
 }

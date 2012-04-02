@@ -1,15 +1,10 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.operator.Folder;
-import com.jnape.dynamiccollection.operator.Partitioner;
+import com.jnape.dynamiccollection.operator.Fold;
 
 public class OperationProvider {
 
-    public Partitioner partitioner() {
-        return new Partitioner();
-    }
-
-    public Folder folder() {
-        return new Folder();
+    public Fold folder() {
+        return new Fold();
     }
 }

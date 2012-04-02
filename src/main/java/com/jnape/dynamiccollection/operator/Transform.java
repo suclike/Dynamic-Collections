@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public class Transform {
 
-    public static <Element, Transformation> DynamicCollection<Transformation> transform(Collection<Element> collection, Function<Element, Transformation> transformationFunction) {
+    public static <Element, Transformation> DynamicCollection<Transformation> transform(Collection<Element> collection, Function<Element, Transformation> transformer) {
         DynamicCollection<Transformation> transformation = new DynamicArrayList<Transformation>();
 
         for (Element element : collection)
-            transformation.add(transformationFunction.apply(element));
+            transformation.add(transformer.apply(element));
 
         return transformation;
     }

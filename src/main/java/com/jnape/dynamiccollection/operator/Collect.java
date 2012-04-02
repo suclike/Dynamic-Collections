@@ -8,11 +8,11 @@ import java.util.Collection;
 
 public class Collect {
 
-    public static <Element> DynamicCollection<Element> collect(Collection<Element> collection, Function<Element, Boolean> collectionFunction) {
+    public static <Element> DynamicCollection<Element> collect(Collection<Element> collection, Function<Element, Boolean> collector) {
         DynamicCollection<Element> collected = new DynamicArrayList<Element>();
 
         for (Element element : collection)
-            if (collectionFunction.apply(element))
+            if (collector.apply(element))
                 collected.add(element);
 
         return collected;

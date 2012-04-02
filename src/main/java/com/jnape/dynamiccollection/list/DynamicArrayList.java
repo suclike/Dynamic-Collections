@@ -12,26 +12,17 @@ import java.util.*;
 
 public class DynamicArrayList<Element> extends ArrayList<Element> implements DynamicList<Element> {
 
-    private final OperationProvider operationProvider;
-
-    DynamicArrayList(OperationProvider operationProvider) {
-        this.operationProvider = operationProvider;
-    }
-
     public DynamicArrayList() {
         super();
-        operationProvider = new OperationProvider();
     }
 
     public DynamicArrayList(Collection<Element> elements) {
         super(elements);
-        operationProvider = new OperationProvider();
     }
 
     public DynamicArrayList(Element... elements) {
         super();
         Collections.addAll(this, elements);
-        operationProvider = new OperationProvider();
     }
 
     @Override
@@ -66,20 +57,13 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Partition<Element> partition(Function<Element, Boolean> partitionFunction) {
-        Partitioner partitioner = operationProvider.partitioner();
-        return partitioner.partition(this, partitionFunction);
+    public Partition<Element> partition(Function<Element, Boolean> partitioner) {
+        return com.jnape.dynamiccollection.operator.Partition.partition(this, partitioner);
     }
 
     @Override
     public DynamicList<Element> unique() {
-        DynamicList<Element> unique = new DynamicArrayList<Element>();
-
-        for (Element element : this)
-            if (!unique.contains(element))
-                unique.add(element);
-
-        return unique;
+        return (DynamicList<Element>) Unique.unique(this);
     }
 
     @Override
@@ -95,14 +79,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        Folder folder = operationProvider.folder();
-        return folder.foldRight(this, startingAccumulation, accumulator);
+        return Fold.foldRight(this, startingAccumulation, accumulator);
     }
 
     @Override
     public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        Folder folder = operationProvider.folder();
-        return folder.foldLeft(this, startingAccumulation, accumulator);
+        return Fold.foldLeft(this, startingAccumulation, accumulator);
     }
 
     @Override

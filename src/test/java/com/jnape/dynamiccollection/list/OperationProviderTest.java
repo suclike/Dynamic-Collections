@@ -1,7 +1,6 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.operator.Folder;
-import com.jnape.dynamiccollection.operator.Partitioner;
+import com.jnape.dynamiccollection.operator.Fold;
 import org.junit.Test;
 
 import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
@@ -17,7 +16,6 @@ public class OperationProviderTest {
     public void shouldProvideExpectedOperations() {
         OperationProvider operationProvider = new OperationProvider();
 
-        assertReflectionEquals(new Partitioner(), operationProvider.partitioner());
-        assertReflectionEquals(new Folder(), operationProvider.folder());
+        assertReflectionEquals(new Fold(), operationProvider.folder());
     }
 }

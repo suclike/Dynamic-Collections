@@ -7,11 +7,7 @@ import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import com.jnape.dynamiccollection.operator.Folder;
-import com.jnape.dynamiccollection.operator.Partitioner;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import testsupport.Item;
 
 import java.util.ArrayList;
@@ -20,33 +16,12 @@ import java.util.List;
 
 import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static testsupport.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
-
-    @Mock
-    private OperationProvider operationProvider;
-
-    @Mock
-    private Partitioner partitioner;
-
-    @Mock
-    private Folder folder;
-
-    @Before
-    public void setUp() {
-        initMocks(this);
-
-        when(operationProvider.partitioner()).thenReturn(partitioner);
-        when(operationProvider.folder()).thenReturn(folder);
-    }
 
     @Test
     public void shouldConstructWithoutArgs() {
@@ -237,14 +212,21 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldDelegatePartition() {
-        Function function = mock(Function.class);
-        DynamicArrayList<Object> dynamicArrayList = new DynamicArrayList<Object>(operationProvider);
+    public void shouldPartitionElements() {
+        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Function<Integer, Boolean> intoEvensAndOdds = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
 
-        Partition<Object> expected = new Partition<Object>(emptyList(), emptyList());
-        when(partitioner.partition(dynamicArrayList, function)).thenReturn(expected);
+        DynamicList<Integer> trues = list(2, 4, 6, 8, 10);
+        DynamicList<Integer> falses = list(1, 3, 5, 7, 9);
 
-        assertSame(expected, dynamicArrayList.partition(function));
+        Partition<Integer> partition = oneThroughTen.partition(intoEvensAndOdds);
+        assertEquals(trues, partition.trues());
+        assertEquals(falses, partition.falses());
     }
 
     @Test
@@ -305,12 +287,45 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldReverse() {
-        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
-        assertEquals(new DynamicArrayList<Item>(C, B, A), items.reverse());
+    public void shouldFoldRight() {
+        DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3);
-        assertEquals(new DynamicArrayList<Integer>(3, 2, 1), numbers.reverse());
+        assertEquals((Integer) 120, theRainInSpain.foldRight(1, new HigherOrderFunction<String, Integer>() {
+            @Override
+            public Integer apply(String word, Integer accumulation) {
+                return word.length() * accumulation;
+            }
+        }));
+    }
+
+    @Test
+    public void shouldFoldLeft() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+        HigherOrderFunction<Integer, Integer> sum = new HigherOrderFunction<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer, Integer accumulation) {
+                return integer + accumulation;
+            }
+        };
+
+        assertEquals((Integer) 15, oneThroughFive.foldLeft(0, sum));
+    }
+
+    @Test
+    public void shouldSortWithCustomComparator() {
+        Function<Item, String> byLabel = new Function<Item, String>() {
+            @Override
+            public String apply(Item item) {
+                return item.getLabel();
+            }
+        };
+
+        DynamicArrayList<Item> ABC = new DynamicArrayList<Item>(A, B, C);
+
+        assertEquals(ABC, new DynamicArrayList<Item>(B, C, A).sort(byLabel));
+        assertEquals(ABC, new DynamicArrayList<Item>(C, B, A).sort(byLabel));
+        assertEquals(ABC, new DynamicArrayList<Item>(A, C, B).sort(byLabel));
     }
 
     @Test
@@ -328,19 +343,18 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldSortWithCustomComparator() {
-        Function<Item, String> byLabel = new Function<Item, String>() {
-            @Override
-            public String apply(Item item) {
-                return item.getLabel();
-            }
-        };
+    public void shouldReverse() {
+        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
+        assertEquals(new DynamicArrayList<Item>(C, B, A), items.reverse());
 
-        DynamicArrayList<Item> ABC = new DynamicArrayList<Item>(A, B, C);
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3);
+        assertEquals(new DynamicArrayList<Integer>(3, 2, 1), numbers.reverse());
+    }
 
-        assertEquals(ABC, new DynamicArrayList<Item>(B, C, A).sort(byLabel));
-        assertEquals(ABC, new DynamicArrayList<Item>(C, B, A).sort(byLabel));
-        assertEquals(ABC, new DynamicArrayList<Item>(A, C, B).sort(byLabel));
+    @Test
+    public void shouldJoinElementsIntoStringWithCombiner() {
+        assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
+        assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
     }
 
     @Test
@@ -411,35 +425,5 @@ public class DynamicArrayListTest {
         };
 
         assertEquals((Integer) 1, new DynamicArrayList<Integer>(1, 2, 3, 4, 5).min(integerValue));
-    }
-
-    @Test
-    public void shouldJoinElementsIntoStringWithCombiner() {
-        assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
-        assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
-    }
-
-    @Test
-    public void shouldDelegateFoldRight() {
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(operationProvider);
-        String startingAccumulation = "";
-        HigherOrderFunction accumulator = mock(HigherOrderFunction.class);
-
-        String expected = "mocked";
-        when(folder.foldRight(dynamicArrayList, startingAccumulation, accumulator)).thenReturn(expected);
-
-        assertSame(expected, dynamicArrayList.foldRight(startingAccumulation, accumulator));
-    }
-
-    @Test
-    public void shouldDelegateFoldLeft() {
-        DynamicArrayList<String> dynamicArrayList = new DynamicArrayList<String>(operationProvider);
-        Integer startAccumulation = 0;
-        HigherOrderFunction accumulator = mock(HigherOrderFunction.class);
-
-        Integer expected = 10;
-        when(folder.foldLeft(dynamicArrayList, startAccumulation, accumulator)).thenReturn(expected);
-
-        assertSame(expected, dynamicArrayList.foldLeft(startAccumulation, accumulator));
     }
 }

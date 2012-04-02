@@ -4,9 +4,9 @@ import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 
 import java.util.List;
 
-public class Folder {
+public class Fold {
 
-    public <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
+    public static <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (Input input : list)
@@ -15,7 +15,7 @@ public class Folder {
         return accumulation;
     }
 
-    public <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
+    public static <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (int i = list.size(); --i >= 0; )

@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.operator;
+package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.list.DynamicArrayList;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static testsupport.ItemFixture.*;
 
 @SuppressWarnings("unchecked")
-public class CartesianMultiplierTest {
+public class CartesianProductTest {
 
     @Test
     public void shouldComputeCartesianProductOfTwoLists() {
@@ -48,7 +48,7 @@ public class CartesianMultiplierTest {
                 new DynamicArrayList<Integer>(10, 9)
         );
 
-        assertEquals(evensTimesOdds, CartesianMultiplier.multiply(evens, odds));
+        assertEquals(evensTimesOdds, CartesianProduct.cartesianProduct(evens, odds));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CartesianMultiplierTest {
         DynamicList<Item> letters = new DynamicArrayList<Item>(A, B, C);
         DynamicList<Item> empty = new DynamicArrayList<Item>();
 
-        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianMultiplier.multiply(empty, letters));
-        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianMultiplier.multiply(letters, empty));
+        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianProduct.cartesianProduct(empty, letters));
+        assertEquals(new DynamicArrayList<DynamicCollection<Item>>(), CartesianProduct.cartesianProduct(letters, empty));
     }
 }

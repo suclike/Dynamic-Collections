@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.operator;
+package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 

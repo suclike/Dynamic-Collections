@@ -6,7 +6,7 @@ import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
-import com.jnape.dynamiccollection.operator.*;
+import com.jnape.dynamiccollection.operation.*;
 
 import java.util.*;
 
@@ -58,7 +58,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public Partition<Element> partition(Function<Element, Boolean> partitioner) {
-        return com.jnape.dynamiccollection.operator.Partition.partition(this, partitioner);
+        return com.jnape.dynamiccollection.operation.Partition.partition(this, partitioner);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
-        return CartesianMultiplier.multiply(this, collection);
+        return CartesianProduct.cartesianProduct(this, collection);
     }
 
     @Override

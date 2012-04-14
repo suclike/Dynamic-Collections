@@ -78,13 +78,13 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        return Fold.foldRight(this, startingAccumulation, accumulator);
+    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        return Fold.foldLeft(this, startingAccumulation, accumulator);
     }
 
     @Override
-    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
-        return Fold.foldLeft(this, startingAccumulation, accumulator);
+    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+        return Fold.foldRight(this, startingAccumulation, accumulator);
     }
 
     @Override

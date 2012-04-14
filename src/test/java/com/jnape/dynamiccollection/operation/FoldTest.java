@@ -29,14 +29,14 @@ public class FoldTest {
     };
 
     @Test
-    public void shouldFoldRight() {
-        assertEquals((Integer) 120, Fold.foldRight(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
-        assertEquals("Hello, world!", Fold.foldRight(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
+    public void shouldFoldLeft() {
+        assertEquals((Integer) 120, Fold.foldLeft(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
+        assertEquals("Hello, world!", Fold.foldLeft(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
     }
 
     @Test
-    public void shouldFoldLeft() {
-        assertEquals((Integer) 114, Fold.foldLeft(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
-        assertEquals("!dlrow ,olleH", Fold.foldLeft(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
+    public void shouldFoldRight() {
+        assertEquals((Integer) 114, Fold.foldRight(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
+        assertEquals("!dlrow ,olleH", Fold.foldRight(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
     }
 }

@@ -287,10 +287,10 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldFoldRight() {
+    public void shouldFoldLeft() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        assertEquals((Integer) 120, theRainInSpain.foldRight(1, new HigherOrderFunction<String, Integer>() {
+        assertEquals((Integer) 120, theRainInSpain.foldLeft(1, new HigherOrderFunction<String, Integer>() {
             @Override
             public Integer apply(String word, Integer accumulation) {
                 return word.length() * accumulation;
@@ -299,7 +299,7 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldFoldLeft() {
+    public void shouldFoldRight() {
         DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
         HigherOrderFunction<Integer, Integer> sum = new HigherOrderFunction<Integer, Integer>() {
@@ -309,7 +309,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        assertEquals((Integer) 15, oneThroughFive.foldLeft(0, sum));
+        assertEquals((Integer) 15, oneThroughFive.foldRight(0, sum));
     }
 
     @Test

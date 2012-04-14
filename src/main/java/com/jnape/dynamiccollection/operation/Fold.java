@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Fold {
 
-    public static <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
+    public static <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (Input input : list)
@@ -15,7 +15,7 @@ public class Fold {
         return accumulation;
     }
 
-    public static <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
+    public static <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation, HigherOrderFunction<Input, Output> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (int i = list.size(); --i >= 0; )

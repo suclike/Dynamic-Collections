@@ -1,8 +1,8 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
@@ -78,13 +78,19 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
         return Fold.foldLeft(this, startingAccumulation, accumulator);
     }
 
     @Override
-    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, HigherOrderFunction<Element, Accumulation> accumulator) {
+    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
         return Fold.foldRight(this, startingAccumulation, accumulator);
+    }
+
+    @Override
+    public Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException {
+        ensureNotEmpty();
+        return Reduce.reduce(this, accumulator);
     }
 
     @Override
@@ -117,8 +123,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> reverse() {
-        Collections.reverse(this);
-        return this;
+        return Reverse.reverse(this);
     }
 
     @Override
@@ -147,8 +152,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     private Element safeGet(int index) {
-        if (isEmpty())
-            throw new ListWasEmptyException();
+        ensureNotEmpty();
 
         return get(index);
     }
@@ -162,6 +166,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         };
 
         return sort(byNumericValue);
+    }
+
+    private void ensureNotEmpty() {
+        if (isEmpty())
+            throw new ListWasEmptyException();
     }
 
 

@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
+import com.jnape.dynamiccollection.lambda.Accumulator;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,33 +10,29 @@ import static org.junit.Assert.assertEquals;
 
 public class FoldTest {
 
-    private static final List<Integer> INTEGERS = list(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
-
-    private static final List<Character> CHARACTERS = list('H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!');
-
-    private static final HigherOrderFunction<Integer, Integer> PLUS_ACCUMULATION_MODULO_ELEMENT = new HigherOrderFunction<Integer, Integer>() {
-        @Override
-        public Integer apply(Integer integer, Integer accumulation) {
-            return accumulation + (accumulation % integer);
-        }
-    };
-
-    private static final HigherOrderFunction<Character, String> ACCUMULATION_PLUS_ELEMENT = new HigherOrderFunction<Character, String>() {
-        @Override
-        public String apply(Character character, String accumulation) {
-            return accumulation + character;
-        }
-    };
-
     @Test
     public void shouldFoldLeft() {
-        assertEquals((Integer) 120, Fold.foldLeft(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
-        assertEquals("Hello, world!", Fold.foldLeft(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
+        Accumulator<String, Character> combineCharacters = new Accumulator<String, Character>() {
+            @Override
+            public String apply(String accumulation, Character character) {
+                return accumulation + character;
+            }
+        };
+
+        List<Character> characters = list('H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!');
+        assertEquals("Hello, world!", Fold.foldLeft(characters, "", combineCharacters));
     }
 
     @Test
     public void shouldFoldRight() {
-        assertEquals((Integer) 114, Fold.foldRight(INTEGERS, 99, PLUS_ACCUMULATION_MODULO_ELEMENT));
-        assertEquals("!dlrow ,olleH", Fold.foldRight(CHARACTERS, "", ACCUMULATION_PLUS_ELEMENT));
+        Accumulator<Long, Integer> product = new Accumulator<Long, Integer>() {
+            @Override
+            public Long apply(Long accumulation, Integer integer) {
+                return accumulation * integer;
+            }
+        };
+
+        List<Integer> numbers = list(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        assertEquals((Long) 359251200L, Fold.foldRight(numbers, 99L, product));
     }
 }

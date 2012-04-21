@@ -2,8 +2,8 @@ package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.HigherOrderFunction;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
@@ -290,9 +290,9 @@ public class DynamicArrayListTest {
     public void shouldFoldLeft() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        assertEquals((Integer) 120, theRainInSpain.foldLeft(1, new HigherOrderFunction<String, Integer>() {
+        assertEquals((Integer) 120, theRainInSpain.foldLeft(1, new Accumulator<Integer, String>() {
             @Override
-            public Integer apply(String word, Integer accumulation) {
+            public Integer apply(Integer accumulation, String word) {
                 return word.length() * accumulation;
             }
         }));
@@ -302,14 +302,39 @@ public class DynamicArrayListTest {
     public void shouldFoldRight() {
         DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
-        HigherOrderFunction<Integer, Integer> sum = new HigherOrderFunction<Integer, Integer>() {
+        Accumulator<Integer, Integer> sum = new Accumulator<Integer, Integer>() {
             @Override
-            public Integer apply(Integer integer, Integer accumulation) {
+            public Integer apply(Integer accumulation, Integer integer) {
                 return integer + accumulation;
             }
         };
 
         assertEquals((Integer) 15, oneThroughFive.foldRight(0, sum));
+    }
+
+    @Test
+    public void shouldReduce() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        Accumulator<Integer, Integer> product = new Accumulator<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer accumulation, Integer integer) {
+                return accumulation * integer;
+            }
+        };
+
+        assertEquals((Integer) 120, oneThroughFive.reduce(product));
+    }
+
+    @Test(expected = ListWasEmptyException.class)
+    public void shouldThrowExceptionIfReduceOnEmptyList() {
+        Accumulator<Integer, Integer> accumulator = new Accumulator<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer accumulation, Integer integer) {
+                return null;
+            }
+        };
+
+        new DynamicArrayList<Integer>().reduce(accumulator);
     }
 
     @Test

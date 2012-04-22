@@ -62,4 +62,10 @@ public class DynamicCollectionFactoryTest {
         assertEquals(new DynamicArrayList<Integer>(1, 2, 3), DynamicCollectionFactory.list(1, 2, 3));
         assertEquals(new DynamicArrayList<Character>('A', 'B', 'C'), DynamicCollectionFactory.list('A', 'B', 'C'));
     }
+
+    @Test
+    public void shouldProvideDynamicListFromIterator() {
+        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(1, 2, 3);
+        assertEquals(dynamicArrayList, DynamicCollectionFactory.list(dynamicArrayList.iterator()));
+    }
 }

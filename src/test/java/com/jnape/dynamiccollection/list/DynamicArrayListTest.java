@@ -12,6 +12,7 @@ import testsupport.Item;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
@@ -45,7 +46,6 @@ public class DynamicArrayListTest {
     @Test
     public void shouldConstructAndPopulateFromArray() {
         Item[] items = {C, A};
-
         DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(items);
 
         assertEquals(2, dynamicArrayList.size());
@@ -62,6 +62,17 @@ public class DynamicArrayListTest {
         assertEquals(C, dynamicArrayList.get(1));
         assertEquals(A, dynamicArrayList.get(2));
         assertEquals(C, dynamicArrayList.get(3));
+    }
+
+    @Test
+    public void shouldConstructAndPopulateFromIterator() {
+        Iterator<Item> iterator = asList(A, B, C).iterator();
+        DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(iterator);
+
+        assertEquals(3, dynamicArrayList.size());
+        assertEquals(A, dynamicArrayList.get(0));
+        assertEquals(B, dynamicArrayList.get(1));
+        assertEquals(C, dynamicArrayList.get(2));
     }
 
     @Test

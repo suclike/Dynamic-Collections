@@ -4,6 +4,7 @@ import com.jnape.dynamiccollection.list.DynamicArrayList;
 import com.jnape.dynamiccollection.list.DynamicList;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class DynamicCollectionFactory {
 
@@ -24,5 +25,9 @@ public class DynamicCollectionFactory {
 
     public static <Element> DynamicList<Element> list(Element... elements) {
         return new DynamicArrayList<Element>(elements);
+    }
+
+    public static <Element> DynamicList<Element> list(Iterator<Element> iterator) {
+        return new DynamicArrayList<Element>(iterator);
     }
 }

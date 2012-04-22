@@ -21,8 +21,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     public DynamicArrayList(Element... elements) {
-        super();
+        this();
         Collections.addAll(this, elements);
+    }
+
+    public DynamicArrayList(Iterator<Element> iterator) {
+        this();
+        while (iterator.hasNext())
+            add(iterator.next());
     }
 
     @Override

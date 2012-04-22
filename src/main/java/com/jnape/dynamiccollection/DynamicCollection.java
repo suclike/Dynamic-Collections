@@ -23,4 +23,6 @@ public interface DynamicCollection<Element> extends Collection<Element> {
     Partition<Element> partition(Function<Element, Boolean> partitioner);
 
     DynamicCollection<Element> unique();
+
+    Boolean any(Function<Element, Boolean> matcher);
 }

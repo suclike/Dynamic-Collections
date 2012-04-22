@@ -1,7 +1,6 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.Procedure;
@@ -30,9 +29,6 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     @Override
     DynamicList<Element> without(Element... exclusions);
-
-    @Override
-    Partition<Element> partition(Function<Element, Boolean> partitioner);
 
     @Override
     DynamicList<Element> unique();

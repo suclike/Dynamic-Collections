@@ -17,8 +17,7 @@ import java.util.List;
 
 import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
@@ -249,6 +248,31 @@ public class DynamicArrayListTest {
 
         assertEquals(new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
         assertEquals(new DynamicArrayList<Integer>(12, 42, 38, 62, 25, 59), ages.unique());
+    }
+
+    @Test
+    public void shouldMatchIfAny() {
+        DynamicArrayList<Boolean> allTrue = new DynamicArrayList<Boolean>(
+                true, true, true, true, true
+        );
+
+        Function<Boolean, Boolean> trues = new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean bool) {
+                return bool;
+            }
+        };
+
+        assertTrue(allTrue.any(trues));
+
+        Function<Boolean, Boolean> falses = new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean bool) {
+                return !bool;
+            }
+        };
+
+        assertFalse(allTrue.any(falses));
     }
 
     @Test

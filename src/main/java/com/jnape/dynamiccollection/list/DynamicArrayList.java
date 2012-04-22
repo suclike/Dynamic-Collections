@@ -73,6 +73,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public Boolean any(Function<Element, Boolean> matcher) {
+        return Any.any(this, matcher);
+    }
+
+    @Override
     public DynamicList<Element> subList(int fromIndex, int toIndex) {
         List<Element> subList = super.subList(fromIndex, toIndex);
         return new DynamicArrayList<Element>(subList);

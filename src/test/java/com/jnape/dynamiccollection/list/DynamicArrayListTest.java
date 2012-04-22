@@ -105,14 +105,6 @@ public class DynamicArrayListTest {
         Collection<Integer> fourAndFive = list(4, 5);
 
         assertEquals(list(1, 2, 3, 4, 5), oneThroughThree.concat(fourAndFive));
-
-        DynamicArrayList<String> aAndB = new DynamicArrayList<String>("a", "b");
-        Collection<String> cThroughG = list("c", "d", "e", "f", "g");
-
-        assertEquals(
-                list("a", "b", "c", "d", "e", "f", "g"),
-                aAndB.concat(cThroughG)
-        );
     }
 
     @Test
@@ -144,18 +136,6 @@ public class DynamicArrayListTest {
 
         DynamicList<Integer> fourAndFive = list(4, 5);
         assertEquals(fourAndFive, oneThroughFive.collect(greaterThanThree));
-
-
-        DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
-        Function<Character, Boolean> vowels = new Function<Character, Boolean>() {
-            @Override
-            public Boolean apply(Character character) {
-                return list('a', 'e', 'i', 'o', 'u').contains(character);
-            }
-        };
-
-        DynamicList<Character> aAndE = list('a', 'e');
-        assertEquals(aAndE, aThroughE.collect(vowels));
     }
 
     @Test
@@ -170,18 +150,6 @@ public class DynamicArrayListTest {
 
         DynamicList<Integer> twoFourSixEightTen = list(2, 4, 6, 8, 10);
         assertEquals(twoFourSixEightTen, oneThroughTen.reject(oddNumbers));
-
-
-        DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
-        Function<String, Boolean> wordsGreaterThanThreeCharacters = new Function<String, Boolean>() {
-            @Override
-            public Boolean apply(String word) {
-                return word.length() > 3;
-            }
-        };
-
-        DynamicList<String> theAndIn = list("The", "in");
-        assertEquals(theAndIn, theRainInSpain.reject(wordsGreaterThanThreeCharacters));
     }
 
     @Test
@@ -196,18 +164,6 @@ public class DynamicArrayListTest {
 
         DynamicList<Integer> transformation = list(6, 5, 5, 6);
         assertEquals(transformation, prepositions.transform(intoWordLength));
-
-
-        DynamicArrayList<Double> perfectSquares = new DynamicArrayList<Double>(1d, 4d, 9d, 16d, 25d);
-        Function<Double, Double> squareRoot = new Function<Double, Double>() {
-            @Override
-            public Double apply(Double perfectSquare) {
-                return Math.sqrt(perfectSquare);
-            }
-        };
-
-        DynamicList<Double> squareRoots = list(1d, 2d, 3d, 4d, 5d);
-        assertEquals(squareRoots, perfectSquares.transform(squareRoot));
     }
 
     @Test
@@ -215,10 +171,6 @@ public class DynamicArrayListTest {
         DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
         DynamicList<Character> bAndC = list('b', 'c');
         assertEquals(bAndC, aThroughE.without('a', 'd', 'e'));
-
-        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        DynamicList<Integer> empty = list();
-        assertEquals(empty, oneThroughTen.without(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 
     @Test
@@ -244,10 +196,7 @@ public class DynamicArrayListTest {
         DynamicArrayList<String> names = new DynamicArrayList<String>(
                 "Alex", "Albert", "Bill", "Bill", "Bob", "Chad", "Chris", "Chris"
         );
-        DynamicArrayList<Integer> ages = new DynamicArrayList<Integer>(12, 42, 38, 38, 62, 25, 59, 59);
-
         assertEquals(new DynamicArrayList<String>("Alex", "Albert", "Bill", "Bob", "Chad", "Chris"), names.unique());
-        assertEquals(new DynamicArrayList<Integer>(12, 42, 38, 62, 25, 59), ages.unique());
     }
 
     @Test
@@ -332,30 +281,20 @@ public class DynamicArrayListTest {
         );
 
         assertEquals(permutedNames, firstNames.cartesianProduct(lastNames));
-
-        DynamicArrayList<Integer> oddNumbers = new DynamicArrayList<Integer>(1, 3);
-        List<Integer> evenNumbers = list(2, 4);
-
-        DynamicList<DynamicList<Integer>> permutedNumbers = new DynamicArrayList<DynamicList<Integer>>(
-                list(1, 2),
-                list(1, 4),
-                list(3, 2),
-                list(3, 4)
-        );
-
-        assertEquals(permutedNumbers, oddNumbers.cartesianProduct(evenNumbers));
     }
 
     @Test
     public void shouldFoldLeft() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        assertEquals((Integer) 120, theRainInSpain.foldLeft(1, new Accumulator<Integer, String>() {
+        Accumulator<Integer, String> product = new Accumulator<Integer, String>() {
             @Override
             public Integer apply(Integer accumulation, String word) {
                 return word.length() * accumulation;
             }
-        }));
+        };
+
+        assertEquals((Integer) 120, theRainInSpain.foldLeft(1, product));
     }
 
     @Test
@@ -417,9 +356,6 @@ public class DynamicArrayListTest {
     public void shouldSort() {
         DynamicArrayList<Character> letters = new DynamicArrayList<Character>('c', 'a', 'd', 'b');
         assertEquals(new DynamicArrayList<Character>('a', 'b', 'c', 'd'), letters.sort());
-
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(5, 3, 2, 4, 1);
-        assertEquals(new DynamicArrayList<Integer>(1, 2, 3, 4, 5), numbers.sort());
     }
 
     @Test(expected = ListNotSortableWithoutCustomComparatorException.class)
@@ -431,14 +367,10 @@ public class DynamicArrayListTest {
     public void shouldReverse() {
         DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
         assertEquals(new DynamicArrayList<Item>(C, B, A), items.reverse());
-
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3);
-        assertEquals(new DynamicArrayList<Integer>(3, 2, 1), numbers.reverse());
     }
 
     @Test
     public void shouldJoinElementsIntoStringWithCombiner() {
-        assertEquals("a,b,c,d", new DynamicArrayList<Character>('a', 'b', 'c', 'd').join(","));
         assertEquals("1 and a 2 and a 3", new DynamicArrayList<Integer>(1, 2, 3).join(" and a "));
     }
 
@@ -446,9 +378,6 @@ public class DynamicArrayListTest {
     public void shouldGetFirst() {
         DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
         assertSame(A, items.first());
-
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(3, 2, 1);
-        assertSame(3, numbers.first());
     }
 
     @Test(expected = ListWasEmptyException.class)
@@ -458,11 +387,8 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldGetLast() {
-        DynamicArrayList<Item> items = new DynamicArrayList<Item>(A, B, C);
-        assertSame(C, items.last());
-
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(3, 2, 1);
-        assertSame(1, numbers.last());
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3);
+        assertSame(3, numbers.last());
     }
 
     @Test(expected = ListWasEmptyException.class)
@@ -480,28 +406,10 @@ public class DynamicArrayListTest {
         };
 
         assertEquals("Spain", new DynamicArrayList<String>("the", "rain", "in", "Spain").max(wordLength));
-
-        Function<Integer, Integer> integerValue = new Function<Integer, Integer>() {
-            @Override
-            public Integer apply(Integer integer) {
-                return integer;
-            }
-        };
-
-        assertEquals((Integer) 5, new DynamicArrayList<Integer>(1, 2, 3, 4, 5).max(integerValue));
     }
 
     @Test
     public void shouldGetMin() {
-        Function<String, Integer> wordLength = new Function<String, Integer>() {
-            @Override
-            public Integer apply(String s) {
-                return s.length();
-            }
-        };
-
-        assertEquals("in", new DynamicArrayList<String>("the", "rain", "in", "Spain").min(wordLength));
-
         Function<Integer, Integer> integerValue = new Function<Integer, Integer>() {
             @Override
             public Integer apply(Integer integer) {

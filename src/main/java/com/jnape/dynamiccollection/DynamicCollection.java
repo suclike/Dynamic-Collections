@@ -25,4 +25,6 @@ public interface DynamicCollection<Element> extends Collection<Element> {
     DynamicCollection<Element> unique();
 
     Boolean any(Function<Element, Boolean> matcher);
+
+    Boolean all(Function<Element, Boolean> matcher);
 }

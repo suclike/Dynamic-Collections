@@ -276,6 +276,31 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldMatchIfAll() {
+        DynamicArrayList<Boolean> allFalse = new DynamicArrayList<Boolean>(
+                false, false, false, false, false
+        );
+
+        Function<Boolean, Boolean> areFalse = new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean bool) {
+                return !bool;
+            }
+        };
+
+        assertTrue(allFalse.all(areFalse));
+
+        Function<Boolean, Boolean> areTrue = new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean bool) {
+                return bool;
+            }
+        };
+
+        assertFalse(allFalse.all(areTrue));
+    }
+
+    @Test
     public void shouldSubList() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 

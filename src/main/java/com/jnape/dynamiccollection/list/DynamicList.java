@@ -13,6 +13,9 @@ import java.util.List;
 public interface DynamicList<Element> extends DynamicCollection<Element>, List<Element> {
 
     @Override
+    DynamicList<Element> subList(int fromIndex, int toIndex);
+
+    @Override
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
@@ -33,8 +36,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     @Override
     DynamicList<Element> unique();
 
-    @Override
-    DynamicList<Element> subList(int fromIndex, int toIndex);
+    DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
     DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection);
 

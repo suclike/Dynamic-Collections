@@ -100,6 +100,20 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldSubList() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+        assertEquals(list(), numbers.subList(0, 0));
+        assertEquals(list(1, 2, 3), numbers.subList(0, 3));
+        assertEquals(list(3, 4, 5), numbers.subList(2, 5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenSubListGivenNegativeToIndex() {
+        new DynamicArrayList<Integer>(1, 2, 3).subList(0, -1);
+    }
+
+    @Test
     public void shouldConcatAnotherCollection() {
         DynamicArrayList<Integer> oneThroughThree = new DynamicArrayList<Integer>(1, 2, 3);
         Collection<Integer> fourAndFive = list(4, 5);
@@ -200,6 +214,17 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldDivideIntoGroups() {
+        DynamicList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
+        DynamicList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);
+        DynamicList<Number> fiveAndSix = new DynamicArrayList<Number>(5.0, 6d);
+
+        DynamicList<Number> oneThroughSix = oneAndTwo.concat(threeAndFour).concat(fiveAndSix);
+
+        assertEquals(list(oneAndTwo, threeAndFour, fiveAndSix), oneThroughSix.inGroupsOf(2));
+    }
+
+    @Test
     public void shouldMatchIfAny() {
         DynamicArrayList<Boolean> allTrue = new DynamicArrayList<Boolean>(
                 true, true, true, true, true
@@ -211,9 +236,6 @@ public class DynamicArrayListTest {
                 return bool;
             }
         };
-
-        assertTrue(allTrue.any(trues));
-
         Function<Boolean, Boolean> falses = new Function<Boolean, Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
@@ -221,6 +243,7 @@ public class DynamicArrayListTest {
             }
         };
 
+        assertTrue(allTrue.any(trues));
         assertFalse(allTrue.any(falses));
     }
 
@@ -236,9 +259,6 @@ public class DynamicArrayListTest {
                 return !bool;
             }
         };
-
-        assertTrue(allFalse.all(areFalse));
-
         Function<Boolean, Boolean> areTrue = new Function<Boolean, Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
@@ -246,21 +266,8 @@ public class DynamicArrayListTest {
             }
         };
 
+        assertTrue(allFalse.all(areFalse));
         assertFalse(allFalse.all(areTrue));
-    }
-
-    @Test
-    public void shouldSubList() {
-        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
-
-        assertEquals(list(), numbers.subList(0, 0));
-        assertEquals(list(1, 2, 3), numbers.subList(0, 3));
-        assertEquals(list(3, 4, 5), numbers.subList(2, 5));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenSubListGivenNegativeToIndex() {
-        new DynamicArrayList<Integer>(1, 2, 3).subList(0, -1);
     }
 
     @Test

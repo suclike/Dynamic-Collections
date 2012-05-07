@@ -32,6 +32,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<Element> subList(int fromIndex, int toIndex) {
+        List<Element> subList = super.subList(fromIndex, toIndex);
+        return new DynamicArrayList<Element>(subList);
+    }
+
+    @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
         return (DynamicList<Element>) Concatenate.concatenate(this, collection);
     }
@@ -73,6 +79,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup) {
+        return InGroupsOf.inGroupsOf(this, elementsPerGroup);
+    }
+
+    @Override
     public Boolean any(Function<Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }
@@ -80,12 +91,6 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     @Override
     public Boolean all(Function<Element, Boolean> matcher) {
         return All.all(this, matcher);
-    }
-
-    @Override
-    public DynamicList<Element> subList(int fromIndex, int toIndex) {
-        List<Element> subList = super.subList(fromIndex, toIndex);
-        return new DynamicArrayList<Element>(subList);
     }
 
     @Override

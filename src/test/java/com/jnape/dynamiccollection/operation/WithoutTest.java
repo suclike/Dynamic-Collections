@@ -1,6 +1,5 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.list.DynamicArrayList;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -15,7 +14,7 @@ public class WithoutTest {
         Collection<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
         Integer[] oneThreeFive = {1, 3, 5};
 
-        assertEquals(new DynamicArrayList<Integer>(2, 4), Without.without(oneThroughFive, oneThreeFive));
+        assertEquals(asList(2, 4), Without.without(oneThroughFive, oneThreeFive));
     }
 
     @Test
@@ -24,7 +23,7 @@ public class WithoutTest {
         Integer[] threeFiveSeven = {3, 5, 7};
 
         assertEquals(
-                new DynamicArrayList<Integer>(1, 2, 4, 6, 8, 9, 10),
+                asList(1, 2, 4, 6, 8, 9, 10),
                 Without.without(oneThroughTenWithDuplicates, threeFiveSeven)
         );
     }
@@ -34,12 +33,12 @@ public class WithoutTest {
         Collection<String> women = asList("Sally", "Samantha");
         String[] men = {"Bob", "Bill"};
 
-        assertEquals(new DynamicArrayList<String>(women), Without.without(women, men));
+        assertEquals(women, Without.without(women, men));
     }
 
     @Test
     public void shouldHandleNull() {
         Collection<String> withNulls = asList("with nulls", null, null, null);
-        assertEquals(new DynamicArrayList<String>("with nulls"), Without.without(withNulls, null));
+        assertEquals(asList("with nulls"), Without.without(withNulls, null));
     }
 }

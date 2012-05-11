@@ -1,19 +1,17 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-import com.jnape.dynamiccollection.list.DynamicList;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.min;
 
 public class InGroupsOf {
 
-    public static <Element> DynamicList<DynamicList<Element>> inGroupsOf(List<Element> elements, int elementsPerGroup) {
+    public static <Element> List<List<Element>> inGroupsOf(List<Element> elements, int elementsPerGroup) {
         ensureAtLeastOne(elementsPerGroup);
 
-        DynamicList<Element> defensiveCopy = new DynamicArrayList<Element>(elements);
-        DynamicList<DynamicList<Element>> groups = new DynamicArrayList<DynamicList<Element>>();
+        List<Element> defensiveCopy = new ArrayList<Element>(elements);
+        List<List<Element>> groups = new ArrayList<List<Element>>();
 
         int index = -elementsPerGroup;
         int numberOfElements = defensiveCopy.size();

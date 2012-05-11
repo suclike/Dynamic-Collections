@@ -1,8 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -29,16 +27,13 @@ public class TransformTest {
         when(transformer.apply(2)).thenReturn("2");
         when(transformer.apply(3)).thenReturn("3");
 
-        DynamicCollection<String> expected = new DynamicArrayList<String>("1", "2", "3");
-
+        Collection<String> expected = asList("1", "2", "3");
         assertEquals(expected, Transform.transform(collection, transformer));
     }
 
     @Test
     public void shouldDoNothingForEmptyCollection() {
-        Collection<Integer> emptyCollection = new ArrayList<Integer>();
-
-        Transform.transform(emptyCollection, transformer);
+        Transform.transform(new ArrayList<Integer>(), transformer);
         verifyZeroInteractions(transformer);
     }
 }

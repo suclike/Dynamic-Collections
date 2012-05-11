@@ -1,20 +1,20 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class Without {
 
     @SuppressWarnings("unchecked")
-    public static <Element> DynamicCollection<Element> without(Collection<Element> collection, Element... exclusions) {
+    public static <Element> Collection<Element> without(Collection<Element> collection, Element... exclusions) {
         List<Element> excludedElements = (exclusions != null)
-                ? new DynamicArrayList<Element>(exclusions)
-                : new DynamicArrayList<Element>((Element[]) new Object[]{null});
+                ? asList(exclusions)
+                : asList((Element[]) new Object[]{null});
 
-        DynamicCollection<Element> afterExclusion = new DynamicArrayList<Element>(collection);
+        Collection<Element> afterExclusion = new ArrayList<Element>(collection);
         afterExclusion.removeAll(excludedElements);
         return afterExclusion;
     }

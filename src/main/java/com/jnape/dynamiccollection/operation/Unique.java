@@ -1,14 +1,12 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Unique {
 
-    public static <Element> DynamicCollection<Element> unique(Collection<Element> collection) {
-        DynamicCollection<Element> unique = new DynamicArrayList<Element>();
+    public static <Element> Collection<Element> unique(Collection<Element> collection) {
+        Collection<Element> unique = new ArrayList<Element>();
 
         for (Element element : collection)
             if (!unique.contains(element))

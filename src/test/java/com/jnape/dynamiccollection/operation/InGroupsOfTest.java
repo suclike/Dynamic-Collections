@@ -1,13 +1,12 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -16,31 +15,37 @@ public class InGroupsOfTest {
 
     @Test
     public void shouldGetEvenlyDistributedListOfGroups() {
-        DynamicList<Integer> oneAndTwo = list(1, 2);
-        DynamicList<Integer> threeAndFour = list(3, 4);
-        DynamicList<Integer> fiveAndSix = list(5, 6);
+        List<Integer> oneAndTwo = asList(1, 2);
+        List<Integer> threeAndFour = asList(3, 4);
+        List<Integer> fiveAndSix = asList(5, 6);
 
-        List<Integer> oneThroughSix = oneAndTwo.concat(threeAndFour).concat(fiveAndSix);
+        List<Integer> oneThroughSix = new ArrayList<Integer>();
+        oneThroughSix.addAll(oneAndTwo);
+        oneThroughSix.addAll(threeAndFour);
+        oneThroughSix.addAll(fiveAndSix);
 
         assertEquals(list(oneAndTwo, threeAndFour, fiveAndSix), InGroupsOf.inGroupsOf(oneThroughSix, 2));
     }
 
     @Test
     public void shouldGetNonFullGroupIfTotalElementCountNotEvenlyDivisibleByElementsPerGroup() {
-        DynamicList<Integer> oneTwoThree = new DynamicArrayList<Integer>(1, 2, 3);
-        DynamicList<Integer> fourFiveSix = new DynamicArrayList<Integer>(4, 5, 6);
-        DynamicList<Integer> seven = new DynamicArrayList<Integer>(7);
+        List<Integer> oneTwoThree = asList(1, 2, 3);
+        List<Integer> fourFiveSix = asList(4, 5, 6);
+        List<Integer> seven = asList(7);
 
-        List<Integer> oneThroughSeven = oneTwoThree.concat(fourFiveSix).concat(seven);
+        List<Integer> oneThroughSeven = new ArrayList<Integer>();
+        oneThroughSeven.addAll(oneTwoThree);
+        oneThroughSeven.addAll(fourFiveSix);
+        oneThroughSeven.addAll(seven);
 
         assertEquals(list(oneTwoThree, fourFiveSix, seven), InGroupsOf.inGroupsOf(oneThroughSeven, 3));
     }
 
     @Test
     public void shouldGetSingleListOfAllElementsIfElementsPerGroupGreaterThanTotalElements() {
-        DynamicList<Integer> oneThroughFive = list(1, 2, 3, 4, 5);
+        List<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
 
-        DynamicList<DynamicList<Integer>> expected = list();
+        List<List<Integer>> expected = asList();
         expected.add(oneThroughFive);
 
         assertEquals(expected, InGroupsOf.inGroupsOf(oneThroughFive, 6));

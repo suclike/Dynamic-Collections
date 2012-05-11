@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection;
 
 import com.jnape.dynamiccollection.list.DynamicArrayList;
+import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -65,7 +66,7 @@ public class DynamicCollectionFactoryTest {
 
     @Test
     public void shouldProvideDynamicListFromIterator() {
-        DynamicArrayList<Integer> dynamicArrayList = new DynamicArrayList<Integer>(1, 2, 3);
-        assertEquals(dynamicArrayList, DynamicCollectionFactory.list(dynamicArrayList.iterator()));
+        DynamicList<Integer> dynamicList = new DynamicArrayList<Integer>(1, 2, 3);
+        assertEquals(dynamicList, DynamicCollectionFactory.list(dynamicList.iterator()));
     }
 }

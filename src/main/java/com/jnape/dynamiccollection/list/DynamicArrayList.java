@@ -39,7 +39,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> concat(Collection<Element> collection) {
-        return (DynamicList<Element>) Concatenate.concatenate(this, collection);
+        Collection<Element> concatenation = Concatenate.concatenate(this, collection);
+        return new DynamicArrayList<Element>(concatenation);
     }
 
     @Override
@@ -50,22 +51,26 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> collect(Function<Element, Boolean> collector) {
-        return (DynamicList<Element>) Collect.collect(this, collector);
+        Collection<Element> collected = Collect.collect(this, collector);
+        return new DynamicArrayList<Element>(collected);
     }
 
     @Override
     public DynamicList<Element> reject(Function<Element, Boolean> rejector) {
-        return (DynamicList<Element>) Reject.reject(this, rejector);
+        Collection<Element> rejected = Reject.reject(this, rejector);
+        return new DynamicArrayList<Element>(rejected);
     }
 
     @Override
     public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer) {
-        return (DynamicList<Transformation>) Transform.transform(this, transformer);
+        Collection<Transformation> transformation = Transform.transform(this, transformer);
+        return new DynamicArrayList<Transformation>(transformation);
     }
 
     @Override
     public DynamicList<Element> without(Element... exclusions) {
-        return (DynamicList<Element>) Without.without(this, exclusions);
+        Collection<Element> sieved = Without.without(this, exclusions);
+        return new DynamicArrayList<Element>(sieved);
     }
 
     @Override
@@ -75,12 +80,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> unique() {
-        return (DynamicList<Element>) Unique.unique(this);
+        Collection<Element> unique = Unique.unique(this);
+        return new DynamicArrayList<Element>(unique);
     }
 
     @Override
     public DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup) {
-        return InGroupsOf.inGroupsOf(this, elementsPerGroup);
+        List<List<Element>> groups = InGroupsOf.inGroupsOf(this, elementsPerGroup);
+        return graduateToDynamic(groups);
     }
 
     @Override
@@ -95,7 +102,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
-        return CartesianProduct.cartesianProduct(this, collection);
+        List<List<Element>> product = CartesianProduct.cartesianProduct(this, collection);
+        return graduateToDynamic(product);
     }
 
     @Override
@@ -144,7 +152,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> reverse() {
-        return Reverse.reverse(this);
+        List<Element> reversed = Reverse.reverse(this);
+        return new DynamicArrayList<Element>(reversed);
     }
 
     @Override
@@ -172,9 +181,17 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return sortByNumericValue(calculator).last();
     }
 
+    private DynamicList<DynamicList<Element>> graduateToDynamic(Collection<List<Element>> nestedCollection) {
+        return new DynamicArrayList<List<Element>>(nestedCollection).transform(new Function<List<Element>, DynamicList<Element>>() {
+            @Override
+            public DynamicList<Element> apply(List<Element> elements) {
+                return new DynamicArrayList<Element>(elements);
+            }
+        });
+    }
+
     private Element safeGet(int index) {
         ensureNotEmpty();
-
         return get(index);
     }
 

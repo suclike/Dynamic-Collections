@@ -1,16 +1,17 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-import com.jnape.dynamiccollection.list.DynamicList;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Reverse {
 
-    public static <Element> DynamicList<Element> reverse(List<Element> list) {
-        DynamicList<Element> reversed = new DynamicArrayList<Element>(list);
+    public static <Element> List<Element> reverse(List<Element> list) {
+        List<Element> reversed = new ArrayList<Element>();
+
+        reversed.addAll(list);
         Collections.reverse(reversed);
+
         return reversed;
     }
 }

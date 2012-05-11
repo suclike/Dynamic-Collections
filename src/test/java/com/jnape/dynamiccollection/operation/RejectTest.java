@@ -1,13 +1,12 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static java.util.Arrays.asList;
@@ -28,7 +27,7 @@ public class RejectTest {
         when(rejector.apply('b')).thenReturn(false);
         when(rejector.apply('c')).thenReturn(false);
 
-        DynamicCollection<Character> consonants = new DynamicArrayList<Character>('b', 'c');
+        Collection<Character> consonants = asList('b', 'c');
         assertEquals(consonants, Reject.reject(letters, rejector));
     }
 
@@ -38,7 +37,7 @@ public class RejectTest {
 
         when(rejector.apply(anyChar())).thenReturn(true);
 
-        DynamicCollection<Character> empty = new DynamicArrayList<Character>();
+        Collection<Character> empty = new ArrayList<Character>();
         assertEquals(empty, Reject.reject(letters, rejector));
     }
 }

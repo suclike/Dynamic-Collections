@@ -1,14 +1,14 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -42,9 +42,9 @@ public class CollectTest {
 
     @Test
     public void shouldReturnEmptyListIfNoItemsMatch() {
-        DynamicList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        List<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
         when(collector.apply(anyInt())).thenReturn(false);
 
-        assertEquals(new DynamicArrayList<Integer>(), Collect.collect(oneThroughFive, collector));
+        assertEquals(new ArrayList<Integer>(), Collect.collect(oneThroughFive, collector));
     }
 }

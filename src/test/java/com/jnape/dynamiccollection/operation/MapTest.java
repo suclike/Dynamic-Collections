@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TransformTest {
+public class MapTest {
 
     @Mock private Function<Integer, String> transformer;
 
@@ -28,12 +28,12 @@ public class TransformTest {
         when(transformer.apply(3)).thenReturn("3");
 
         Collection<String> expected = asList("1", "2", "3");
-        assertEquals(expected, Transform.transform(collection, transformer));
+        assertEquals(expected, Map.map(collection, transformer));
     }
 
     @Test
     public void shouldDoNothingForEmptyCollection() {
-        Transform.transform(new ArrayList<Integer>(), transformer);
+        Map.map(new ArrayList<Integer>(), transformer);
         verifyZeroInteractions(transformer);
     }
 }

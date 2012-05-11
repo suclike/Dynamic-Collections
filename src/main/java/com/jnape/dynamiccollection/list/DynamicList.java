@@ -28,7 +28,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> reject(Function<Element, Boolean> rejector);
 
     @Override
-    <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer);
+    <Output> DynamicList<Output> map(Function<Element, Output> mapper);
 
     @Override
     DynamicList<Element> without(Element... exclusions);

@@ -16,7 +16,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> reject(Function<Element, Boolean> rejector);
 
-    <Transformation> DynamicCollection<Transformation> transform(Function<Element, Transformation> transformer);
+    <Output> DynamicCollection<Output> map(Function<Element, Output> mapper);
 
     DynamicCollection<Element> without(Element... exclusions);
 

@@ -177,7 +177,7 @@ public class DynamicArrayListTest {
         };
 
         DynamicList<Integer> transformation = list(6, 5, 5, 6);
-        assertEquals(transformation, prepositions.transform(intoWordLength));
+        assertEquals(transformation, prepositions.map(intoWordLength));
     }
 
     @Test

@@ -7,6 +7,7 @@ import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
+import com.jnape.dynamiccollection.operation.Map;
 
 import java.util.*;
 
@@ -62,9 +63,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Transformation> DynamicList<Transformation> transform(Function<Element, Transformation> transformer) {
-        Collection<Transformation> transformation = Transform.transform(this, transformer);
-        return new DynamicArrayList<Transformation>(transformation);
+    public <Output> DynamicList<Output> map(Function<Element, Output> mapper) {
+        Collection<Output> output = Map.map(this, mapper);
+        return new DynamicArrayList<Output>(output);
     }
 
     @Override
@@ -182,7 +183,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     private DynamicList<DynamicList<Element>> graduateToDynamic(Collection<List<Element>> nestedCollection) {
-        return new DynamicArrayList<List<Element>>(nestedCollection).transform(new Function<List<Element>, DynamicList<Element>>() {
+        return new DynamicArrayList<List<Element>>(nestedCollection).map(new Function<List<Element>, DynamicList<Element>>() {
             @Override
             public DynamicList<Element> apply(List<Element> elements) {
                 return new DynamicArrayList<Element>(elements);

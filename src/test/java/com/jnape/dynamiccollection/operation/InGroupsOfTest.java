@@ -45,7 +45,7 @@ public class InGroupsOfTest {
     public void shouldGetSingleListOfAllElementsIfElementsPerGroupGreaterThanTotalElements() {
         List<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
 
-        List<List<Integer>> expected = asList();
+        List<List<Integer>> expected = new ArrayList<List<Integer>>();
         expected.add(oneThroughFive);
 
         assertEquals(expected, InGroupsOf.inGroupsOf(oneThroughFive, 6));

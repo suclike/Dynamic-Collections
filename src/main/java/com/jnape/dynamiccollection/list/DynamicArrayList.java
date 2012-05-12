@@ -191,7 +191,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         });
     }
 
-    private Element safeGet(int index) {
+    protected final Element safeGet(int index) {
         ensureNotEmpty();
         return get(index);
     }

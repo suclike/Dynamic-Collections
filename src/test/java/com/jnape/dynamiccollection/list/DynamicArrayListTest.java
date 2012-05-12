@@ -19,6 +19,7 @@ import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
+import static testsupport.assertion.InheritanceAssert.assertThat;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {
@@ -75,28 +76,13 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldPolymorphToDynamicCollection() {
-        DynamicCollection dynamicCollection = new DynamicArrayList();
-    }
-
-    @Test
-    public void shouldPolymorphToDynamicList() {
-        DynamicList dynamicList = new DynamicArrayList();
-    }
-
-    @Test
-    public void shouldPolymorphToCollection() {
-        Collection collection = new DynamicArrayList();
-    }
-
-    @Test
-    public void shouldPolymorphToList() {
-        List collection = new DynamicArrayList();
-    }
-
-    @Test
-    public void shouldPolymorphToArrayList() {
-        ArrayList arrayList = new DynamicArrayList();
+    public void shouldHaveExpectedPolymorphisms() {
+        assertThat(DynamicArrayList.class)
+                .isA(DynamicCollection.class)
+                .isA(DynamicList.class)
+                .isA(Collection.class)
+                .isA(List.class)
+                .isA(ArrayList.class);
     }
 
     @Test

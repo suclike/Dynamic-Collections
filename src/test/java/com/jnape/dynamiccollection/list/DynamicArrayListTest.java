@@ -5,7 +5,6 @@ import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
 import testsupport.Item;
@@ -15,7 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
+import static com.jnape.dynamiccollection.factory.DynamicListFactory.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
@@ -343,17 +342,6 @@ public class DynamicArrayListTest {
         assertEquals(ABC, new DynamicArrayList<Item>(B, C, A).sort(byLabel));
         assertEquals(ABC, new DynamicArrayList<Item>(C, B, A).sort(byLabel));
         assertEquals(ABC, new DynamicArrayList<Item>(A, C, B).sort(byLabel));
-    }
-
-    @Test
-    public void shouldSort() {
-        DynamicArrayList<Character> letters = new DynamicArrayList<Character>('c', 'a', 'd', 'b');
-        assertEquals(new DynamicArrayList<Character>('a', 'b', 'c', 'd'), letters.sort());
-    }
-
-    @Test(expected = ListNotSortableWithoutCustomComparatorException.class)
-    public void shouldThrowExceptionIfSortingNonComparablesWithoutCustomComparator() {
-        list(A).sort();
     }
 
     @Test

@@ -4,7 +4,6 @@ import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.Collection;
@@ -47,8 +46,6 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException;
 
     <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<Element, Comparison> comparator);
-
-    DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException;
 
     DynamicList<Element> reverse();
 

@@ -4,7 +4,6 @@ import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.list.exception.ListNotSortableWithoutCustomComparatorException;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
 import com.jnape.dynamiccollection.operation.Map;
@@ -138,17 +137,6 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         DynamicList<Element> sorted = new DynamicArrayList<Element>(this);
         Collections.sort(sorted, internalComparator);
         return sorted;
-    }
-
-    @Override
-    @SuppressWarnings({"unchecked"})
-    public DynamicList<Element> sort() throws ListNotSortableWithoutCustomComparatorException {
-        try {
-            Collections.sort((List<Comparable>) this);
-            return this;
-        } catch (ClassCastException notComparable) {
-            throw new ListNotSortableWithoutCustomComparatorException(this);
-        }
     }
 
     @Override

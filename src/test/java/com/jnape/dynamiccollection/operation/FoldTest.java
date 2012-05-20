@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.jnape.dynamiccollection.DynamicCollectionFactory.list;
+import static com.jnape.dynamiccollection.factory.DynamicListFactory.list;
 import static org.junit.Assert.assertEquals;
 
 public class FoldTest {

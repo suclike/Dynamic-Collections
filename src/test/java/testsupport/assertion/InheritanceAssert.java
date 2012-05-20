@@ -12,6 +12,10 @@ public class InheritanceAssert {
         return new InheritanceAssert(type);
     }
 
+    public static <T> InheritanceAssert assertThat(T object) {
+        return assertThat(object.getClass());
+    }
+
     public InheritanceAssert isA(Class anotherType) {
         if (!anotherType.isAssignableFrom(type))
             throw new AssertionError("Expected type <" + type + "> to have isA relationship with <" + anotherType + ">, but it doesn't.");

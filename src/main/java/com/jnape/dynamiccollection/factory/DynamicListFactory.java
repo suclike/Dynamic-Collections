@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection;
+package com.jnape.dynamiccollection.factory;
 
 import com.jnape.dynamiccollection.list.DynamicArrayList;
 import com.jnape.dynamiccollection.list.DynamicList;
@@ -6,13 +6,9 @@ import com.jnape.dynamiccollection.list.DynamicList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class DynamicCollectionFactory {
+public class DynamicListFactory {
 
-    private DynamicCollectionFactory() {
-    }
-
-    public static <Element> DynamicCollection<Element> with(Collection<Element> collection) {
-        return new DynamicArrayList<Element>(collection);
+    private DynamicListFactory() {
     }
 
     public static <Element> DynamicList<Element> list() {

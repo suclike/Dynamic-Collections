@@ -10,7 +10,6 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 import static testsupport.assertion.InheritanceAssert.assertThat;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection"})
@@ -106,11 +105,5 @@ public class ComparableDynamicArrayListTest {
         );
 
         assertEquals(sortedNames, names.sort());
-    }
-
-    @Test
-    public void shouldUseDefensiveCopyForSort() {
-        ComparableDynamicArrayList<Integer> numbers = new ComparableDynamicArrayList<Integer>();
-        assertNotSame(numbers, numbers.sort());
     }
 }

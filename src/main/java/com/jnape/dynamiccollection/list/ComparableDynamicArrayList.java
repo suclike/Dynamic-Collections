@@ -1,10 +1,11 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.operation.Bound;
+import com.jnape.dynamiccollection.operation.Sort;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 public class ComparableDynamicArrayList<Element extends Comparable<Element>> extends DynamicArrayList<Element> implements ComparableDynamicList<Element> {
 
@@ -36,8 +37,7 @@ public class ComparableDynamicArrayList<Element extends Comparable<Element>> ext
 
     @Override
     public ComparableDynamicList<Element> sort() {
-        ComparableDynamicList<Element> sorted = new ComparableDynamicArrayList<Element>(this);
-        Collections.sort(sorted);
-        return sorted;
+        List<Element> sorted = Sort.sort(this);
+        return new ComparableDynamicArrayList<Element>(sorted);
     }
 }

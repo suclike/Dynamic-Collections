@@ -134,7 +134,7 @@ public class DynamicArrayListTest {
         };
 
         DynamicList<Integer> fourAndFive = list(4, 5);
-        assertEquals(fourAndFive, oneThroughFive.collect(greaterThanThree));
+        assertEquals(fourAndFive, oneThroughFive.filter(greaterThanThree));
     }
 
     @Test

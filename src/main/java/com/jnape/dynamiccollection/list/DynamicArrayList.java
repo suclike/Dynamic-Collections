@@ -50,9 +50,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> collect(Function<? super Element, Boolean> collector) {
-        Collection<Element> collected = Collect.collect(this, collector);
-        return new DynamicArrayList<Element>(collected);
+    public DynamicList<Element> filter(Function<? super Element, Boolean> filterer) {
+        Collection<Element> filtered = Filter.filter(this, filterer);
+        return new DynamicArrayList<Element>(filtered);
     }
 
     @Override

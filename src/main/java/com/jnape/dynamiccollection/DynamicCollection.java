@@ -12,7 +12,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> each(Procedure<? super Element> procedure);
 
-    DynamicCollection<Element> collect(Function<? super Element, Boolean> collector);
+    DynamicCollection<Element> filter(Function<? super Element, Boolean> filterer);
 
     DynamicCollection<Element> reject(Function<? super Element, Boolean> rejector);
 

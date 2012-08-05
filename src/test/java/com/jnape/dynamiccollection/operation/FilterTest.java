@@ -16,35 +16,35 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CollectTest {
+public class FilterTest {
 
-    @Mock private Function<Integer, Boolean> collector;
+    @Mock private Function<Integer, Boolean> filterer;
 
     @Test
     public void shouldConstruct() {
-        new Collect();
+        new Filter();
     }
 
     @Test
     public void shouldCollectSpecificElements() {
         Collection<Integer> oneThroughSix = asList(1, 2, 3, 4, 5, 6);
 
-        when(collector.apply(1)).thenReturn(false);
-        when(collector.apply(3)).thenReturn(false);
-        when(collector.apply(5)).thenReturn(false);
+        when(filterer.apply(1)).thenReturn(false);
+        when(filterer.apply(3)).thenReturn(false);
+        when(filterer.apply(5)).thenReturn(false);
 
-        when(collector.apply(2)).thenReturn(true);
-        when(collector.apply(4)).thenReturn(true);
-        when(collector.apply(6)).thenReturn(true);
+        when(filterer.apply(2)).thenReturn(true);
+        when(filterer.apply(4)).thenReturn(true);
+        when(filterer.apply(6)).thenReturn(true);
 
-        assertEquals(asList(2, 4, 6), Collect.collect(oneThroughSix, collector));
+        assertEquals(asList(2, 4, 6), Filter.filter(oneThroughSix, filterer));
     }
 
     @Test
     public void shouldReturnEmptyListIfNoItemsMatch() {
         List<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
-        when(collector.apply(anyInt())).thenReturn(false);
+        when(filterer.apply(anyInt())).thenReturn(false);
 
-        assertEquals(new ArrayList<Integer>(), Collect.collect(oneThroughFive, collector));
+        assertEquals(new ArrayList<Integer>(), Filter.filter(oneThroughFive, filterer));
     }
 }

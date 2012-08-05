@@ -21,7 +21,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> each(Procedure<? super Element> procedure);
 
     @Override
-    DynamicList<Element> collect(Function<? super Element, Boolean> collector);
+    DynamicList<Element> filter(Function<? super Element, Boolean> filterer);
 
     @Override
     DynamicList<Element> reject(Function<? super Element, Boolean> rejector);

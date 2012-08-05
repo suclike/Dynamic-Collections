@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class Collect {
 
-    public static <Element> Collection<Element> collect(Collection<Element> collection, Function<Element, Boolean> collector) {
+    public static <Element> Collection<Element> collect(Collection<Element> collection, Function<? super Element, Boolean> collector) {
         Collection<Element> collected = new ArrayList<Element>();
 
         for (Element element : collection)

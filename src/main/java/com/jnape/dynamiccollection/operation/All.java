@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public class All {
 
-    public static <Element> boolean all(Collection<Element> elements, final Function<Element, Boolean> matcher) {
+    public static <Element> boolean all(Collection<Element> elements, Function<? super Element, Boolean> matcher) {
         for (Element element : elements)
             if (!matcher.apply(element))
                 return false;

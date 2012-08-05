@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class Reject {
 
-    public static <Element> Collection<Element> reject(Collection<Element> collection, Function<Element, Boolean> rejector) {
+    public static <Element> Collection<Element> reject(Collection<Element> collection, Function<? super Element, Boolean> rejector) {
         Collection<Element> notRejected = new ArrayList<Element>();
 
         for (Element element : collection)

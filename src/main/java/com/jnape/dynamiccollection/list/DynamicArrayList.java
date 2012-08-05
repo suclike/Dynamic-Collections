@@ -44,25 +44,25 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> each(Procedure<Element> procedure) {
+    public DynamicList<Element> each(Procedure<? super Element> procedure) {
         Each.each(this, procedure);
         return this;
     }
 
     @Override
-    public DynamicList<Element> collect(Function<Element, Boolean> collector) {
+    public DynamicList<Element> collect(Function<? super Element, Boolean> collector) {
         Collection<Element> collected = Collect.collect(this, collector);
         return new DynamicArrayList<Element>(collected);
     }
 
     @Override
-    public DynamicList<Element> reject(Function<Element, Boolean> rejector) {
+    public DynamicList<Element> reject(Function<? super Element, Boolean> rejector) {
         Collection<Element> rejected = Reject.reject(this, rejector);
         return new DynamicArrayList<Element>(rejected);
     }
 
     @Override
-    public <Output> DynamicList<Output> map(Function<Element, Output> mapper) {
+    public <Output> DynamicList<Output> map(Function<? super Element, Output> mapper) {
         Collection<Output> output = Map.map(this, mapper);
         return new DynamicArrayList<Output>(output);
     }
@@ -74,7 +74,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Partition<Element> partition(Function<Element, Boolean> partitioner) {
+    public Partition<Element> partition(Function<? super Element, Boolean> partitioner) {
         return com.jnape.dynamiccollection.operation.Partition.partition(this, partitioner);
     }
 
@@ -91,12 +91,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Boolean any(Function<Element, Boolean> matcher) {
+    public Boolean any(Function<? super Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }
 
     @Override
-    public Boolean all(Function<Element, Boolean> matcher) {
+    public Boolean all(Function<? super Element, Boolean> matcher) {
         return All.all(this, matcher);
     }
 
@@ -123,7 +123,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(final Function<Element, Comparison> comparator) {
+    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(final Function<? super Element, Comparison> comparator) {
         Comparator<Element> internalComparator = new Comparator<Element>() {
             @Override
             public int compare(Element element1, Element element2) {
@@ -161,12 +161,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Element min(Function<Element, Integer> calculator) {
+    public Element min(Function<? super Element, Integer> calculator) {
         return sortByNumericValue(calculator).first();
     }
 
     @Override
-    public Element max(final Function<Element, Integer> calculator) {
+    public Element max(final Function<? super Element, Integer> calculator) {
         return sortByNumericValue(calculator).last();
     }
 
@@ -184,7 +184,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return get(index);
     }
 
-    private DynamicList<Element> sortByNumericValue(final Function<Element, Integer> calculator) {
+    private DynamicList<Element> sortByNumericValue(final Function<? super Element, Integer> calculator) {
         Function<Element, Integer> byNumericValue = new Function<Element, Integer>() {
             @Override
             public Integer apply(Element element) {

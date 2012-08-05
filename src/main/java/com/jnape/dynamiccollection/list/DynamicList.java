@@ -18,16 +18,16 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
-    DynamicList<Element> each(Procedure<Element> procedure);
+    DynamicList<Element> each(Procedure<? super Element> procedure);
 
     @Override
-    DynamicList<Element> collect(Function<Element, Boolean> collector);
+    DynamicList<Element> collect(Function<? super Element, Boolean> collector);
 
     @Override
-    DynamicList<Element> reject(Function<Element, Boolean> rejector);
+    DynamicList<Element> reject(Function<? super Element, Boolean> rejector);
 
     @Override
-    <Output> DynamicList<Output> map(Function<Element, Output> mapper);
+    <Output> DynamicList<Output> map(Function<? super Element, Output> mapper);
 
     @Override
     DynamicList<Element> without(Element... exclusions);
@@ -45,7 +45,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException;
 
-    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<Element, Comparison> comparator);
+    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> comparator);
 
     DynamicList<Element> reverse();
 
@@ -55,7 +55,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element last() throws ListWasEmptyException;
 
-    Element min(Function<Element, Integer> calculator);
+    Element min(Function<? super Element, Integer> calculator);
 
-    Element max(Function<Element, Integer> calculator);
+    Element max(Function<? super Element, Integer> calculator);
 }

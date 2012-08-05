@@ -10,21 +10,21 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
 
-    DynamicCollection<Element> each(Procedure<Element> procedure);
+    DynamicCollection<Element> each(Procedure<? super Element> procedure);
 
-    DynamicCollection<Element> collect(Function<Element, Boolean> collector);
+    DynamicCollection<Element> collect(Function<? super Element, Boolean> collector);
 
-    DynamicCollection<Element> reject(Function<Element, Boolean> rejector);
+    DynamicCollection<Element> reject(Function<? super Element, Boolean> rejector);
 
-    <Output> DynamicCollection<Output> map(Function<Element, Output> mapper);
+    <Output> DynamicCollection<Output> map(Function<? super Element, Output> mapper);
 
     DynamicCollection<Element> without(Element... exclusions);
 
-    Partition<Element> partition(Function<Element, Boolean> partitioner);
+    Partition<Element> partition(Function<? super Element, Boolean> partitioner);
 
     DynamicCollection<Element> unique();
 
-    Boolean any(Function<Element, Boolean> matcher);
+    Boolean any(Function<? super Element, Boolean> matcher);
 
-    Boolean all(Function<Element, Boolean> matcher);
+    Boolean all(Function<? super Element, Boolean> matcher);
 }

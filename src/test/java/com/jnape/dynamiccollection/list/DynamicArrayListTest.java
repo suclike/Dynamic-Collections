@@ -124,7 +124,7 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldCollectElements() {
+    public void shouldFilterElements() {
         DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
         Function<Integer, Boolean> greaterThanThree = new Function<Integer, Boolean>() {
             @Override

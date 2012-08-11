@@ -21,12 +21,7 @@ public class FilterTest {
     @Mock private Function<Integer, Boolean> filterer;
 
     @Test
-    public void shouldConstruct() {
-        new Filter();
-    }
-
-    @Test
-    public void shouldCollectSpecificElements() {
+    public void shouldFilterSpecificElements() {
         Collection<Integer> oneThroughSix = asList(1, 2, 3, 4, 5, 6);
 
         when(filterer.apply(1)).thenReturn(false);

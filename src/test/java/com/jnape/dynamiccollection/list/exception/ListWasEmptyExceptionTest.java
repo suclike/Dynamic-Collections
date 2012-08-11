@@ -9,11 +9,6 @@ import static org.junit.Assert.assertTrue;
 public class ListWasEmptyExceptionTest {
 
     @Test
-    public void shouldConstruct() {
-        new ListWasEmptyException();
-    }
-
-    @Test
     public void shouldBeIllegalStateException() {
         boolean isIllegalStateException = IllegalStateException.class.isInstance(new ListWasEmptyException());
         assertTrue(isIllegalStateException);

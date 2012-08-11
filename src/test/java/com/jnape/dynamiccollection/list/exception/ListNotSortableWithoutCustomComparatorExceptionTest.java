@@ -10,11 +10,6 @@ import static org.junit.Assert.assertTrue;
 public class ListNotSortableWithoutCustomComparatorExceptionTest {
 
     @Test
-    public void shouldConstruct() {
-        new ListNotSortableWithoutCustomComparatorException(list());
-    }
-
-    @Test
     public void shouldBeRuntimeException() {
         boolean isRuntimeException = RuntimeException.class.isInstance(new ListNotSortableWithoutCustomComparatorException(list()));
         assertTrue(isRuntimeException);

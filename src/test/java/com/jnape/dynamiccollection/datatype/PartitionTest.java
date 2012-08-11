@@ -14,11 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class PartitionTest {
 
     @Test
-    public void shouldConstruct() {
-        new Partition<Object>(new ArrayList<Object>(), new ArrayList<Object>());
-    }
-
-    @Test
     public void shouldStoreTruesAndFalsesAsDynamicCollection() {
         Partition<Object> partition = new Partition<Object>(new ArrayList<Object>(), new ArrayList<Object>());
 

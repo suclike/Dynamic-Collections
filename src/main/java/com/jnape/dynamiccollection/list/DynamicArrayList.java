@@ -44,8 +44,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> each(Procedure<? super Element> procedure) {
-        Each.each(this, procedure);
+    public DynamicList<Element> forEach(Procedure<? super Element> procedure) {
+        ForEach.forEach(this, procedure);
         return this;
     }
 

@@ -18,7 +18,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
-    DynamicList<Element> each(Procedure<? super Element> procedure);
+    DynamicList<Element> forEach(Procedure<? super Element> procedure);
 
     @Override
     DynamicList<Element> filter(Function<? super Element, Boolean> filterer);

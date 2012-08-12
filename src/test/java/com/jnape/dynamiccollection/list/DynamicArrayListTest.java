@@ -119,7 +119,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        assertSame(theRainInSpain, theRainInSpain.each(addUpperCasedToAllCaps));
+        assertSame(theRainInSpain, theRainInSpain.forEach(addUpperCasedToAllCaps));
         assertEquals(list("THE", "RAIN", "IN", "SPAIN"), allCaps);
     }
 

@@ -10,7 +10,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
 
-    DynamicCollection<Element> each(Procedure<? super Element> procedure);
+    DynamicCollection<Element> forEach(Procedure<? super Element> procedure);
 
     DynamicCollection<Element> filter(Function<? super Element, Boolean> filterer);
 

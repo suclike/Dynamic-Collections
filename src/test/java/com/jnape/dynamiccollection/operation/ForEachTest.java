@@ -15,7 +15,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EachTest {
+public class ForEachTest {
 
     @Mock private Procedure<Integer> procedure;
 
@@ -23,7 +23,7 @@ public class EachTest {
     public void shouldExecuteProcedureOnEachElementInCollection() {
         Collection<Integer> oneTwoThree = asList(1, 2, 3);
 
-        Each.each(oneTwoThree, procedure);
+        ForEach.forEach(oneTwoThree, procedure);
 
         InOrder inOrder = inOrder(procedure);
         inOrder.verify(procedure).execute(1);
@@ -36,7 +36,7 @@ public class EachTest {
     public void shouldDoNothingForEmptyCollection() {
         Collection<Integer> emptyCollection = emptyList();
 
-        Each.each(emptyCollection, procedure);
+        ForEach.forEach(emptyCollection, procedure);
 
         verifyZeroInteractions(procedure);
     }

@@ -1,8 +1,10 @@
 package com.jnape.dynamiccollection.list;
 
+import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
@@ -41,6 +43,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     public DynamicList<Element> concat(Collection<Element> collection) {
         Collection<Element> concatenation = Concatenate.concatenate(this, collection);
         return new DynamicArrayList<Element>(concatenation);
+    }
+
+    @Override
+    public DynamicCollection<Element> each(IndexedProcedure<? super Element> indexedProcedure) {
+        Each.each(this, indexedProcedure);
+        return this;
     }
 
     @Override

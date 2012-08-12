@@ -4,6 +4,7 @@ import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
@@ -107,7 +108,24 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldExecuteProcedureOnEachElement() {
+    public void shouldExecuteProcedureForEachElementAndIndex() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+        final List<Integer> products = list();
+
+        IndexedProcedure<Integer> elementTimesIndex = new IndexedProcedure<Integer>() {
+            @Override
+            public void execute(Integer element, Integer index) {
+                products.add(element * index);
+            }
+        };
+
+        assertSame(numbers, numbers.each(elementTimesIndex));
+        assertEquals(list(0, 2, 6, 12, 20), products);
+    }
+
+    @Test
+    public void shouldExecuteProcedureForEachElement() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
         final List<String> allCaps = list();

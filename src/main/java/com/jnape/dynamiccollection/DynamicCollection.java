@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection;
 
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.Collection;
@@ -9,6 +10,8 @@ import java.util.Collection;
 public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
+
+    DynamicCollection<Element> each(IndexedProcedure<? super Element> indexedProcedure);
 
     DynamicCollection<Element> forEach(Procedure<? super Element> procedure);
 

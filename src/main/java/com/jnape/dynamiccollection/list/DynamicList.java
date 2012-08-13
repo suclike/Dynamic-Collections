@@ -40,7 +40,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
-    DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection);
+    DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
+
+    DynamicList<DynamicList<Element>> cartesianProduct();
 
     <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator);
 

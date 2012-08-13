@@ -117,9 +117,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<DynamicList<Element>> cartesianProduct(List<Element> collection) {
+    public DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection) {
         List<List<Element>> product = CartesianProduct.cartesianProduct(this, collection);
         return graduateToDynamic(product);
+    }
+
+    @Override
+    public DynamicList<DynamicList<Element>> cartesianProduct() {
+        return cartesianProduct(this);
     }
 
     @Override

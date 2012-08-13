@@ -302,6 +302,20 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldComputeCartesianProductOfSelf() {
+        DynamicArrayList<Integer> oneAndTwo = new DynamicArrayList<Integer>(1, 2);
+
+        DynamicList<DynamicList<Integer>> permutations = new DynamicArrayList<DynamicList<Integer>>(
+                list(1, 1),
+                list(1, 2),
+                list(2, 1),
+                list(2, 2)
+        );
+
+        assertEquals(permutations, oneAndTwo.cartesianProduct());
+    }
+
+    @Test
     public void shouldFoldLeft() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 

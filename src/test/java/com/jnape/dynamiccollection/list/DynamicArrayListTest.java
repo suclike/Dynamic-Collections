@@ -108,6 +108,14 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldConcatElements() {
+        DynamicArrayList<String> theRain = new DynamicArrayList<String>("The", "rain");
+        String[] inSpain = {"in", "Spain"};
+
+        assertEquals(list("The", "rain", "in", "Spain"), theRain.concat(inSpain));
+    }
+
+    @Test
     public void shouldExecuteProcedureForEachElementAndIndex() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 

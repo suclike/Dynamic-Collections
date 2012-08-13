@@ -18,6 +18,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> concat(Collection<Element> collection);
 
     @Override
+    DynamicList<Element> concat(Element... elements);
+
+    @Override
     DynamicList<Element> forEach(Procedure<? super Element> procedure);
 
     @Override

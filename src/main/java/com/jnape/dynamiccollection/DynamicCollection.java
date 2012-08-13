@@ -11,6 +11,8 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> concat(Collection<Element> collection);
 
+    DynamicCollection<Element> concat(Element... elements);
+
     DynamicCollection<Element> each(IndexedProcedure<? super Element> indexedProcedure);
 
     DynamicCollection<Element> forEach(Procedure<? super Element> procedure);

@@ -12,6 +12,8 @@ import com.jnape.dynamiccollection.operation.Map;
 
 import java.util.*;
 
+import static java.util.Arrays.asList;
+
 public class DynamicArrayList<Element> extends ArrayList<Element> implements DynamicList<Element> {
 
     public DynamicArrayList() {
@@ -43,6 +45,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     public DynamicList<Element> concat(Collection<Element> collection) {
         Collection<Element> concatenation = Concatenate.concatenate(this, collection);
         return new DynamicArrayList<Element>(concatenation);
+    }
+
+    @Override
+    public DynamicList<Element> concat(Element... elements) {
+        Collection<Element> collection = asList(elements);
+        return concat(collection);
     }
 
     @Override

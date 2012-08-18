@@ -369,6 +369,21 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldScanLeft() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+
+        Accumulator<Integer, Integer> partialSums = new Accumulator<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer accumulation, Integer integer) {
+                return accumulation + integer;
+            }
+        };
+
+        assertEquals(list(0, 1, 3, 6, 10, 15), oneThroughFive.scanLeft(0, partialSums));
+    }
+
+    @Test
     public void shouldSortWithCustomComparator() {
         Function<Item, String> byLabel = new Function<Item, String>() {
             @Override

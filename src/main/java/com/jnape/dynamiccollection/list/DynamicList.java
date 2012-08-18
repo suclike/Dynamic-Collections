@@ -50,6 +50,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException;
 
+    <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator);
+
     <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> comparator);
 
     DynamicList<Element> reverse();

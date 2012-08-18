@@ -144,6 +144,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
+        List<Accumulation> scanned = Scan.scanLeft(this, startingAccumulation, accumulator);
+        return new DynamicArrayList<Accumulation>(scanned);
+    }
+
+    @Override
     public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(final Function<? super Element, Comparison> comparator) {
         Comparator<Element> internalComparator = new Comparator<Element>() {
             @Override

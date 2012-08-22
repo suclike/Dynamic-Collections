@@ -107,6 +107,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<DynamicList<Element>> zip(List<Element>... lists) {
+        List<List<Element>> zipped = Zip.zip(this, lists);
+        return graduateToDynamic(zipped);
+    }
+
+    @Override
     public Boolean any(Function<? super Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }

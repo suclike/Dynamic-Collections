@@ -226,13 +226,36 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldDivideIntoGroups() {
-        DynamicList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
-        DynamicList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);
-        DynamicList<Number> fiveAndSix = new DynamicArrayList<Number>(5.0, 6d);
+        DynamicArrayList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
+        DynamicArrayList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);
+        DynamicArrayList<Number> fiveAndSix = new DynamicArrayList<Number>(5.0, 6d);
 
         DynamicList<Number> oneThroughSix = oneAndTwo.concat(threeAndFour).concat(fiveAndSix);
 
         assertEquals(list(oneAndTwo, threeAndFour, fiveAndSix), oneThroughSix.inGroupsOf(2));
+    }
+
+    @Test
+    public void shouldZipToNothing() {
+        DynamicArrayList<Item> aB = new DynamicArrayList<Item>(A, B);
+
+        assertEquals(list(
+                list(A),
+                list(B)
+        ), aB.zip());
+    }
+
+    @Test
+    public void shouldZipLists() {
+        DynamicArrayList<Integer> oneTwo = new DynamicArrayList<Integer>(1, 2, 3);
+        List<Integer> fourFiveSix = asList(4, 5, 6);
+        List<Integer> sevenEight = asList(7, 8);
+
+        assertEquals(list(
+                list(1, 4, 7),
+                list(2, 5, 8),
+                list(3, 6, null)
+        ), oneTwo.zip(fourFiveSix, sevenEight));
     }
 
     @Test

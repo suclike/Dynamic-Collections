@@ -40,6 +40,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
+    DynamicList<DynamicList<Element>> zip(List<Element>... lists);
+
     DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
 
     DynamicList<DynamicList<Element>> cartesianProduct();

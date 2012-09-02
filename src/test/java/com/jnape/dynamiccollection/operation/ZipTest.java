@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.factory.DynamicListFactory.list;
+import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 

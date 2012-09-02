@@ -10,14 +10,13 @@ public class InGroupsOf {
     public static <Element> List<List<Element>> inGroupsOf(List<Element> elements, int elementsPerGroup) {
         ensureAtLeastOne(elementsPerGroup);
 
-        List<Element> defensiveCopy = new ArrayList<Element>(elements);
         List<List<Element>> groups = new ArrayList<List<Element>>();
 
         int index = -elementsPerGroup;
-        int numberOfElements = defensiveCopy.size();
+        int numberOfElements = elements.size();
         while ((index += elementsPerGroup) < numberOfElements) {
             int endIndex = min((index + elementsPerGroup), numberOfElements);
-            groups.add(defensiveCopy.subList(index, endIndex));
+            groups.add(elements.subList(index, endIndex));
         }
 
         return groups;

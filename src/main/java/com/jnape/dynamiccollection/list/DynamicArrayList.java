@@ -20,19 +20,19 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         super();
     }
 
-    public DynamicArrayList(Collection<Element> elements) {
-        super(elements);
-    }
-
     public DynamicArrayList(Element... elements) {
         this();
         Collections.addAll(this, elements);
     }
 
-    public DynamicArrayList(Iterator<Element> iterator) {
-        this();
+    public DynamicArrayList(Iterator<? extends Element> iterator) {
+        super();
         while (iterator.hasNext())
             add(iterator.next());
+    }
+
+    public DynamicArrayList(Collection<? extends Element> elements) {
+        this(elements.iterator());
     }
 
     @Override
@@ -239,19 +239,19 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
             throw new ListWasEmptyException();
     }
 
-    public static <Element> DynamicList<Element> list() {
+    public static <Element> DynamicArrayList<Element> list() {
         return new DynamicArrayList<Element>();
     }
 
-    public static <Element> DynamicList<Element> list(Collection<Element> collection) {
-        return new DynamicArrayList<Element>(collection);
-    }
-
-    public static <Element> DynamicList<Element> list(Element... elements) {
+    public static <Element> DynamicArrayList<Element> list(Element... elements) {
         return new DynamicArrayList<Element>(elements);
     }
 
-    public static <Element> DynamicList<Element> list(Iterator<Element> iterator) {
+    public static <Element> DynamicArrayList<Element> list(Collection<Element> collection) {
+        return new DynamicArrayList<Element>(collection);
+    }
+
+    public static <Element> DynamicArrayList<Element> list(Iterator<Element> iterator) {
         return new DynamicArrayList<Element>(iterator);
     }
 }

@@ -1,6 +1,5 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
@@ -27,7 +26,6 @@ public class DynamicArrayListTest {
     @Test
     public void shouldConstructWithoutArgs() {
         DynamicArrayList dynamicArrayList = new DynamicArrayList();
-
         assertEquals(0, dynamicArrayList.size());
     }
 
@@ -41,16 +39,6 @@ public class DynamicArrayListTest {
         assertEquals(A, dynamicArrayList.get(0));
         assertEquals(B, dynamicArrayList.get(1));
         assertEquals(C, dynamicArrayList.get(2));
-    }
-
-    @Test
-    public void shouldConstructAndPopulateFromArray() {
-        Item[] items = {C, A};
-        DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(items);
-
-        assertEquals(2, dynamicArrayList.size());
-        assertEquals(C, dynamicArrayList.get(0));
-        assertEquals(A, dynamicArrayList.get(1));
     }
 
     @Test
@@ -76,13 +64,50 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldHaveFactoryMethodThatRequiresNoArgs() {
+        DynamicArrayList<Object> dynamicArrayList = list();
+        assertEquals(0, dynamicArrayList.size());
+    }
+
+    @Test
+    public void shouldHaveFactoryMethodThatPopulatesFromCollection() {
+        Collection<Item> items = asList(A, B, C);
+
+        DynamicArrayList<Item> dynamicArrayList = list(items);
+
+        assertEquals(3, dynamicArrayList.size());
+        assertEquals(A, dynamicArrayList.get(0));
+        assertEquals(B, dynamicArrayList.get(1));
+        assertEquals(C, dynamicArrayList.get(2));
+    }
+
+    @Test
+    public void shouldHaveFactoryMethodThatPopulatesFromVarArgs() {
+        DynamicArrayList<Item> dynamicArrayList = list(B, C, A, C);
+
+        assertEquals(4, dynamicArrayList.size());
+        assertEquals(B, dynamicArrayList.get(0));
+        assertEquals(C, dynamicArrayList.get(1));
+        assertEquals(A, dynamicArrayList.get(2));
+        assertEquals(C, dynamicArrayList.get(3));
+    }
+
+    @Test
+    public void shouldHaveFactoryMethodThatPopulatesFromIterator() {
+        Iterator<Item> iterator = asList(A, B, C).iterator();
+        DynamicArrayList<Item> dynamicArrayList = list(iterator);
+
+        assertEquals(3, dynamicArrayList.size());
+        assertEquals(A, dynamicArrayList.get(0));
+        assertEquals(B, dynamicArrayList.get(1));
+        assertEquals(C, dynamicArrayList.get(2));
+    }
+
+    @Test
     public void shouldHaveExpectedPolymorphisms() {
         assertThat(DynamicArrayList.class)
-                .isA(DynamicCollection.class)
-                .isA(DynamicList.class)
-                .isA(Collection.class)
-                .isA(List.class)
-                .isA(ArrayList.class);
+                .isA(ArrayList.class)
+                .isA(DynamicList.class);
     }
 
     @Test

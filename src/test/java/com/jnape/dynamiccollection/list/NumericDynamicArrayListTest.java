@@ -95,10 +95,20 @@ public class NumericDynamicArrayListTest {
     }
 
     @Test
-    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfOneWithTypeOfHighestPrecedenceOfFromAndTo() {
-        assertEquals(numbers(1l, 2l, 3l, 4l, 5l), fromTo(1l, 5l));
-        assertEquals(numbers(1d, 2d, 3d), fromTo(1, 3.5d));
-        assertEquals(numbers((short) 1, (short) 2), fromTo((short) 1, (byte) 2));
+    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfNWithTypeOfHighestPrecedenceOfFromAndTo() {
+        assertEquals(numbers(1l, 2l, 3l, 4l, 5l), fromTo(1l, 5l, 1));
+        assertEquals(numbers(1d, 3d, 5d), fromTo(1, 5d, 2));
+        assertEquals(numbers((short) 1), fromTo((short) 1, (byte) 2, 2f));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldFailIfFromToWithIncrementOfZeroOrLess() {
+        fromTo(1, 10, 0);
+    }
+
+    @Test
+    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfOneIfNoIncrementProvided() {
+        assertEquals(numbers(1, 2, 3, 4, 5), fromTo(1, 5));
     }
 
     @Test

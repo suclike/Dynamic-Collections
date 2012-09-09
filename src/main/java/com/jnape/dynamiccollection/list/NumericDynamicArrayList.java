@@ -100,16 +100,23 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> {
         return new NumericDynamicArrayList(numbers);
     }
 
-    public static NumericDynamicArrayList fromTo(Number from, Number to) {
+    public static NumericDynamicArrayList fromTo(Number from, Number to, Number increment) {
+        if (increment.doubleValue() <= 0)
+            throw new IllegalArgumentException("Increment must be greater than 0");
+
         NumericDynamicArrayList range = new NumericDynamicArrayList();
         NumericType coercion = NumericType.coercionFor(from, to);
 
         Number next = from;
         while (next.doubleValue() <= to.doubleValue()) {
             range.add(coercion.coerce(next));
-            next = PLUS.apply(next, (byte) 1);
+            next = PLUS.apply(next, increment);
         }
 
         return range;
+    }
+
+    public static NumericDynamicArrayList fromTo(Number from, Number to) {
+        return fromTo(from, to, 1);
     }
 }

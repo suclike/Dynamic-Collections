@@ -12,7 +12,7 @@ public class InheritanceAssert {
         return new InheritanceAssert(type);
     }
 
-    public static <T> InheritanceAssert assertThat(T object) {
+    public static InheritanceAssert assertThat(Object object) {
         return assertThat(object.getClass());
     }
 

@@ -25,6 +25,25 @@ public enum NumericType {
         return ordinal() > numericType.ordinal();
     }
 
+    public Number coerce(Number number) {
+        switch (this) {
+            case BYTE:
+                return number.byteValue();
+            case SHORT:
+                return number.shortValue();
+            case INTEGER:
+                return number.intValue();
+            case LONG:
+                return number.longValue();
+            case FLOAT:
+                return number.floatValue();
+            case DOUBLE:
+                return number.doubleValue();
+        }
+
+        throw new Error("Can't get here");
+    }
+
     public static NumericType coercionFor(Number number, Number... moreNumbers) {
         NumericType highestPrecedence = typeOf(number);
 
@@ -42,6 +61,6 @@ public enum NumericType {
             if (numericType.getNativeClass().isInstance(number))
                 return numericType;
 
-        throw new IllegalArgumentException(format("No coercion supported for type <%s>", number.getClass()));
+        throw new IllegalArgumentException(format("No NumericType found for native class <%s>", number.getClass()));
     }
 }

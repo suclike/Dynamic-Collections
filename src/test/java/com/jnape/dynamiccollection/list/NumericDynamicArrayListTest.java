@@ -1,18 +1,27 @@
 package com.jnape.dynamiccollection.list;
 
+import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
 import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.numbers;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.InheritanceAssert.assertThat;
 
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+@RunWith(MockitoJUnitRunner.class)
 public class NumericDynamicArrayListTest {
+
+    @Mock private Function<Number, Number>  numericMapper;
+    @Mock private Function<Number, Boolean> predicate;
 
     @Test
     public void shouldConstructAndPopulateFromVarArgs() {
@@ -83,12 +92,30 @@ public class NumericDynamicArrayListTest {
         assertEquals(1f, numericDynamicArrayList.get(0));
         assertEquals((short) 2, numericDynamicArrayList.get(1));
         assertEquals((byte) 3, numericDynamicArrayList.get(2));
+    }
 
+    @Test
+    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfOneWithTypeOfHighestPrecedenceOfFromAndTo() {
+        assertEquals(numbers(1l, 2l, 3l, 4l, 5l), fromTo(1l, 5l));
+        assertEquals(numbers(1d, 2d, 3d), fromTo(1, 3.5d));
+        assertEquals(numbers((short) 1, (short) 2), fromTo((short) 1, (byte) 2));
     }
 
     @Test
     public void shouldHaveExpectedPolymorphisms() {
         assertThat(NumericDynamicArrayList.class)
                 .isA(DynamicArrayList.class);
+    }
+
+    @Test
+    public void shouldHaveCustomMapThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
+        assertThat(numbers().map(numericMapper))
+                .isA(NumericDynamicArrayList.class);
+    }
+
+    @Test
+    public void shouldHaveCustomMapWhileThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
+        assertThat(numbers().mapWhile(numericMapper, predicate))
+                .isA(NumericDynamicArrayList.class);
     }
 }

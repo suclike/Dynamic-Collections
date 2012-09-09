@@ -178,7 +178,7 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldTransformElements() {
+    public void shouldMapOverList() {
         DynamicArrayList<String> prepositions = new DynamicArrayList<String>("Aboard", "About", "Above", "Across");
         Function<String, Object> intoWordLength = new Function<String, Object>() {
             @Override
@@ -187,8 +187,28 @@ public class DynamicArrayListTest {
             }
         };
 
-        DynamicList<Integer> transformation = list(6, 5, 5, 6);
-        assertEquals(transformation, prepositions.map(intoWordLength));
+        DynamicList<Integer> mapped = list(6, 5, 5, 6);
+        assertEquals(mapped, prepositions.map(intoWordLength));
+    }
+
+    @Test
+    public void shouldMapOverListWhilePredicate() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+
+        Function<Integer, Integer> timesTwo = new Function<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer) {
+                return integer * 2;
+            }
+        };
+        Function<Integer, Boolean> lessThanEight = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer < 8;
+            }
+        };
+
+        assertEquals(list(2, 4, 6), numbers.mapWhile(timesTwo, lessThanEight));
     }
 
     @Test

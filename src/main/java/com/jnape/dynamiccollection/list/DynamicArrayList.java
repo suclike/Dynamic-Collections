@@ -79,8 +79,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public <Output> DynamicList<Output> map(Function<? super Element, Output> mapper) {
-        Collection<Output> output = Map.map(this, mapper);
-        return new DynamicArrayList<Output>(output);
+        Collection<Output> mapped = Map.map(this, mapper);
+        return new DynamicArrayList<Output>(mapped);
+    }
+
+    @Override
+    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate) {
+        Collection<Output> mapped = Map.mapWhile(this, mapper, predicate);
+        return new DynamicArrayList<Output>(mapped);
     }
 
     @Override

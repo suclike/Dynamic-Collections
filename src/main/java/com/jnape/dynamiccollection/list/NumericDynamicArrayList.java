@@ -4,12 +4,11 @@ import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;
 import java.util.Iterator;
-
-import static com.jnape.dynamiccollection.lambda.accumulator.Arithmetic.PLUS;
 
 public class NumericDynamicArrayList extends DynamicArrayList<Number> {
 
@@ -110,7 +109,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> {
         Number next = from;
         while (next.doubleValue() <= to.doubleValue()) {
             range.add(coercion.coerce(next));
-            next = PLUS.apply(next, increment);
+            next = Add.add(next, increment);
         }
 
         return range;

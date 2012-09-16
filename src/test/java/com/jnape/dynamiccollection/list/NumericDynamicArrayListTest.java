@@ -1,5 +1,6 @@
 package com.jnape.dynamiccollection.list;
 
+import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +21,9 @@ import static testsupport.assertion.InheritanceAssert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class NumericDynamicArrayListTest {
 
-    @Mock private Function<Number, Number>  numericMapper;
-    @Mock private Function<Number, Boolean> predicate;
+    @Mock private Function<Number, Number>    numericMapper;
+    @Mock private Function<Number, Boolean>   predicate;
+    @Mock private Accumulator<Number, Number> scanner;
 
     @Test
     public void shouldConstructAndPopulateFromVarArgs() {
@@ -119,13 +121,22 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldHaveCustomMapThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
-        assertThat(numbers().map(numericMapper))
-                .isA(NumericDynamicArrayList.class);
+        assertThat(
+                numbers().map(numericMapper)
+        ).isA(NumericDynamicArrayList.class);
     }
 
     @Test
     public void shouldHaveCustomMapWhileThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
-        assertThat(numbers().mapWhile(numericMapper, predicate))
-                .isA(NumericDynamicArrayList.class);
+        assertThat(
+                numbers().mapWhile(numericMapper, predicate)
+        ).isA(NumericDynamicArrayList.class);
+    }
+
+    @Test
+    public void shouldHaveCustomScanLeftThatReturnsNumericDynamicArrayListIfAccumulatorExtendsNumber() {
+        assertThat(
+                numbers().scanLeft(0, scanner)
+        ).isA(NumericDynamicArrayList.class);
     }
 }

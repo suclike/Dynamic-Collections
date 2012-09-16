@@ -1,5 +1,6 @@
 package com.jnape.dynamiccollection.lambda.library.numeric.accumulator;
 
+import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
 import testsupport.UnsupportedNumber;
 
@@ -29,6 +30,12 @@ public class AddTest {
     @Test
     public void shouldHaveStaticFactoryMethod() {
         assertReflectionEquals(new Add(), Add.plus());
+    }
+
+    @Test
+    public void shouldHaveStaticFactoryMethodForCurriedFunction() {
+        Function<Number, Number> plus10 = Add.plus(10);
+        assertEquals(15, plus10.apply(5));
     }
 
     @Test

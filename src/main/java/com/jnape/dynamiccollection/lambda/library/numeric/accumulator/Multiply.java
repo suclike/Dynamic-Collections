@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.lambda.library.numeric.accumulator;
 
 import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
@@ -34,7 +35,16 @@ public class Multiply implements Accumulator<Number, Number> {
         return times().apply(multiplicand, multiplier);
     }
 
-    public static Multiply times() {
+    public static Accumulator<Number, Number> times() {
         return new Multiply();
+    }
+
+    public static Function<Number, Number> times(final Number multiplier) {
+        return new Function<Number, Number>() {
+            @Override
+            public Number apply(Number multiplicand) {
+                return multiply(multiplicand, multiplier);
+            }
+        };
     }
 }

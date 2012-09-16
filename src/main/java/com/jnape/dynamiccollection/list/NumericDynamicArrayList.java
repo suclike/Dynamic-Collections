@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
+import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
@@ -75,6 +76,10 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> {
     @Override
     public NumericDynamicArrayList unique() {
         return numbers(super.unique());
+    }
+
+    public NumericDynamicArrayList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator) {
+        return numbers(super.scanLeft(startingAccumulation, accumulator));
     }
 
     @Override

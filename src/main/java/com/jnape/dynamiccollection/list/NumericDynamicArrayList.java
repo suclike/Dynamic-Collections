@@ -92,6 +92,60 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> {
         return numbers(super.reverse());
     }
 
+    public NumericDynamicArrayList toBytes() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.byteValue();
+            }
+        });
+    }
+
+    public NumericDynamicArrayList toShorts() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.shortValue();
+            }
+        });
+    }
+
+    public NumericDynamicArrayList toIntegers() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.intValue();
+            }
+        });
+    }
+
+    public NumericDynamicArrayList toLongs() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.longValue();
+            }
+        });
+    }
+
+    public NumericDynamicArrayList toFloats() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.floatValue();
+            }
+        });
+    }
+
+    public NumericDynamicArrayList toDoubles() {
+        return map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return number.doubleValue();
+            }
+        });
+    }
+
     public static NumericDynamicArrayList numbers(Number... numbers) {
         return new NumericDynamicArrayList(numbers);
     }

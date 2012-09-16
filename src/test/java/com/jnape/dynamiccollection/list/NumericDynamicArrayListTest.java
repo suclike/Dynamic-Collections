@@ -24,6 +24,7 @@ public class NumericDynamicArrayListTest {
     @Mock private Function<Number, Number>    numericMapper;
     @Mock private Function<Number, Boolean>   predicate;
     @Mock private Accumulator<Number, Number> scanner;
+    private static final NumericDynamicArrayList HETEROGENEOUS_NUMBERS = numbers((byte) 1, (short) 2, 3, 4L, 5F, 6D);
 
     @Test
     public void shouldConstructAndPopulateFromVarArgs() {
@@ -138,5 +139,53 @@ public class NumericDynamicArrayListTest {
         assertThat(
                 numbers().scanLeft(0, scanner)
         ).isA(NumericDynamicArrayList.class);
+    }
+
+    @Test
+    public void shouldMapToBytes() {
+        assertEquals(
+                fromTo((byte) 1, (byte) 6),
+                HETEROGENEOUS_NUMBERS.toBytes()
+        );
+    }
+
+    @Test
+    public void shouldMapToShorts() {
+        assertEquals(
+                fromTo((short) 1, (short) 6),
+                HETEROGENEOUS_NUMBERS.toShorts()
+        );
+    }
+
+    @Test
+    public void shouldMapToIntegers() {
+        assertEquals(
+                fromTo(1, 6),
+                HETEROGENEOUS_NUMBERS.toIntegers()
+        );
+    }
+
+    @Test
+    public void shouldMapToLongs() {
+        assertEquals(
+                fromTo(1L, 6L),
+                HETEROGENEOUS_NUMBERS.toLongs()
+        );
+    }
+
+    @Test
+    public void shouldMapToFloats() {
+        assertEquals(
+                fromTo(1F, 6F),
+                HETEROGENEOUS_NUMBERS.toFloats()
+        );
+    }
+
+    @Test
+    public void shouldMapToDoubles() {
+        assertEquals(
+                fromTo(1D, 6D),
+                HETEROGENEOUS_NUMBERS.toDoubles()
+        );
     }
 }

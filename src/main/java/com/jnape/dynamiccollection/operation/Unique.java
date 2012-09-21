@@ -5,20 +5,24 @@ import com.jnape.dynamiccollection.lambda.Function;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.jnape.dynamiccollection.operation.Any.any;
+
 public class Unique {
 
     public static <Element> Collection<Element> unique(Collection<Element> collection, final Function<? super Element, ?> mapper) {
         Collection<Element> unique = new ArrayList<Element>();
 
-        //TODO: too dense
-        for (final Element element : collection)
-            if (!Any.any(unique, new Function<Element, Boolean>() {
+        for (final Element element : collection) {
+            Function<Element, Boolean> haveEqualMappedOutputs = new Function<Element, Boolean>() {
                 @Override
                 public Boolean apply(Element uniqueElement) {
                     return mapper.apply(element).equals(mapper.apply(uniqueElement));
                 }
-            }))
+            };
+
+            if (!any(unique, haveEqualMappedOutputs))
                 unique.add(element);
+        }
 
         return unique;
     }

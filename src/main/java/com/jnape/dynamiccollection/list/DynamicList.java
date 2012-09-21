@@ -41,6 +41,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     @Override
     DynamicList<Element> unique();
 
+    @Override
+    DynamicCollection<Element> unique(Function<? super Element, ?> mapper);
+
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
     DynamicList<DynamicList<Element>> zip(List<Element>... lists);

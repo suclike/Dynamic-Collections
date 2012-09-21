@@ -107,6 +107,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicCollection<Element> unique(Function<? super Element, ?> mapper) {
+        Collection<Element> unique = Unique.unique(this, mapper);
+        return new DynamicArrayList<Element>(unique);
+    }
+
+    @Override
     public DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup) {
         List<List<Element>> groups = InGroupsOf.inGroupsOf(this, elementsPerGroup);
         return graduateToDynamic(groups);

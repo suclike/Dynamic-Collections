@@ -270,6 +270,19 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldGetUniqueElementsUsingCustomMapper() {
+        DynamicArrayList<String> mixedCaseWords = new DynamicArrayList<String>(
+                "One", "ONE", "Two", "two", "three"
+        );
+        assertEquals(new DynamicArrayList<String>("One", "Two", "three"), mixedCaseWords.unique(new Function<String, String>() {
+            @Override
+            public String apply(String mixedCaseWord) {
+                return mixedCaseWord.toLowerCase();
+            }
+        }));
+    }
+
+    @Test
     public void shouldDivideIntoGroups() {
         DynamicArrayList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
         DynamicArrayList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);

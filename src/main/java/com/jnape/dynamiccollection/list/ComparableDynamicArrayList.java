@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+//TODO: Not very useful. Revisit this whole thing
 public class ComparableDynamicArrayList<Element extends Comparable<Element>> extends DynamicArrayList<Element> implements ComparableDynamicList<Element> {
 
     public ComparableDynamicArrayList() {

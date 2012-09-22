@@ -21,10 +21,11 @@ import static testsupport.assertion.InheritanceAssert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class NumericDynamicArrayListTest {
 
+    private static final NumericDynamicList HETEROGENEOUS_NUMBERS = numbers((byte) 1, (short) 2, 3, 4L, 5F, 6D);
+
     @Mock private Function<Number, Number>    numericMapper;
-    @Mock private Function<Number, Boolean>   predicate;
-    @Mock private Accumulator<Number, Number> scanner;
-    private static final NumericDynamicArrayList HETEROGENEOUS_NUMBERS = numbers((byte) 1, (short) 2, 3, 4L, 5F, 6D);
+    @Mock private Function<Number, Boolean>   numericPredicate;
+    @Mock private Accumulator<Number, Number> numericScanner;
 
     @Test
     public void shouldConstructAndPopulateFromVarArgs() {
@@ -130,14 +131,14 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldHaveCustomMapWhileThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
         assertThat(
-                numbers().mapWhile(numericMapper, predicate)
+                numbers().mapWhile(numericMapper, numericPredicate)
         ).isA(NumericDynamicArrayList.class);
     }
 
     @Test
     public void shouldHaveCustomScanLeftThatReturnsNumericDynamicArrayListIfAccumulatorExtendsNumber() {
         assertThat(
-                numbers().scanLeft(0, scanner)
+                numbers().scanLeft(0, numericScanner)
         ).isA(NumericDynamicArrayList.class);
     }
 

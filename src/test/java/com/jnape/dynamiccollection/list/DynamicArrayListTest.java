@@ -240,7 +240,7 @@ public class DynamicArrayListTest {
     public void shouldCreateDynamicCollectionWithoutElements() {
         DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
         DynamicList<Character> bAndC = list('b', 'c');
-        assertEquals(bAndC, aThroughE.without('a', 'd', 'e'));
+        assertEquals(bAndC, aThroughE.without(list('a', 'd', 'e')));
     }
 
     @Test

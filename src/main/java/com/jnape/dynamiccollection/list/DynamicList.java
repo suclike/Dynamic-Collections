@@ -36,7 +36,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate);
 
     @Override
-    DynamicList<Element> without(Element... exclusions);
+    DynamicList<Element> without(Collection<? super Element> exclusions);
 
     @Override
     DynamicList<Element> unique();

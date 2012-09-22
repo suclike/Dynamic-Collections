@@ -90,7 +90,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> without(Element... exclusions) {
+    public DynamicList<Element> without(Collection<? super Element> exclusions) {
         Collection<Element> sieved = Without.without(this, exclusions);
         return new DynamicArrayList<Element>(sieved);
     }

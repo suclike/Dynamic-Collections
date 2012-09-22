@@ -25,7 +25,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     <Output> DynamicCollection<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate);
 
-    DynamicCollection<Element> without(Element... exclusions);
+    DynamicCollection<Element> without(Collection<? super Element> exclusions);
 
     Partition<Element> partition(Function<? super Element, Boolean> partitioner);
 

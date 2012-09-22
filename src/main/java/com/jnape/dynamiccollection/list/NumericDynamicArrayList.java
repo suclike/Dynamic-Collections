@@ -69,7 +69,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> {
     }
 
     @Override
-    public NumericDynamicArrayList without(Number... exclusions) {
+    public NumericDynamicArrayList without(Collection<? super Number> exclusions) {
         return numbers(super.without(exclusions));
     }
 

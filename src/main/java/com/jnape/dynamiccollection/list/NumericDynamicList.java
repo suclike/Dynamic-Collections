@@ -48,6 +48,16 @@ public interface NumericDynamicList extends DynamicList<Number> {
 
     NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator);
 
+    Number sum();
+
+    Number product();
+
+    Number arithmeticMean();
+
+    Number geometricMean();
+
+    Number harmonicMean();
+
     NumericDynamicList toBytes();
 
     NumericDynamicList toShorts();

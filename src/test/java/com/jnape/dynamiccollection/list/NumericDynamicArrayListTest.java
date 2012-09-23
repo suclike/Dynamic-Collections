@@ -143,6 +143,31 @@ public class NumericDynamicArrayListTest {
     }
 
     @Test
+    public void shouldComputeSum() {
+        assertEquals(10, numbers(1, 2, 3, 4).sum());
+    }
+
+    @Test
+    public void shouldComputeProduct() {
+        assertEquals(24, numbers(1, 2, 3, 4).product());
+    }
+
+    @Test
+    public void shouldComputeArithmeticMean() {
+        assertEquals(2, numbers(1, 2, 3).arithmeticMean());
+    }
+
+    @Test
+    public void shouldComputeGeometricMean() {
+        assertEquals(4, numbers(2, 8).geometricMean());
+    }
+
+    @Test
+    public void shouldComputeHarmonicMean() {
+        assertEquals(12f / 7, numbers(1f, 2f, 4f).harmonicMean());
+    }
+
+    @Test
     public void shouldMapToBytes() {
         assertEquals(
                 fromTo((byte) 1, (byte) 6),

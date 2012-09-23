@@ -10,6 +10,12 @@ import com.jnape.dynamiccollection.operation.NumericType;
 import java.util.Collection;
 import java.util.Iterator;
 
+import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add.plus;
+import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Divide.divide;
+import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Multiply.times;
+import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
+import static java.lang.Math.pow;
+
 public class NumericDynamicArrayList extends DynamicArrayList<Number> implements NumericDynamicList {
 
     public NumericDynamicArrayList(Number... numbers) {
@@ -96,6 +102,39 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
+    public Number sum() {
+        return reduce(plus());
+    }
+
+    @Override
+    public Number product() {
+        return reduce(times());
+    }
+
+    @Override
+    public Number arithmeticMean() {
+        return divide(sum(), size());
+    }
+
+    @Override
+    public Number geometricMean() {
+        //TODO: implement NumericType-specific #power method to avoid having to do coercion in List method
+        Number product = product();
+        NumericType returnType = coercionFor(product);
+        return returnType.coerce(pow(product.doubleValue(), 1d / size()));
+    }
+
+    @Override
+    public Number harmonicMean() {
+        return divide(size(), map(new Function<Number, Number>() {
+            @Override
+            public Number apply(Number number) {
+                return divide(1f, number);
+            }
+        }).sum());
+    }
+
+    @Override
     public NumericDynamicList toBytes() {
         return map(new Function<Number, Number>() {
             @Override
@@ -172,7 +211,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
             throw new IllegalArgumentException("Increment must be greater than 0");
 
         NumericDynamicList range = new NumericDynamicArrayList();
-        NumericType coercion = NumericType.coercionFor(from, to);
+        NumericType coercion = coercionFor(from, to);
 
         Number next = from;
         while (next.doubleValue() <= to.doubleValue()) {

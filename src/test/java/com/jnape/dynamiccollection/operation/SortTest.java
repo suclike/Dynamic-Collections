@@ -1,24 +1,30 @@
 package com.jnape.dynamiccollection.operation;
 
+import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
+import testsupport.Item;
 
 import java.util.List;
 
+import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static testsupport.ItemFixture.*;
 
 public class SortTest {
 
     @Test
-    public void shouldSortListOfComparables() {
-        List<Integer> numbers = asList(3, 1, 2, 5, 4);
-        assertEquals(asList(1, 2, 3, 4, 5), Sort.sort(numbers));
+    public void shouldSortListUsingComparisonMapper() {
+        List<Item> items = asList(B, C, A);
+
+        Function<Item, String> byLabel = new Function<Item, String>() {
+            @Override
+            public String apply(Item item) {
+                return item.getLabel();
+            }
+        };
+
+        assertEquals(list(A, B, C), Sort.sort(items, byLabel));
     }
 
-    @Test
-    public void shouldUseDefensiveCopyAndLeaveOriginalListUntouched() {
-        List<Character> letters = asList('b', 'd', 'c', 'a', 'e');
-        Sort.sort(letters);
-        assertEquals(asList('b', 'd', 'c', 'a', 'e'), letters);
-    }
 }

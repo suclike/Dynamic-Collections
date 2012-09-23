@@ -70,8 +70,8 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> NumericDynamicList sort(Function<? super Number, Comparison> comparator) {
-        return numbers(super.sort(comparator));
+    public <Comparison extends Comparable<Comparison>> NumericDynamicList sort(Function<? super Number, Comparison> mapper) {
+        return numbers(super.sort(mapper));
     }
 
     @Override

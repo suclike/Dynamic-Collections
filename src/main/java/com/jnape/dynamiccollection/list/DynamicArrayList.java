@@ -147,31 +147,17 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator) {
-        List<Accumulation> scanned = Scan.scanLeft(this, startingAccumulation, accumulator);
-        return new DynamicArrayList<Accumulation>(scanned);
+        return list(Scan.scanLeft(this, startingAccumulation, accumulator));
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(final Function<? super Element, Comparison> comparator) {
-        Comparator<Element> internalComparator = new Comparator<Element>() {
-            @Override
-            public int compare(Element element1, Element element2) {
-                Comparison comparison1 = comparator.apply(element1);
-                Comparison comparison2 = comparator.apply(element2);
-
-                return comparison1.compareTo(comparison2);
-            }
-        };
-
-        DynamicList<Element> sorted = list(this);
-        Collections.sort(sorted, internalComparator);
-        return sorted;
+    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> mapper) {
+        return list(Sort.sort(this, mapper));
     }
 
     @Override
     public DynamicList<Element> reverse() {
-        List<Element> reversed = Reverse.reverse(this);
-        return list(reversed);
+        return list(Reverse.reverse(this));
     }
 
     @Override
@@ -199,11 +185,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         return sort(mapper).last();
     }
 
-    private DynamicList<DynamicList<Element>> graduateToDynamic(Collection<List<Element>> nestedCollection) {
-        return list(nestedCollection).map(new Function<List<Element>, DynamicList<Element>>() {
+    private DynamicList<DynamicList<Element>> graduateToDynamic(List<List<Element>> nestedCollection) {
+        return Fold.foldLeft(nestedCollection, new DynamicArrayList<DynamicList<Element>>(), new Accumulator<DynamicList<DynamicList<Element>>, List<Element>>() {
             @Override
-            public DynamicList<Element> apply(List<Element> elements) {
-                return list(elements);
+            public DynamicList<DynamicList<Element>> apply(DynamicList<DynamicList<Element>> accumulation, List<Element> elements) {
+                accumulation.add(list(elements));
+                return accumulation;
             }
         });
     }

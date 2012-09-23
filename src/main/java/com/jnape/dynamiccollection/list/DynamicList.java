@@ -60,7 +60,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
 
-    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> comparator);
+    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> mapper);
 
     DynamicList<Element> reverse();
 

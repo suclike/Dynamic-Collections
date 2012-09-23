@@ -60,16 +60,6 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public NumericDynamicList map(Function<? super Number, ? extends Number> mapper) {
-        return numbers(super.map(mapper));
-    }
-
-    @Override
-    public NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Function<? super Number, Boolean> predicate) {
-        return numbers(super.mapWhile(mapper, predicate));
-    }
-
-    @Override
     public NumericDynamicList without(Collection<? super Number> exclusions) {
         return numbers(super.without(exclusions));
     }
@@ -77,12 +67,6 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     @Override
     public NumericDynamicList unique() {
         return numbers(super.unique());
-    }
-
-
-    @Override
-    public NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator) {
-        return numbers(super.scanLeft(startingAccumulation, accumulator));
     }
 
     @Override
@@ -93,6 +77,22 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     @Override
     public NumericDynamicList reverse() {
         return numbers(super.reverse());
+    }
+
+
+    @Override
+    public NumericDynamicList map(Function<? super Number, ? extends Number> mapper) {
+        return numbers(super.map(mapper));
+    }
+
+    @Override
+    public NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Function<? super Number, Boolean> predicate) {
+        return numbers(super.mapWhile(mapper, predicate));
+    }
+
+    @Override
+    public NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator) {
+        return numbers(super.scanLeft(startingAccumulation, accumulator));
     }
 
     @Override

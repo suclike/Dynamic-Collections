@@ -181,12 +181,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public Element first() throws ListWasEmptyException {
-        return safeGet(0);
+        return checkedGet(0);
     }
 
     @Override
     public Element last() throws ListWasEmptyException {
-        return safeGet(size() - 1);
+        return checkedGet(size() - 1);
     }
 
     @Override
@@ -208,7 +208,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
         });
     }
 
-    protected final Element safeGet(int index) {
+    protected final Element checkedGet(int index) {
         ensureNotEmpty();
         return get(index);
     }

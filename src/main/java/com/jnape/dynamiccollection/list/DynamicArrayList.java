@@ -105,17 +105,17 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<DynamicList<Element>> zip(List<Element>... lists) {
+    public DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists) {
         return graduateToDynamic(Zip.zip(this, lists));
     }
 
     @Override
-    public Boolean any(Function<? super Element, Boolean> matcher) {
+    public boolean any(Function<? super Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }
 
     @Override
-    public Boolean all(Function<? super Element, Boolean> matcher) {
+    public boolean all(Function<? super Element, Boolean> matcher) {
         return All.all(this, matcher);
     }
 
@@ -130,23 +130,23 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
+    public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator) {
         return Fold.foldLeft(this, startingAccumulation, accumulator);
     }
 
     @Override
-    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
+    public <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator) {
         return Fold.foldRight(this, startingAccumulation, accumulator);
     }
 
     @Override
-    public Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException {
+    public Element reduce(Accumulator<Element, ? super Element> accumulator) throws ListWasEmptyException {
         ensureNotEmpty();
         return Reduce.reduce(this, accumulator);
     }
 
     @Override
-    public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator) {
+    public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator) {
         List<Accumulation> scanned = Scan.scanLeft(this, startingAccumulation, accumulator);
         return new DynamicArrayList<Accumulation>(scanned);
     }
@@ -190,13 +190,13 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Element min(Function<? super Element, Integer> calculator) {
-        return sortByNumericValue(calculator).first();
+    public <Comparison extends Comparable<Comparison>> Element min(Function<? super Element, Comparison> mapper) {
+        return sort(mapper).first();
     }
 
     @Override
-    public Element max(final Function<? super Element, Integer> calculator) {
-        return sortByNumericValue(calculator).last();
+    public <Comparison extends Comparable<Comparison>> Element max(Function<? super Element, Comparison> mapper) {
+        return sort(mapper).last();
     }
 
     private DynamicList<DynamicList<Element>> graduateToDynamic(Collection<List<Element>> nestedCollection) {
@@ -211,17 +211,6 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     protected final Element checkedGet(int index) {
         ensureNotEmpty();
         return get(index);
-    }
-
-    private DynamicList<Element> sortByNumericValue(final Function<? super Element, Integer> calculator) {
-        Function<Element, Integer> byNumericValue = new Function<Element, Integer>() {
-            @Override
-            public Integer apply(Element element) {
-                return calculator.apply(element);
-            }
-        };
-
-        return sort(byNumericValue);
     }
 
     private void ensureNotEmpty() {

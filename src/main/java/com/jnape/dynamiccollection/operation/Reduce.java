@@ -8,7 +8,7 @@ import static com.jnape.dynamiccollection.operation.Fold.foldLeft;
 
 public class Reduce {
 
-    public static <InputOutput> InputOutput reduce(List<InputOutput> list, Accumulator<InputOutput, InputOutput> accumulator) {
+    public static <InputOutput> InputOutput reduce(List<InputOutput> list, Accumulator<InputOutput, ? super InputOutput> accumulator) {
         InputOutput head = list.get(0);
         List<InputOutput> tail = list.subList(1, list.size());
 

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scan {
-    public static <Element, Output> List<Output> scanLeft(List<Element> elements, Output startingAccumulation, Accumulator<Output, Element> scanner) {
+
+    public static <Element, Output> List<Output> scanLeft(List<Element> elements, Output startingAccumulation, Accumulator<Output, ? super Element> scanner) {
         List<Output> accumulations = new ArrayList<Output>();
         accumulations.add(startingAccumulation);
 

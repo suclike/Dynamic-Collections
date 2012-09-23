@@ -46,19 +46,19 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
-    DynamicList<DynamicList<Element>> zip(List<Element>... lists);
+    DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists);
 
     DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
 
     DynamicList<DynamicList<Element>> cartesianProduct();
 
-    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator);
+    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
 
-    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator);
+    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
 
-    Element reduce(Accumulator<Element, Element> accumulator) throws ListWasEmptyException;
+    Element reduce(Accumulator<Element, ? super Element> accumulator) throws ListWasEmptyException;
 
-    <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, Element> accumulator);
+    <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
 
     <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> comparator);
 
@@ -70,7 +70,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element last() throws ListWasEmptyException;
 
-    Element min(Function<? super Element, Integer> calculator);
+    <Comparison extends Comparable<Comparison>> Element min(Function<? super Element, Comparison> mapper);
 
-    Element max(Function<? super Element, Integer> calculator);
+    <Comparison extends Comparable<Comparison>> Element max(Function<? super Element, Comparison> mapper);
 }

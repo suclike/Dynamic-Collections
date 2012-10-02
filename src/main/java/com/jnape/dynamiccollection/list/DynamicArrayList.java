@@ -33,6 +33,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public Element get(int i) {
+        return super.get(i < 0 ? size() + i : i);
+    }
+
+    @Override
     public DynamicList<Element> subList(int fromIndex, int toIndex) {
         return list(super.subList(fromIndex, toIndex));
     }

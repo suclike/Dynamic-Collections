@@ -111,6 +111,20 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldGetElementsUsingIndex() {
+        DynamicArrayList<String> abc = new DynamicArrayList<String>("a", "b", "c");
+
+        assertEquals("a", abc.get(0));
+    }
+
+    @Test
+    public void shouldGetElementsFromEndUsingNegativeNumbersAsIndexes() {
+        DynamicArrayList<String> abc = new DynamicArrayList<String>("a", "b", "c");
+
+        assertEquals("c", abc.get(-1));
+    }
+
+    @Test
     public void shouldSubList() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 

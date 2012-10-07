@@ -297,6 +297,12 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldGetDuplicateElements() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 1, 2, 3, 4, 4, 5, 6, 6);
+        assertEquals(new DynamicArrayList<Integer>(1, 4, 6), numbers.duplicates());
+    }
+
+    @Test
     public void shouldDivideIntoGroups() {
         DynamicArrayList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
         DynamicArrayList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);

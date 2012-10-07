@@ -33,6 +33,8 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> unique(Function<? super Element, ?> mapper);
 
+    DynamicCollection<Element> duplicates();
+
     boolean any(Function<? super Element, Boolean> matcher);
 
     boolean all(Function<? super Element, Boolean> matcher);

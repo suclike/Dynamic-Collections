@@ -39,21 +39,14 @@ public class CachingStreamTest {
     }
 
     @Test
-    public void shouldUpdateCacheWithNewlyGeneratedValues() {
+    public void shouldKeepGeneratedElementsInMemoryToAvoidRegeneration() {
         CachingStream<Integer> cachingStream = new CachingStream<Integer>(generator);
-        cachingStream.take(5);
-        verify(generator, atLeast(5)).apply(any(DynamicList.class));
 
         cachingStream.take(5);
-        verifyNoMoreInteractions(generator);
-    }
+        verify(generator, times(5)).apply(any(DynamicList.class));
 
-    @Test
-    public void shouldGrowCacheUsingLoadFactor() {
-        CachingStream<Integer> cachingStream = new CachingStream<Integer>(list(1, 2, 3, 4, 5), generator);
-
-        cachingStream.take(6);
-        verify(generator, times(4)).apply(any(DynamicList.class));
+        cachingStream.take(5);
+        verifyZeroInteractions(generator);
     }
 
     private void givenGeneratorThatReturns(Integer... values) {

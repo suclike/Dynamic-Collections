@@ -1,5 +1,6 @@
 package com.jnape.dynamiccollection.lambda;
 
-public interface IndexedProcedure<Element> {
-    void execute(Element element, Integer index);
+public interface IndexedProcedure<Input> {
+
+    void execute(Input input, Integer index);
 }

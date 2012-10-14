@@ -9,12 +9,12 @@ import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 
 public class CachingStream<Element> implements Stream<Element> {
 
-    private final Function<DynamicList<Element>, Element> generator;
-    private final DynamicList<Element>                    cache;
+    private final DynamicList<Element>                           cache;
+    private final CapacityMonitor<Element, DynamicList<Element>> capacityMonitor;
 
     public CachingStream(Collection<Element> elements, Function<DynamicList<Element>, Element> generator) {
-        this.cache = list(elements);
-        this.generator = generator;
+        cache = list(elements);
+        capacityMonitor = new CapacityMonitor<Element, DynamicList<Element>>(cache, generator);
     }
 
     public CachingStream(Function<DynamicList<Element>, Element> generator) {
@@ -23,16 +23,7 @@ public class CachingStream<Element> implements Stream<Element> {
 
     @Override
     public DynamicList<Element> take(int elements) {
-        ensureCapacity(elements);
+        capacityMonitor.ensureCapacity(elements);
         return cache.subList(0, elements);
-    }
-
-    private void ensureCapacity(int elements) {
-        while (elements > cache.size()) {
-            int size = cache.size();
-            int newSize = size + size * 3 / 4;
-            while (cache.size() <= newSize)
-                cache.add(generator.apply(cache));
-        }
     }
 }

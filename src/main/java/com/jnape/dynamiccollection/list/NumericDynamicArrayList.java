@@ -85,7 +85,6 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
         return numbers(super.reverse());
     }
 
-
     @Override
     public NumericDynamicList map(Function<? super Number, ? extends Number> mapper) {
         return numbers(super.map(mapper));

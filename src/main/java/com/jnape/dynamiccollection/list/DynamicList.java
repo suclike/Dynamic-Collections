@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.list;
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
@@ -19,6 +20,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     @Override
     DynamicList<Element> concat(Element... elements);
+
+    @Override
+    DynamicList<Element> each(IndexedProcedure<? super Element> indexedProcedure);
 
     @Override
     DynamicList<Element> forEach(Procedure<? super Element> procedure);
@@ -42,10 +46,13 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> unique();
 
     @Override
+    DynamicList<Element> unique(Function<? super Element, ?> mapper);
+
+    @Override
     DynamicList<Element> duplicates();
 
     @Override
-    DynamicList<Element> unique(Function<? super Element, ?> mapper);
+    DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper);
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 

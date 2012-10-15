@@ -303,6 +303,17 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldGroupElementsByMappedOutput() {
+        DynamicArrayList<String> words = list("one", "two", "three");
+        assertEquals(list(list("one", "two"), list("three")), words.group(new Function<String, Integer>() {
+            @Override
+            public Integer apply(String word) {
+                return word.length();
+            }
+        }));
+    }
+
+    @Test
     public void shouldDivideIntoGroups() {
         DynamicArrayList<Number> oneAndTwo = new DynamicArrayList<Number>(1, 2.0);
         DynamicArrayList<Number> threeAndFour = new DynamicArrayList<Number>(3d, 4);

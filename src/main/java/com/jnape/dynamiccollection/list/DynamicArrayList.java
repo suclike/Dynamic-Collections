@@ -100,13 +100,18 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<Element> unique(Function<? super Element, ?> mapper) {
+        return list(Unique.unique(this, mapper));
+    }
+
+    @Override
     public DynamicList<Element> duplicates() {
         return list(Duplicates.duplicates(this));
     }
 
     @Override
-    public DynamicList<Element> unique(Function<? super Element, ?> mapper) {
-        return list(Unique.unique(this, mapper));
+    public DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper) {
+        return graduateToDynamic(Group.group(this, mapper));
     }
 
     @Override

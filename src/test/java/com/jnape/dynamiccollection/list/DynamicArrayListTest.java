@@ -371,6 +371,33 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldMatchIfAnyWhile() {
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 3, 5, 6, 7, 8, 9, 10);
+
+        Function<Integer, Boolean> evens = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
+        Function<Integer, Boolean> odds = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 1;
+            }
+        };
+        Function<Integer, Boolean> lessThanFive = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer < 5;
+            }
+        };
+
+        assertFalse(numbers.anyWhile(evens, lessThanFive));
+        assertTrue(numbers.anyWhile(odds, lessThanFive));
+    }
+
+    @Test
     public void shouldMatchIfAll() {
         DynamicArrayList<Boolean> allFalse = new DynamicArrayList<Boolean>(
                 false, false, false, false, false

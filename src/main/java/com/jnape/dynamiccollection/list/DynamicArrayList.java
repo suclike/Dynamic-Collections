@@ -130,6 +130,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public boolean anyWhile(Function<? super Element, Boolean> matcher, Function<? super Element, Boolean> predicate) {
+        return Any.anyWhile(this, matcher, predicate);
+    }
+
+    @Override
     public boolean all(Function<? super Element, Boolean> matcher) {
         return All.all(this, matcher);
     }

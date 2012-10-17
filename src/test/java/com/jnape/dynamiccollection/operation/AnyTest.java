@@ -52,4 +52,45 @@ public class AnyTest {
 
         assertFalse(Any.any(noEmpties, isEmpty));
     }
+
+    @Test
+    public void shouldReturnTrueIfMatcherMatchesBeforePredicateTerminatesSearch() {
+        String empty = "";
+        Collection<String> empties = asList("not empty", empty, "also not empty");
+
+        Function<String, Boolean> isNotEmpty = new Function<String, Boolean>() {
+            @Override
+            public Boolean apply(String string) {
+                return string.length() > 0;
+            }
+        };
+        Function<String, Boolean> whileDoesNotStartWithAlso = new Function<String, Boolean>() {
+            @Override
+            public Boolean apply(String string) {
+                return !string.startsWith("also");
+            }
+        };
+
+        assertTrue(Any.anyWhile(empties, isNotEmpty, whileDoesNotStartWithAlso));
+    }
+
+    @Test
+    public void shouldReturnFalseIfMatcherDoesNotMatchBeforePredicateTerminatesSearch() {
+        Collection<Integer> oneThroughTen = asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        Function<Integer, Boolean> greaterThanSix = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer > 6;
+            }
+        };
+        Function<Integer, Boolean> whileLessThanFour = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer < 4;
+            }
+        };
+
+        assertFalse(Any.anyWhile(oneThroughTen, greaterThanSix, whileLessThanFour));
+    }
 }

@@ -1,19 +1,32 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.list.DynamicList;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.operation.Fold.foldLeft;
 
 public class Scan {
 
-    public static <Element, Output> List<Output> scanLeft(List<Element> elements, Output startingAccumulation, Accumulator<Output, ? super Element> scanner) {
-        List<Output> accumulations = new ArrayList<Output>();
-        accumulations.add(startingAccumulation);
+    public static <Element> List<Element> scanLeft(List<Element> elements, Accumulator<Element, ? super Element> scanner) {
+        if (elements.size() == 0)
+            return list();
 
-        for (Element element : elements)
-            accumulations.add(scanner.apply(accumulations.get(accumulations.size() - 1), element));
+        Element head = elements.get(0);
+        List<Element> tail = elements.subList(1, elements.size());
+        return scanLeft(tail, head, scanner);
+    }
 
-        return accumulations;
+    @SuppressWarnings("unchecked")
+    public static <Element, Output> List<Output> scanLeft(List<Element> elements, Output startingAccumulation, final Accumulator<Output, ? super Element> scanner) {
+        return foldLeft(elements, list(startingAccumulation), new Accumulator<DynamicList<Output>, Element>() {
+            @Override
+            public DynamicList<Output> apply(DynamicList<Output> accumulation, Element element) {
+                accumulation.add(scanner.apply(accumulation.last(), element));
+                return accumulation;
+            }
+        });
     }
 }

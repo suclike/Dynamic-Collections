@@ -11,6 +11,15 @@ import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 
 public class Group {
 
+    public static <Element> List<List<Element>> group(Collection<Element> elements) {
+        return group(elements, new Function<Element, Object>() {
+            @Override
+            public Object apply(Element element) {
+                return element;
+            }
+        });
+    }
+
     public static <Element, Output> List<List<Element>> group(Collection<Element> elements, final Function<? super Element, Output> mapper) {
         List<List<Element>> groups = new ArrayList<List<Element>>();
         DynamicList<Element> candidates = list(elements);

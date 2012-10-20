@@ -5,22 +5,39 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add.add;
 import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
+import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.numbers;
 import static org.junit.Assert.assertEquals;
 
 public class ScanTest {
 
+    private static final List<Number>                ONE_THROUGH_FIVE = fromTo(1, 5);
+    private static final Accumulator<Number, Number> SCANNER          = new Accumulator<Number, Number>() {
+        @Override
+        public Number apply(Number partialSum, Number number) {
+            return add(partialSum, number);
+        }
+    };
+
     @Test
-    public void shouldScanLeft() {
-        List<Integer> oneThroughFive = list(1, 2, 3, 4, 5);
+    public void shouldUseHeadIfNoStartingAccumulationProvided() {
+        assertEquals(list(1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, SCANNER));
+    }
 
-        Accumulator<Integer, Integer> scanner = new Accumulator<Integer, Integer>() {
-            @Override
-            public Integer apply(Integer partialSum, Integer number) {
-                return partialSum + number;
-            }
-        };
+    @Test
+    public void shouldScanLeftUsingStartingAccumulation() {
+        assertEquals(list(0, 1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, 0, SCANNER));
+    }
 
-        assertEquals(list(0, 1, 3, 6, 10, 15), Scan.scanLeft(oneThroughFive, 0, scanner));
+    @Test
+    public void shouldReturnEmptyListIfNoElementsAndNoStartingAccumulatorProvided() {
+        assertEquals(list(), Scan.scanLeft(numbers(), SCANNER));
+    }
+
+    @Test
+    public void shouldReturnListOfStartingAccumulationIfNoElementsAndStartingAccumulationProvided() {
+        assertEquals(list(0), Scan.scanLeft(numbers(), 0, SCANNER));
     }
 }

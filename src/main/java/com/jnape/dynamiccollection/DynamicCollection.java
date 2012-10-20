@@ -35,6 +35,8 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> duplicates();
 
+    DynamicCollection<? extends DynamicCollection<Element>> group();
+
     DynamicCollection<? extends DynamicCollection<Element>> group(Function<? super Element, ?> mapper);
 
     boolean any(Function<? super Element, Boolean> matcher);

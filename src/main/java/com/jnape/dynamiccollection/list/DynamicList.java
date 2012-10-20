@@ -52,6 +52,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> duplicates();
 
     @Override
+    DynamicList<DynamicList<Element>> group();
+
+    @Override
     DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper);
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
@@ -69,6 +72,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     Element reduce(Accumulator<Element, ? super Element> accumulator) throws ListWasEmptyException;
 
     <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
+
+    DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator);
 
     <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> mapper);
 

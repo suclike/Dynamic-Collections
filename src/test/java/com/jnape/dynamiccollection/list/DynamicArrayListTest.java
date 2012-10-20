@@ -303,6 +303,19 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldGroupElements() {
+        DynamicArrayList<Integer> numbers = list(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5);
+
+        assertEquals(list(
+                list(1),
+                list(2, 2),
+                list(3, 3, 3),
+                list(4, 4, 4, 4),
+                list(5, 5, 5, 5, 5)
+        ), numbers.group());
+    }
+
+    @Test
     public void shouldGroupElementsByMappedOutput() {
         DynamicArrayList<String> words = list("one", "two", "three");
         assertEquals(list(list("one", "two"), list("three")), words.group(new Function<String, Integer>() {
@@ -511,6 +524,19 @@ public class DynamicArrayListTest {
     public void shouldScanLeft() {
         DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
+        Accumulator<Integer, Integer> partialProducts = new Accumulator<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer product, Integer element) {
+                return product * element;
+            }
+        };
+
+        assertEquals(list(1, 2, 6, 24, 120), oneThroughFive.scanLeft(partialProducts));
+    }
+
+    @Test
+    public void shouldScanLeftUsingStartingAccumulator() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
         Accumulator<Integer, Integer> partialSums = new Accumulator<Integer, Integer>() {
             @Override

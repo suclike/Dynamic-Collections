@@ -110,6 +110,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<DynamicList<Element>> group() {
+        return graduateToDynamic(Group.group(this));
+    }
+
+    @Override
     public DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper) {
         return graduateToDynamic(Group.group(this, mapper));
     }
@@ -168,6 +173,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     @Override
     public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator) {
         return list(Scan.scanLeft(this, startingAccumulation, accumulator));
+    }
+
+    @Override
+    public DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator) {
+        return list(Scan.scanLeft(this, accumulator));
     }
 
     @Override

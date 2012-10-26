@@ -145,6 +145,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public boolean none(Function<? super Element, Boolean> matcher) {
+        return None.none(this, matcher);
+    }
+
+    @Override
     public DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection) {
         return graduateToDynamic(CartesianProduct.cartesianProduct(this, collection));
     }

@@ -44,4 +44,6 @@ public interface DynamicCollection<Element> extends Collection<Element> {
     boolean anyWhile(Function<? super Element, Boolean> matcher, Function<? super Element, Boolean> predicate);
 
     boolean all(Function<? super Element, Boolean> matcher);
+
+    boolean none(Function<? super Element, Boolean> matcher);
 }

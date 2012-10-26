@@ -434,6 +434,27 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldMatchIfNone() {
+        DynamicArrayList<Integer> odds = new DynamicArrayList<Integer>(1, 3, 5, 7, 9);
+
+        final Function<? super Integer, Boolean> even = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return integer % 2 == 0;
+            }
+        };
+        Function<? super Integer, Boolean> odd = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer) {
+                return !even.apply(integer);
+            }
+        };
+
+        assertTrue(odds.none(even));
+        assertFalse(odds.none(odd));
+    }
+
+    @Test
     public void shouldComputeCartesianProduct() {
         DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
         List<String> lastNames = list("West", "Barker", "Kaufman");

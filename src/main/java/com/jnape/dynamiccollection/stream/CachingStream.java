@@ -1,6 +1,7 @@
-package com.jnape.dynamiccollection.list;
+package com.jnape.dynamiccollection.stream;
 
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.list.DynamicList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +10,7 @@ import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 
 public class CachingStream<Element> implements Stream<Element> {
 
-    private final DynamicList<Element>                           cache;
+    private final DynamicList<Element> cache;
     private final CapacityMonitor<Element, DynamicList<Element>> capacityMonitor;
 
     public CachingStream(Collection<Element> elements, Function<DynamicList<Element>, Element> generator) {

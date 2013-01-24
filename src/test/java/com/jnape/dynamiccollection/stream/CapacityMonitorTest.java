@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.list;
+package com.jnape.dynamiccollection.stream;
 
 import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Before;
@@ -18,9 +18,10 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class CapacityMonitorTest {
 
-    @Mock private Function<List<Integer>, Integer> generator;
+    @Mock
+    private Function<List<Integer>, Integer> generator;
 
-    private List<Integer>                           list;
+    private List<Integer> list;
     private CapacityMonitor<Integer, List<Integer>> capacityMonitor;
 
     @Before

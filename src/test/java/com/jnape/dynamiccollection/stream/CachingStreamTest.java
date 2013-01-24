@@ -1,6 +1,7 @@
-package com.jnape.dynamiccollection.list;
+package com.jnape.dynamiccollection.stream;
 
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,8 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CachingStreamTest {
 
-    @Mock private Function<DynamicList<Integer>, Integer> generator;
+    @Mock
+    private Function<DynamicList<Integer>, Integer> generator;
 
     @Before
     public void setUp() {

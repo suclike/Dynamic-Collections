@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.list;
+package com.jnape.dynamiccollection.stream;
 
 import com.jnape.dynamiccollection.lambda.Function;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CapacityMonitor<Element, Elements extends List<Element>> {
 
-    private final Elements                    elements;
+    private final Elements elements;
     private final Function<Elements, Element> generator;
 
     public CapacityMonitor(Elements elements, Function<Elements, Element> generator) {

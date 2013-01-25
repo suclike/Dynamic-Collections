@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection.stream;
 
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.list.DynamicList;
+import com.jnape.dynamiccollection.operation.Take;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +26,6 @@ public class CachingStream<Element> implements Stream<Element> {
     @Override
     public DynamicList<Element> take(int elements) {
         capacityMonitor.ensureCapacity(elements);
-        return cache.subList(0, elements);
+        return list(Take.take(elements, cache));
     }
 }

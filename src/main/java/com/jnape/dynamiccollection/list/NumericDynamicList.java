@@ -1,9 +1,6 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.*;
 
 import java.util.Collection;
 
@@ -25,10 +22,10 @@ public interface NumericDynamicList extends DynamicList<Number> {
     NumericDynamicList forEach(Procedure<? super Number> procedure);
 
     @Override
-    NumericDynamicList filter(Function<? super Number, Boolean> filterer);
+    NumericDynamicList filter(Predicate<? super Number> filterer);
 
     @Override
-    NumericDynamicList reject(Function<? super Number, Boolean> rejector);
+    NumericDynamicList reject(Predicate<? super Number> rejector);
 
     @Override
     NumericDynamicList without(Collection<? super Number> exclusions);
@@ -44,7 +41,7 @@ public interface NumericDynamicList extends DynamicList<Number> {
 
     NumericDynamicList map(Function<? super Number, ? extends Number> mapper);
 
-    NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Function<? super Number, Boolean> predicate);
+    NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Predicate<? super Number> predicate);
 
     NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator);
 

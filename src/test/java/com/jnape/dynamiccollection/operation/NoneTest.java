@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ public class NoneTest {
     private static final Collection<Number> ODDS  = fromTo(1, 9, 2);
     private static final Collection<Number> EVENS = fromTo(2, 10, 2);
 
-    private static final Function<Number, Boolean> ARE_EVEN = new Function<Number, Boolean>() {
+    private static final Predicate<Number> ARE_EVEN = new Predicate<Number>() {
         @Override
         public Boolean apply(Number number) {
             return number.intValue() % 2 == 0;

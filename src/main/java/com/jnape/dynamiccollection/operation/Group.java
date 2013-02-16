@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import com.jnape.dynamiccollection.list.DynamicList;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Group {
 
         while (!candidates.isEmpty()) {
             final Output matcher = mapper.apply(candidates.first());
-            List<Element> group = candidates.filter(new Function<Element, Boolean>() {
+            List<Element> group = candidates.filter(new Predicate<Element>() {
                 @Override
                 public Boolean apply(Element candidate) {
                     return mapper.apply(candidate).equals(matcher);

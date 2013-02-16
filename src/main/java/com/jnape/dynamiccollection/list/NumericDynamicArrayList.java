@@ -1,9 +1,6 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add;
 import com.jnape.dynamiccollection.operation.NumericType;
 
@@ -56,12 +53,12 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public NumericDynamicList filter(Function<? super Number, Boolean> filterer) {
+    public NumericDynamicList filter(Predicate<? super Number> filterer) {
         return numbers(super.filter(filterer));
     }
 
     @Override
-    public NumericDynamicList reject(Function<? super Number, Boolean> rejector) {
+    public NumericDynamicList reject(Predicate<? super Number> rejector) {
         return numbers(super.reject(rejector));
     }
 
@@ -91,7 +88,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Function<? super Number, Boolean> predicate) {
+    public NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Predicate<? super Number> predicate) {
         return numbers(super.mapWhile(mapper, predicate));
     }
 

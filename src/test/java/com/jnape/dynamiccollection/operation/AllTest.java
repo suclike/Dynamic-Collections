@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ public class AllTest {
     public void shouldReturnTrueIfAllElementsMatch() {
         Collection<Integer> evens = asList(2, 4, 6, 8, 10);
 
-        Function<Integer, Boolean> areEven = new Function<Integer, Boolean>() {
+        Predicate<Integer> areEven = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer % 2 == 0;
@@ -29,7 +29,7 @@ public class AllTest {
     public void shouldReturnFalseIfOneElementDoesNotMatch() {
         Collection<Boolean> truesAndFalses = asList(true, true, false, true, true);
 
-        Function<Boolean, Boolean> areTrue = new Function<Boolean, Boolean>() {
+        Predicate<Boolean> areTrue = new Predicate<Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
                 return bool;
@@ -43,7 +43,7 @@ public class AllTest {
     public void shouldReturnFalseIfNoElementsMatch() {
         Collection<Boolean> allFalses = asList(false, false, false);
 
-        Function<Boolean, Boolean> areTrue = new Function<Boolean, Boolean>() {
+        Predicate<Boolean> areTrue = new Predicate<Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
                 return bool;

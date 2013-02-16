@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GroupTest {
 
-    private static final Function<Integer, Boolean> MAPPER = new Function<Integer, Boolean>() {
+    private static final Predicate<Integer> MAPPER = new Predicate<Integer>() {
         @Override
         public Boolean apply(Integer integer) {
             return integer % 2 == 0;

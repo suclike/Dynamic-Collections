@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.jnape.dynamiccollection.operation.Filter.filter;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class FilterTest {
 
-    @Mock private Function<Integer, Boolean> filterer;
+    @Mock private Predicate<Integer> filterer;
 
     @Test
     public void shouldFilterSpecificElements() {
@@ -32,7 +33,7 @@ public class FilterTest {
         when(filterer.apply(4)).thenReturn(true);
         when(filterer.apply(6)).thenReturn(true);
 
-        assertEquals(asList(2, 4, 6), Filter.filter(oneThroughSix, filterer));
+        assertEquals(asList(2, 4, 6), filter(oneThroughSix, filterer));
     }
 
     @Test
@@ -40,6 +41,6 @@ public class FilterTest {
         List<Integer> oneThroughFive = asList(1, 2, 3, 4, 5);
         when(filterer.apply(anyInt())).thenReturn(false);
 
-        assertEquals(new ArrayList<Integer>(), Filter.filter(oneThroughFive, filterer));
+        assertEquals(new ArrayList<Integer>(), filter(oneThroughFive, filterer));
     }
 }

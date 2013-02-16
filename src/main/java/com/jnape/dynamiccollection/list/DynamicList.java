@@ -1,10 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.Collection;
@@ -28,16 +25,16 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> forEach(Procedure<? super Element> procedure);
 
     @Override
-    DynamicList<Element> filter(Function<? super Element, Boolean> filterer);
+    DynamicList<Element> filter(Predicate<? super Element> filterer);
 
     @Override
-    DynamicList<Element> reject(Function<? super Element, Boolean> rejector);
+    DynamicList<Element> reject(Predicate<? super Element> rejector);
 
     @Override
     <Output> DynamicList<Output> map(Function<? super Element, Output> mapper);
 
     @Override
-    <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate);
+    <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Predicate<? super Output> predicate);
 
     @Override
     DynamicList<Element> without(Collection<? super Element> exclusions);

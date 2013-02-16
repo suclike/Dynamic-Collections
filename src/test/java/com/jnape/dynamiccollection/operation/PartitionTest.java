@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -15,7 +15,7 @@ import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class PartitionTest {
 
-    @Mock private Function<Integer, Boolean> partitioner;
+    @Mock private Predicate<Integer> partitioner;
 
     @Test
     public void shouldPartitionCollectionIntoTruesAndFalses() {

@@ -1,10 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
 import testsupport.Item;
@@ -191,7 +188,7 @@ public class DynamicArrayListTest {
     @Test
     public void shouldFilterElements() {
         DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
-        Function<Integer, Boolean> greaterThanThree = new Function<Integer, Boolean>() {
+        Predicate<Integer> greaterThanThree = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer > 3;
@@ -205,7 +202,7 @@ public class DynamicArrayListTest {
     @Test
     public void shouldRejectElements() {
         DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Function<Integer, Boolean> oddNumbers = new Function<Integer, Boolean>() {
+        Predicate<Integer> oddNumbers = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer % 2 != 0;
@@ -240,12 +237,13 @@ public class DynamicArrayListTest {
                 return integer * 2;
             }
         };
-        Function<Integer, Boolean> lessThanEight = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer < 8;
-            }
-        };
+        Predicate<Integer> lessThanEight = new
+                Predicate<Integer>() {
+                    @Override
+                    public Boolean apply(Integer integer) {
+                        return integer < 8;
+                    }
+                };
 
         assertEquals(list(2, 4, 6), numbers.mapWhile(timesTwo, lessThanEight));
     }
@@ -260,7 +258,7 @@ public class DynamicArrayListTest {
     @Test
     public void shouldPartitionElements() {
         DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Function<Integer, Boolean> intoEvensAndOdds = new Function<Integer, Boolean>() {
+        Predicate<Integer> intoEvensAndOdds = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer % 2 == 0;
@@ -366,18 +364,19 @@ public class DynamicArrayListTest {
                 true, true, true, true, true
         );
 
-        Function<Boolean, Boolean> trues = new Function<Boolean, Boolean>() {
+        Predicate<Boolean> trues = new Predicate<Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
                 return bool;
             }
         };
-        Function<Boolean, Boolean> falses = new Function<Boolean, Boolean>() {
-            @Override
-            public Boolean apply(Boolean bool) {
-                return !bool;
-            }
-        };
+        Predicate<Boolean> falses = new
+                Predicate<Boolean>() {
+                    @Override
+                    public Boolean apply(Boolean bool) {
+                        return !bool;
+                    }
+                };
 
         assertTrue(allTrue.any(trues));
         assertFalse(allTrue.any(falses));
@@ -387,24 +386,28 @@ public class DynamicArrayListTest {
     public void shouldMatchIfAnyWhile() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 3, 5, 6, 7, 8, 9, 10);
 
-        Function<Integer, Boolean> evens = new Function<Integer, Boolean>() {
+        Predicate<Integer> evens = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer % 2 == 0;
             }
         };
-        Function<Integer, Boolean> odds = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer % 2 == 1;
-            }
-        };
-        Function<Integer, Boolean> lessThanFive = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return integer < 5;
-            }
-        };
+        Predicate<Integer> odds = new
+
+                Predicate<Integer>() {
+                    @Override
+                    public Boolean apply(Integer integer) {
+                        return integer % 2 == 1;
+                    }
+                };
+        Predicate<Integer> lessThanFive = new
+
+                Predicate<Integer>() {
+                    @Override
+                    public Boolean apply(Integer integer) {
+                        return integer < 5;
+                    }
+                };
 
         assertFalse(numbers.anyWhile(evens, lessThanFive));
         assertTrue(numbers.anyWhile(odds, lessThanFive));
@@ -416,18 +419,19 @@ public class DynamicArrayListTest {
                 false, false, false, false, false
         );
 
-        Function<Boolean, Boolean> areFalse = new Function<Boolean, Boolean>() {
+        Predicate<Boolean> areFalse = new Predicate<Boolean>() {
             @Override
             public Boolean apply(Boolean bool) {
                 return !bool;
             }
         };
-        Function<Boolean, Boolean> areTrue = new Function<Boolean, Boolean>() {
-            @Override
-            public Boolean apply(Boolean bool) {
-                return bool;
-            }
-        };
+        Predicate<Boolean> areTrue = new
+                Predicate<Boolean>() {
+                    @Override
+                    public Boolean apply(Boolean bool) {
+                        return bool;
+                    }
+                };
 
         assertTrue(allFalse.all(areFalse));
         assertFalse(allFalse.all(areTrue));
@@ -437,18 +441,19 @@ public class DynamicArrayListTest {
     public void shouldMatchIfNone() {
         DynamicArrayList<Integer> odds = new DynamicArrayList<Integer>(1, 3, 5, 7, 9);
 
-        final Function<? super Integer, Boolean> even = new Function<Integer, Boolean>() {
+        final Predicate<? super Integer> even = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer integer) {
                 return integer % 2 == 0;
             }
         };
-        Function<? super Integer, Boolean> odd = new Function<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer integer) {
-                return !even.apply(integer);
-            }
-        };
+        Predicate<? super Integer> odd = new
+                Predicate<Integer>() {
+                    @Override
+                    public Boolean apply(Integer integer) {
+                        return !even.apply(integer);
+                    }
+                };
 
         assertTrue(odds.none(even));
         assertFalse(odds.none(odd));

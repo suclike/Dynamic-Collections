@@ -1,13 +1,14 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Map {
 
-    private static final Function<Object, Boolean> TRUE = new Function<Object, Boolean>() {
+    private static final Predicate<Object> TRUE = new Predicate<Object>() {
         @Override
         public Boolean apply(Object anything) {
             return true;
@@ -18,7 +19,7 @@ public class Map {
         return mapWhile(collection, mapper, TRUE);
     }
 
-    public static <Input, Output> Collection<Output> mapWhile(Collection<Input> collection, Function<? super Input, Output> mapper, Function<? super Output, Boolean> predicate) {
+    public static <Input, Output> Collection<Output> mapWhile(Collection<Input> collection, Function<? super Input, Output> mapper, Predicate<? super Output> predicate) {
         Collection<Output> output = new ArrayList<Output>();
 
         for (Input input : collection) {

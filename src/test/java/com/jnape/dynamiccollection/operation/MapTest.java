@@ -1,11 +1,14 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.operation.Map.map;
+import static com.jnape.dynamiccollection.operation.Map.mapWhile;
 import static org.junit.Assert.assertEquals;
 
 public class MapTest {
@@ -16,8 +19,7 @@ public class MapTest {
             return n * 2;
         }
     };
-
-    private static final Function<Integer, Boolean> LESS_THAN_FOUR = new Function<Integer, Boolean>() {
+    private static final Predicate<Integer> LESS_THAN_FOUR = new Predicate<Integer>() {
         @Override
         public Boolean apply(Integer n) {
             return n < 4;
@@ -26,16 +28,16 @@ public class MapTest {
 
     @Test
     public void shouldMapOverCollection() {
-        assertEquals(list(2, 4, 6), Map.map(list(1, 2, 3), DOUBLE));
+        assertEquals(list(2, 4, 6), map(list(1, 2, 3), DOUBLE));
     }
 
     @Test
     public void shouldMapOverCollectionWhilePredicate() {
-        assertEquals(list(2), Map.mapWhile(list(1, 2, 3, 4, 5), DOUBLE, LESS_THAN_FOUR));
+        assertEquals(list(2), mapWhile(list(1, 2, 3, 4, 5), DOUBLE, LESS_THAN_FOUR));
     }
 
     @Test
     public void shouldDoNothingForEmptyCollection() {
-        Map.map(new ArrayList<Integer>(), DOUBLE);
+        map(new ArrayList<Integer>(), DOUBLE);
     }
 }

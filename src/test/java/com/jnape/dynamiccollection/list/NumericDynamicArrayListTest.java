@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,9 +23,8 @@ import static testsupport.assertion.InheritanceAssert.assertThat;
 public class NumericDynamicArrayListTest {
 
     private static final NumericDynamicList HETEROGENEOUS_NUMBERS = numbers((byte) 1, (short) 2, 3, 4L, 5F, 6D);
-
     @Mock private Function<Number, Number>    numericMapper;
-    @Mock private Function<Number, Boolean>   numericPredicate;
+    @Mock private Predicate<Number>           numericPredicate;
     @Mock private Accumulator<Number, Number> numericScanner;
 
     @Test

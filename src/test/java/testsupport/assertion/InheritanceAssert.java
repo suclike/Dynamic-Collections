@@ -16,6 +16,7 @@ public class InheritanceAssert {
         return assertThat(object.getClass());
     }
 
+    @SuppressWarnings("unchecked")
     public InheritanceAssert isA(Class anotherType) {
         if (!anotherType.isAssignableFrom(type))
             throw new AssertionError("Expected type <" + type + "> to have isA relationship with <" + anotherType + ">, but it doesn't.");

@@ -39,10 +39,6 @@ public interface NumericDynamicList extends DynamicList<Number> {
     @Override
     NumericDynamicList reverse();
 
-    NumericDynamicList map(Function<? super Number, ? extends Number> mapper);
-
-    NumericDynamicList mapWhile(Function<? super Number, ? extends Number> mapper, Predicate<? super Number> predicate);
-
     NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator);
 
     Number sum();

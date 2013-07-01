@@ -122,20 +122,6 @@ public class NumericDynamicArrayListTest {
     }
 
     @Test
-    public void shouldHaveCustomMapThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
-        assertThat(
-                numbers().map(numericMapper)
-        ).isA(NumericDynamicArrayList.class);
-    }
-
-    @Test
-    public void shouldHaveCustomMapWhileThatReturnsNumericDynamicArrayListIfOutputExtendsNumber() {
-        assertThat(
-                numbers().mapWhile(numericMapper, numericPredicate)
-        ).isA(NumericDynamicArrayList.class);
-    }
-
-    @Test
     public void shouldHaveCustomScanLeftThatReturnsNumericDynamicArrayListIfAccumulatorExtendsNumber() {
         assertThat(
                 numbers().scanLeft(0, numericScanner)

@@ -238,6 +238,7 @@ public class DynamicArrayListTest {
             }
         };
         Predicate<Integer> lessThanEight = new
+
                 Predicate<Integer>() {
                     @Override
                     public Boolean apply(Integer integer) {
@@ -353,8 +354,7 @@ public class DynamicArrayListTest {
 
         assertEquals(list(
                 list(1, 4, 7),
-                list(2, 5, 8),
-                list(3, 6, null)
+                list(2, 5, 8)
         ), oneTwo.zip(fourFiveSix, sevenEight));
     }
 
@@ -371,6 +371,7 @@ public class DynamicArrayListTest {
             }
         };
         Predicate<Boolean> falses = new
+
                 Predicate<Boolean>() {
                     @Override
                     public Boolean apply(Boolean bool) {
@@ -426,6 +427,7 @@ public class DynamicArrayListTest {
             }
         };
         Predicate<Boolean> areTrue = new
+
                 Predicate<Boolean>() {
                     @Override
                     public Boolean apply(Boolean bool) {
@@ -448,6 +450,7 @@ public class DynamicArrayListTest {
             }
         };
         Predicate<? super Integer> odd = new
+
                 Predicate<Integer>() {
                     @Override
                     public Boolean apply(Integer integer) {

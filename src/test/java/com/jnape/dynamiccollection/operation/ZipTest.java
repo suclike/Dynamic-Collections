@@ -37,11 +37,11 @@ public class ZipTest {
     }
 
     @Test
-    public void shouldZipTwoListsOfDifferentSizeUsingNullForPaddingIfNoPaddingProvided() {
+    public void shouldZipTwoListsOfDifferentSizesNotExceedingElementsOfSmallestList() {
         List<Character> abc = asList('a', 'b', 'c');
         List<Character> oneTwo = asList('1', '2');
 
-        assertEquals(list(list('a', '1'), list('b', '2'), list('c', null)), Zip.zip(abc, oneTwo));
+        assertEquals(list(list('a', '1'), list('b', '2')), Zip.zip(abc, oneTwo));
     }
 
     @Test

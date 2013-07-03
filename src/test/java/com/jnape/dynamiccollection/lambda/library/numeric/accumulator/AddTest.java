@@ -13,8 +13,8 @@ public class AddTest {
     public void shouldAddNumbers() {
         Add add = new Add();
 
-        assertEquals(1, add.apply((byte) 0, (byte) 1));
-        assertEquals(3, add.apply((short) 1, (short) 2));
+        assertEquals((byte) 1, add.apply((byte) 0, (byte) 1));
+        assertEquals((short) 3, add.apply((short) 1, (short) 2));
         assertEquals(5, add.apply(2, 3));
         assertEquals(7l, add.apply(3l, 4l));
         assertEquals(9f, add.apply(4f, 5f));

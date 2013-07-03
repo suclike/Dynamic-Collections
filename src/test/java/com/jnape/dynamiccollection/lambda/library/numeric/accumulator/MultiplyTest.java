@@ -13,8 +13,8 @@ public class MultiplyTest {
     public void shouldMultiplyNumbers() {
         Multiply multiply = new Multiply();
 
-        assertEquals(96, multiply.apply((byte) 1, (byte) 96));
-        assertEquals(96, multiply.apply((short) 2, (short) 48));
+        assertEquals((byte) 96, multiply.apply((byte) 1, (byte) 96));
+        assertEquals((short) 96, multiply.apply((short) 2, (short) 48));
         assertEquals(96, multiply.apply(3, 32));
         assertEquals(96l, multiply.apply(4l, 24l));
         assertEquals(96f, multiply.apply(6f, 16f));

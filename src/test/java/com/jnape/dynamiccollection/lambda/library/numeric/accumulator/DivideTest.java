@@ -13,8 +13,8 @@ public class DivideTest {
     public void shouldDivideNumbers() {
         Divide divide = new Divide();
 
-        assertEquals(96, divide.apply((byte) 96, (byte) 1));
-        assertEquals(48, divide.apply((short) 96, (short) 2));
+        assertEquals((byte) 96, divide.apply((byte) 96, (byte) 1));
+        assertEquals((short) 48, divide.apply((short) 96, (short) 2));
         assertEquals(32, divide.apply(96, 3));
         assertEquals(24l, divide.apply(96l, 4l));
         assertEquals(16f, divide.apply(96f, 6f));

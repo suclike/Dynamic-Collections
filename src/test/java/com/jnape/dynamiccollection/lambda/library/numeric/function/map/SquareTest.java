@@ -11,8 +11,8 @@ public class SquareTest {
     public void shouldSquareNumber() {
         Square square = new Square();
 
-        assertEquals(1, square.apply((byte) 1));
-        assertEquals(4, square.apply((short) 2));
+        assertEquals((byte) 1, square.apply((byte) 1));
+        assertEquals((short) 4, square.apply((short) 2));
         assertEquals(9, square.apply(3));
         assertEquals(16l, square.apply(4l));
         assertEquals(25f, square.apply(5f));

@@ -13,8 +13,8 @@ public class SubtractTest {
     public void shouldSubtractNumbers() {
         Subtract subtract = new Subtract();
 
-        assertEquals(1, subtract.apply((byte) 1, (byte) 0));
-        assertEquals(3, subtract.apply((short) 4, (short) 1));
+        assertEquals((byte) 1, subtract.apply((byte) 1, (byte) 0));
+        assertEquals((short) 3, subtract.apply((short) 4, (short) 1));
         assertEquals(5, subtract.apply(7, 2));
         assertEquals(7l, subtract.apply(10l, 3l));
         assertEquals(9f, subtract.apply(13f, 4f));

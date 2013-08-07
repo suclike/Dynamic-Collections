@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.Function;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class Take {
 
-    public static <Element> Collection<Element> take(int n, Iterable<Element> iterable) {
+    public static <Element> Collection<Element> take(Iterable<Element> iterable, int n) {
         Collection<Element> taken = new ArrayList<Element>(n);
 
         Iterator<Element> iterator = iterable.iterator();
@@ -19,7 +19,7 @@ public class Take {
         return taken;
     }
 
-    public static <Element> Collection<Element> takeWhile(Predicate<? super Element> predicate, Iterable<Element> iterable) {
+    public static <Element> Collection<Element> takeWhile(Iterable<Element> iterable, Function<? super Element, Boolean> predicate) {
         Collection<Element> taken = new ArrayList<Element>();
 
         Iterator<Element> iterator = iterable.iterator();

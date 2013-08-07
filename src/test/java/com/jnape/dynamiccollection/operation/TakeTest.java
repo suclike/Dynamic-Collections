@@ -17,12 +17,12 @@ public class TakeTest {
 
     @Test
     public void shouldTakeItemsFromIterable() {
-        assertEquals(asList(1, 2, 3), take(3, NUMBERS));
+        assertEquals(asList(1, 2, 3), take(NUMBERS, 3));
     }
 
     @Test
     public void shouldTakeZeroItems() {
-        assertEquals(new ArrayList<Integer>(), take(0, NUMBERS));
+        assertEquals(new ArrayList<Integer>(), take(NUMBERS, 0));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class TakeTest {
             }
         };
 
-        assertEquals(asList(1, 2, 3), takeWhile(lessThanFour, NUMBERS));
+        assertEquals(asList(1, 2, 3), takeWhile(NUMBERS, lessThanFour));
     }
 
     @Test
@@ -46,6 +46,6 @@ public class TakeTest {
             }
         };
 
-        assertEquals(new ArrayList<Integer>(), takeWhile(fails, NUMBERS));
+        assertEquals(new ArrayList<Integer>(), takeWhile(NUMBERS, fails));
     }
 }

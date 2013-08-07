@@ -1,25 +1,19 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
+
 public class Map {
 
-    private static final Predicate<Object> TRUE = new Predicate<Object>() {
-        @Override
-        public Boolean apply(Object anything) {
-            return true;
-        }
-    };
-
     public static <Input, Output> Collection<Output> map(Collection<Input> collection, Function<? super Input, Output> mapper) {
-        return mapWhile(collection, mapper, TRUE);
+        return mapWhile(collection, mapper, always(true));
     }
 
-    public static <Input, Output> Collection<Output> mapWhile(Collection<Input> collection, Function<? super Input, Output> mapper, Predicate<? super Output> predicate) {
+    public static <Input, Output> Collection<Output> mapWhile(Collection<Input> collection, Function<? super Input, Output> mapper, Function<? super Output, Boolean> predicate) {
         Collection<Output> output = new ArrayList<Output>();
 
         for (Input input : collection) {

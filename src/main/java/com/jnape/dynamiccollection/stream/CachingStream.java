@@ -26,6 +26,6 @@ public class CachingStream<Element> implements Stream<Element> {
     @Override
     public DynamicList<Element> take(int elements) {
         capacityMonitor.ensureCapacity(elements);
-        return list(Take.take(elements, cache));
+        return list(Take.take(cache, elements));
     }
 }

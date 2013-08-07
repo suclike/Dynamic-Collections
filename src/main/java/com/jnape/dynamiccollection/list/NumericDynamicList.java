@@ -22,10 +22,10 @@ public interface NumericDynamicList extends DynamicList<Number> {
     NumericDynamicList forEach(Procedure<? super Number> procedure);
 
     @Override
-    NumericDynamicList filter(Predicate<? super Number> filterer);
+    NumericDynamicList filter(Function<? super Number, Boolean> filterer);
 
     @Override
-    NumericDynamicList reject(Predicate<? super Number> rejector);
+    NumericDynamicList reject(Function<? super Number, Boolean> rejector);
 
     @Override
     NumericDynamicList without(Collection<? super Number> exclusions);

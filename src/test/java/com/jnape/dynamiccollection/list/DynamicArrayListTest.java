@@ -39,6 +39,16 @@ public class DynamicArrayListTest {
     }
 
     @Test
+    public void shouldConstructAndPopulateFromArray() {
+        DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(new Item[]{A, B, C});
+
+        assertEquals(3, dynamicArrayList.size());
+        assertEquals(A, dynamicArrayList.get(0));
+        assertEquals(B, dynamicArrayList.get(1));
+        assertEquals(C, dynamicArrayList.get(2));
+    }
+
+    @Test
     public void shouldConstructAndPopulateFromVarArgs() {
         DynamicArrayList<Item> dynamicArrayList = new DynamicArrayList<Item>(B, C, A, C);
 
@@ -125,7 +135,7 @@ public class DynamicArrayListTest {
     public void shouldSubList() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
-        assertEquals(list(), numbers.subList(0, 0));
+        assertEquals(new DynamicArrayList<Integer>(), numbers.subList(0, 0));
         assertEquals(list(1, 2, 3), numbers.subList(0, 3));
         assertEquals(list(3, 4, 5), numbers.subList(2, 5));
     }
@@ -216,9 +226,9 @@ public class DynamicArrayListTest {
     @Test
     public void shouldMapOverList() {
         DynamicArrayList<String> prepositions = new DynamicArrayList<String>("Aboard", "About", "Above", "Across");
-        Function<String, Object> intoWordLength = new Function<String, Object>() {
+        Function<String, Integer> intoWordLength = new Function<String, Integer>() {
             @Override
-            public Object apply(String word) {
+            public Integer apply(String word) {
                 return word.length();
             }
         };
@@ -305,7 +315,7 @@ public class DynamicArrayListTest {
     public void shouldGroupElements() {
         DynamicArrayList<Integer> numbers = list(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5);
 
-        assertEquals(list(
+        assertEquals(new DynamicArrayList<DynamicList<Integer>>(
                 list(1),
                 list(2, 2),
                 list(3, 3, 3),
@@ -317,7 +327,10 @@ public class DynamicArrayListTest {
     @Test
     public void shouldGroupElementsByMappedOutput() {
         DynamicArrayList<String> words = list("one", "two", "three");
-        assertEquals(list(list("one", "two"), list("three")), words.group(new Function<String, Integer>() {
+        assertEquals(new DynamicArrayList<DynamicList<String>>(
+                list("one", "two"),
+                list("three")
+        ), words.group(new Function<String, Integer>() {
             @Override
             public Integer apply(String word) {
                 return word.length();
@@ -333,14 +346,34 @@ public class DynamicArrayListTest {
 
         DynamicList<Number> oneThroughSix = oneAndTwo.concat(threeAndFour).concat(fiveAndSix);
 
-        assertEquals(list(oneAndTwo, threeAndFour, fiveAndSix), oneThroughSix.inGroupsOf(2));
+        assertEquals(new DynamicArrayList<DynamicList<Number>>(
+                oneAndTwo,
+                threeAndFour,
+                fiveAndSix
+        ), oneThroughSix.inGroupsOf(2));
+    }
+
+    @Test
+    public void shouldGetSequencesOfElements() {
+        DynamicArrayList<Integer> oneThroughTen = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        assertEquals(new DynamicArrayList<DynamicList<Integer>>(
+                list(1, 2, 3),
+                list(2, 3, 4),
+                list(3, 4, 5),
+                list(4, 5, 6),
+                list(5, 6, 7),
+                list(6, 7, 8),
+                list(7, 8, 9),
+                list(8, 9, 10)
+        ), oneThroughTen.allSequencesOf(3));
     }
 
     @Test
     public void shouldZipToNothing() {
         DynamicArrayList<Item> aB = new DynamicArrayList<Item>(A, B);
 
-        assertEquals(list(
+        assertEquals(new DynamicArrayList<DynamicList<Item>>(
                 list(A),
                 list(B)
         ), aB.zip());
@@ -352,7 +385,7 @@ public class DynamicArrayListTest {
         List<Integer> fourFiveSix = asList(4, 5, 6);
         List<Integer> sevenEight = asList(7, 8);
 
-        assertEquals(list(
+        assertEquals(new DynamicArrayList<DynamicList<Integer>>(
                 list(1, 4, 7),
                 list(2, 5, 8)
         ), oneTwo.zip(fourFiveSix, sevenEight));

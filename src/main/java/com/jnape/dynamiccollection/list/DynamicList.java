@@ -34,7 +34,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     <Output> DynamicList<Output> map(Function<? super Element, Output> mapper);
 
     @Override
-    <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Predicate<? super Output> predicate);
+    <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper,
+                                          Predicate<? super Output> predicate);
 
     @Override
     DynamicList<Element> without(Collection<? super Element> exclusions);
@@ -56,19 +57,24 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
+    DynamicList<DynamicList<Element>> allSequencesOf(int elementsPerSequences);
+
     DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists);
 
     DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
 
     DynamicList<DynamicList<Element>> cartesianProduct();
 
-    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
+    <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation,
+                                         Accumulator<Accumulation, ? super Element> accumulator);
 
-    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
+    <Accumulation> Accumulation foldRight(Accumulation startingAccumulation,
+                                          Accumulator<Accumulation, ? super Element> accumulator);
 
     Element reduce(Accumulator<Element, ? super Element> accumulator) throws ListWasEmptyException;
 
-    <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation, Accumulator<Accumulation, ? super Element> accumulator);
+    <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation,
+                                                      Accumulator<Accumulation, ? super Element> accumulator);
 
     DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator);
 

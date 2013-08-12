@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public class Partition {
 
-    public static <Element> com.jnape.dynamiccollection.datatype.Partition<Element> partition(Collection<Element> collection, Predicate<? super Element> partitioner) {
+    public static <Element> com.jnape.dynamiccollection.datatype.Partition<Element> partition(Collection<Element> collection, Function<? super Element, Boolean> partitioner) {
         DynamicCollection<Element> trues = new DynamicArrayList<Element>();
         DynamicCollection<Element> falses = new DynamicArrayList<Element>();
 

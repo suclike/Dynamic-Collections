@@ -69,12 +69,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> filter(Predicate<? super Element> filterer) {
+    public DynamicList<Element> filter(Function<? super Element, Boolean> filterer) {
         return list(Filter.filter(this, filterer));
     }
 
     @Override
-    public DynamicList<Element> reject(Predicate<? super Element> rejector) {
+    public DynamicList<Element> reject(Function<? super Element, Boolean> rejector) {
         return list(Reject.reject(this, rejector));
     }
 
@@ -84,8 +84,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper,
-                                                 Predicate<? super Output> predicate) {
+    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate) {
         return list(Map.mapWhile(this, mapper, predicate));
     }
 
@@ -95,7 +94,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Partition<Element> partition(Predicate<? super Element> partitioner) {
+    public Partition<Element> partition(Function<? super Element, Boolean> partitioner) {
         return com.jnape.dynamiccollection.operation.Partition.partition(this, partitioner);
     }
 
@@ -140,22 +139,22 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public boolean any(Predicate<? super Element> matcher) {
+    public boolean any(Function<? super Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }
 
     @Override
-    public boolean anyWhile(Predicate<? super Element> matcher, Predicate<? super Element> predicate) {
+    public boolean anyWhile(Function<? super Element, Boolean> matcher, Function<? super Element, Boolean> predicate) {
         return Any.anyWhile(this, matcher, predicate);
     }
 
     @Override
-    public boolean all(Predicate<? super Element> matcher) {
+    public boolean all(Function<? super Element, Boolean> matcher) {
         return All.all(this, matcher);
     }
 
     @Override
-    public boolean none(Predicate<? super Element> matcher) {
+    public boolean none(Function<? super Element, Boolean> matcher) {
         return None.none(this, matcher);
     }
 

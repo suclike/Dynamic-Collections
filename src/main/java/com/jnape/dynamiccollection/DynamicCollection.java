@@ -3,7 +3,6 @@ package com.jnape.dynamiccollection;
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Predicate;
 import com.jnape.dynamiccollection.lambda.Procedure;
 
 import java.util.Collection;
@@ -18,17 +17,17 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<Element> forEach(Procedure<? super Element> procedure);
 
-    DynamicCollection<Element> filter(Predicate<? super Element> filterer);
+    DynamicCollection<Element> filter(Function<? super Element, Boolean> filterer);
 
-    DynamicCollection<Element> reject(Predicate<? super Element> rejector);
+    DynamicCollection<Element> reject(Function<? super Element, Boolean> rejector);
 
     <Output> DynamicCollection<Output> map(Function<? super Element, Output> mapper);
 
-    <Output> DynamicCollection<Output> mapWhile(Function<? super Element, Output> mapper, Predicate<? super Output> predicate);
+    <Output> DynamicCollection<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate);
 
     DynamicCollection<Element> without(Collection<? super Element> exclusions);
 
-    Partition<Element> partition(Predicate<? super Element> partitioner);
+    Partition<Element> partition(Function<? super Element, Boolean> partitioner);
 
     DynamicCollection<Element> unique();
 
@@ -40,11 +39,11 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<? extends DynamicCollection<Element>> group(Function<? super Element, ?> mapper);
 
-    boolean any(Predicate<? super Element> matcher);
+    boolean any(Function<? super Element, Boolean> matcher);
 
-    boolean anyWhile(Predicate<? super Element> matcher, Predicate<? super Element> predicate);
+    boolean anyWhile(Function<? super Element, Boolean> matcher, Function<? super Element, Boolean> predicate);
 
-    boolean all(Predicate<? super Element> matcher);
+    boolean all(Function<? super Element, Boolean> matcher);
 
-    boolean none(Predicate<? super Element> matcher);
+    boolean none(Function<? super Element, Boolean> matcher);
 }

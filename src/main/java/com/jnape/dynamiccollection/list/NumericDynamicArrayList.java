@@ -4,15 +4,15 @@ import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add;
+import com.jnape.dynamiccollection.lambda.builtin.accumulator.Add;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add.plus;
-import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Divide.divide;
-import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Multiply.times;
+import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.plus;
+import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Divide.divide;
+import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.times;
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 import static java.lang.Math.pow;
 

@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda.library.numeric.function.map;
+package com.jnape.dynamiccollection.lambda.builtin.function;
 
 import org.junit.Test;
 

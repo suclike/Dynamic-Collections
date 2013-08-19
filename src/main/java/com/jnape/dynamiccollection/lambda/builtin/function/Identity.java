@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda.library.generic.function.map;
+package com.jnape.dynamiccollection.lambda.builtin.function;
 
 import com.jnape.dynamiccollection.lambda.Function;
 

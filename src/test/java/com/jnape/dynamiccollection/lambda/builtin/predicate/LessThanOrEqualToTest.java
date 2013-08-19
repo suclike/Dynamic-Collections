@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda.library.numeric.function.filter;
+package com.jnape.dynamiccollection.lambda.builtin.predicate;
 
 import org.junit.Before;
 import org.junit.Test;

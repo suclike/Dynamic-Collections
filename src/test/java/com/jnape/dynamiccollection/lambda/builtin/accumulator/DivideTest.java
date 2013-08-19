@@ -1,6 +1,5 @@
-package com.jnape.dynamiccollection.lambda.library.numeric.accumulator;
+package com.jnape.dynamiccollection.lambda.builtin.accumulator;
 
-import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
 import testsupport.UnsupportedNumber;
 
@@ -30,12 +29,6 @@ public class DivideTest {
     @Test
     public void shouldHaveStaticFactoryMethod() {
         assertReflectionEquals(new Divide(), Divide.divided_by());
-    }
-
-    @Test
-    public void shouldHaveStaticFactoryMethodForCurriedFunction() {
-        Function<Number, Number> dividedBy2 = Divide.divided_by(2);
-        assertEquals(5, dividedBy2.apply(10));
     }
 
     @Test

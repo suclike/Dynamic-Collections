@@ -1,6 +1,5 @@
-package com.jnape.dynamiccollection.lambda.library.numeric.accumulator;
+package com.jnape.dynamiccollection.lambda.builtin.accumulator;
 
-import com.jnape.dynamiccollection.lambda.Function;
 import org.junit.Test;
 import testsupport.UnsupportedNumber;
 
@@ -30,12 +29,6 @@ public class MultiplyTest {
     @Test
     public void shouldHaveStaticFactoryMethod() {
         assertReflectionEquals(new Multiply(), Multiply.times());
-    }
-
-    @Test
-    public void shouldHaveStaticFactoryMethodForCurriedFunction() {
-        Function<Number, Number> times2 = Multiply.times(2);
-        assertEquals(10, times2.apply(5));
     }
 
     @Test

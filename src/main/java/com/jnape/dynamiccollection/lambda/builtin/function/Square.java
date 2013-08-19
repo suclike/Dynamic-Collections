@@ -1,8 +1,8 @@
-package com.jnape.dynamiccollection.lambda.library.numeric.function.map;
+package com.jnape.dynamiccollection.lambda.builtin.function;
 
 import com.jnape.dynamiccollection.lambda.Function;
 
-import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Multiply.multiply;
+import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.multiply;
 
 public class Square implements Function<Number, Number> {
 

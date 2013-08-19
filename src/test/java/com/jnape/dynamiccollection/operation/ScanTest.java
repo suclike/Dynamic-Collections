@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.jnape.dynamiccollection.lambda.library.numeric.accumulator.Add.add;
+import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.add;
 import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
 import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.numbers;

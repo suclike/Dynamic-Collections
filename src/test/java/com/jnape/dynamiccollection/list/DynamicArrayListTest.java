@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
@@ -71,46 +70,6 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldHaveFactoryMethodThatRequiresNoArgs() {
-        DynamicArrayList<Object> dynamicArrayList = list();
-        assertEquals(0, dynamicArrayList.size());
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromCollection() {
-        Collection<Item> items = asList(A, B, C);
-
-        DynamicArrayList<Item> dynamicArrayList = list(items);
-
-        assertEquals(3, dynamicArrayList.size());
-        assertEquals(A, dynamicArrayList.get(0));
-        assertEquals(B, dynamicArrayList.get(1));
-        assertEquals(C, dynamicArrayList.get(2));
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromVarArgs() {
-        DynamicArrayList<Item> dynamicArrayList = list(B, C, A, C);
-
-        assertEquals(4, dynamicArrayList.size());
-        assertEquals(B, dynamicArrayList.get(0));
-        assertEquals(C, dynamicArrayList.get(1));
-        assertEquals(A, dynamicArrayList.get(2));
-        assertEquals(C, dynamicArrayList.get(3));
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromIterator() {
-        Iterator<Item> iterator = asList(A, B, C).iterator();
-        DynamicArrayList<Item> dynamicArrayList = list(iterator);
-
-        assertEquals(3, dynamicArrayList.size());
-        assertEquals(A, dynamicArrayList.get(0));
-        assertEquals(B, dynamicArrayList.get(1));
-        assertEquals(C, dynamicArrayList.get(2));
-    }
-
-    @Test
     public void shouldHaveExpectedPolymorphisms() {
         assertThat(DynamicArrayList.class)
                 .isA(ArrayList.class)
@@ -136,8 +95,8 @@ public class DynamicArrayListTest {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
         assertEquals(new DynamicArrayList<Integer>(), numbers.subList(0, 0));
-        assertEquals(list(1, 2, 3), numbers.subList(0, 3));
-        assertEquals(list(3, 4, 5), numbers.subList(2, 5));
+        assertEquals(new DynamicArrayList<Integer>(1, 2, 3), numbers.subList(0, 3));
+        assertEquals(new DynamicArrayList<Integer>(3, 4, 5), numbers.subList(2, 5));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -148,9 +107,9 @@ public class DynamicArrayListTest {
     @Test
     public void shouldConcatAnotherCollection() {
         DynamicArrayList<Integer> oneThroughThree = new DynamicArrayList<Integer>(1, 2, 3);
-        Collection<Integer> fourAndFive = list(4, 5);
+        Collection<Integer> fourAndFive = new DynamicArrayList<Integer>(4, 5);
 
-        assertEquals(list(1, 2, 3, 4, 5), oneThroughThree.concat(fourAndFive));
+        assertEquals(new DynamicArrayList<Integer>(1, 2, 3, 4, 5), oneThroughThree.concat(fourAndFive));
     }
 
     @Test
@@ -158,14 +117,14 @@ public class DynamicArrayListTest {
         DynamicArrayList<String> theRain = new DynamicArrayList<String>("The", "rain");
         String[] inSpain = {"in", "Spain"};
 
-        assertEquals(list("The", "rain", "in", "Spain"), theRain.concat(inSpain));
+        assertEquals(new DynamicArrayList<String>("The", "rain", "in", "Spain"), theRain.concat(inSpain));
     }
 
     @Test
     public void shouldExecuteProcedureForEachElementAndIndex() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
-        final List<Integer> products = list();
+        final List<Integer> products = new ArrayList<Integer>();
 
         IndexedProcedure<Integer> elementTimesIndex = new IndexedProcedure<Integer>() {
             @Override
@@ -175,14 +134,14 @@ public class DynamicArrayListTest {
         };
 
         assertSame(numbers, numbers.each(elementTimesIndex));
-        assertEquals(list(0, 2, 6, 12, 20), products);
+        assertEquals(new DynamicArrayList<Integer>(0, 2, 6, 12, 20), products);
     }
 
     @Test
     public void shouldExecuteProcedureForEachElement() {
         DynamicArrayList<String> theRainInSpain = new DynamicArrayList<String>("The", "rain", "in", "Spain");
 
-        final List<String> allCaps = list();
+        final List<String> allCaps = new ArrayList<String>();
 
         Procedure<String> addUpperCasedToAllCaps = new Procedure<String>() {
             @Override
@@ -192,7 +151,7 @@ public class DynamicArrayListTest {
         };
 
         assertSame(theRainInSpain, theRainInSpain.forEach(addUpperCasedToAllCaps));
-        assertEquals(list("THE", "RAIN", "IN", "SPAIN"), allCaps);
+        assertEquals(new DynamicArrayList<String>("THE", "RAIN", "IN", "SPAIN"), allCaps);
     }
 
     @Test
@@ -205,7 +164,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        DynamicList<Integer> fourAndFive = list(4, 5);
+        DynamicArrayList<Integer> fourAndFive = new DynamicArrayList<Integer>(4, 5);
         assertEquals(fourAndFive, oneThroughFive.filter(greaterThanThree));
     }
 
@@ -219,7 +178,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        DynamicList<Integer> twoFourSixEightTen = list(2, 4, 6, 8, 10);
+        DynamicArrayList<Integer> twoFourSixEightTen = new DynamicArrayList<Integer>(2, 4, 6, 8, 10);
         assertEquals(twoFourSixEightTen, oneThroughTen.reject(oddNumbers));
     }
 
@@ -233,7 +192,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        DynamicList<Integer> mapped = list(6, 5, 5, 6);
+        DynamicArrayList<Integer> mapped = new DynamicArrayList<Integer>(6, 5, 5, 6);
         assertEquals(mapped, prepositions.map(intoWordLength));
     }
 
@@ -256,14 +215,14 @@ public class DynamicArrayListTest {
                     }
                 };
 
-        assertEquals(list(2, 4, 6), numbers.mapWhile(timesTwo, lessThanEight));
+        assertEquals(new DynamicArrayList<Integer>(2, 4, 6), numbers.mapWhile(timesTwo, lessThanEight));
     }
 
     @Test
     public void shouldCreateDynamicCollectionWithoutElements() {
         DynamicArrayList<Character> aThroughE = new DynamicArrayList<Character>('a', 'b', 'c', 'd', 'e');
-        DynamicList<Character> bAndC = list('b', 'c');
-        assertEquals(bAndC, aThroughE.without(list('a', 'd', 'e')));
+        DynamicArrayList<Character> bAndC = new DynamicArrayList<Character>('b', 'c');
+        assertEquals(bAndC, aThroughE.without(new DynamicArrayList<Character>('a', 'd', 'e')));
     }
 
     @Test
@@ -276,8 +235,8 @@ public class DynamicArrayListTest {
             }
         };
 
-        DynamicList<Integer> trues = list(2, 4, 6, 8, 10);
-        DynamicList<Integer> falses = list(1, 3, 5, 7, 9);
+        DynamicList<Integer> trues = new DynamicArrayList<Integer>(2, 4, 6, 8, 10);
+        DynamicList<Integer> falses = new DynamicArrayList<Integer>(1, 3, 5, 7, 9);
 
         Partition<Integer> partition = oneThroughTen.partition(intoEvensAndOdds);
         assertEquals(trues, partition.trues());
@@ -313,23 +272,23 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldGroupElements() {
-        DynamicArrayList<Integer> numbers = list(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5);
+        DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5);
 
         assertEquals(new DynamicArrayList<DynamicList<Integer>>(
-                list(1),
-                list(2, 2),
-                list(3, 3, 3),
-                list(4, 4, 4, 4),
-                list(5, 5, 5, 5, 5)
+                new DynamicArrayList<Integer>(1),
+                new DynamicArrayList<Integer>(2, 2),
+                new DynamicArrayList<Integer>(3, 3, 3),
+                new DynamicArrayList<Integer>(4, 4, 4, 4),
+                new DynamicArrayList<Integer>(5, 5, 5, 5, 5)
         ), numbers.group());
     }
 
     @Test
     public void shouldGroupElementsByMappedOutput() {
-        DynamicArrayList<String> words = list("one", "two", "three");
+        DynamicArrayList<String> words = new DynamicArrayList<String>("one", "two", "three");
         assertEquals(new DynamicArrayList<DynamicList<String>>(
-                list("one", "two"),
-                list("three")
+                new DynamicArrayList<String>("one", "two"),
+                new DynamicArrayList<String>("three")
         ), words.group(new Function<String, Integer>() {
             @Override
             public Integer apply(String word) {
@@ -355,17 +314,17 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldGetSequencesOfElements() {
-        DynamicArrayList<Integer> oneThroughTen = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        DynamicArrayList<Integer> oneThroughTen = new DynamicArrayList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         assertEquals(new DynamicArrayList<DynamicList<Integer>>(
-                list(1, 2, 3),
-                list(2, 3, 4),
-                list(3, 4, 5),
-                list(4, 5, 6),
-                list(5, 6, 7),
-                list(6, 7, 8),
-                list(7, 8, 9),
-                list(8, 9, 10)
+                new DynamicArrayList<Integer>(1, 2, 3),
+                new DynamicArrayList<Integer>(2, 3, 4),
+                new DynamicArrayList<Integer>(3, 4, 5),
+                new DynamicArrayList<Integer>(4, 5, 6),
+                new DynamicArrayList<Integer>(5, 6, 7),
+                new DynamicArrayList<Integer>(6, 7, 8),
+                new DynamicArrayList<Integer>(7, 8, 9),
+                new DynamicArrayList<Integer>(8, 9, 10)
         ), oneThroughTen.allSequencesOf(3));
     }
 
@@ -374,8 +333,8 @@ public class DynamicArrayListTest {
         DynamicArrayList<Item> aB = new DynamicArrayList<Item>(A, B);
 
         assertEquals(new DynamicArrayList<DynamicList<Item>>(
-                list(A),
-                list(B)
+                new DynamicArrayList<Item>(A),
+                new DynamicArrayList<Item>(B)
         ), aB.zip());
     }
 
@@ -386,8 +345,8 @@ public class DynamicArrayListTest {
         List<Integer> sevenEight = asList(7, 8);
 
         assertEquals(new DynamicArrayList<DynamicList<Integer>>(
-                list(1, 4, 7),
-                list(2, 5, 8)
+                new DynamicArrayList<Integer>(1, 4, 7),
+                new DynamicArrayList<Integer>(2, 5, 8)
         ), oneTwo.zip(fourFiveSix, sevenEight));
     }
 
@@ -498,18 +457,18 @@ public class DynamicArrayListTest {
     @Test
     public void shouldComputeCartesianProduct() {
         DynamicArrayList<String> firstNames = new DynamicArrayList<String>("Adam", "Bob", "Charlie");
-        List<String> lastNames = list("West", "Barker", "Kaufman");
+        List<String> lastNames = new DynamicArrayList<String>("West", "Barker", "Kaufman");
 
         DynamicList<DynamicList<String>> permutedNames = new DynamicArrayList<DynamicList<String>>(
-                list("Adam", "West"),
-                list("Adam", "Barker"),
-                list("Adam", "Kaufman"),
-                list("Bob", "West"),
-                list("Bob", "Barker"),
-                list("Bob", "Kaufman"),
-                list("Charlie", "West"),
-                list("Charlie", "Barker"),
-                list("Charlie", "Kaufman")
+                new DynamicArrayList<String>("Adam", "West"),
+                new DynamicArrayList<String>("Adam", "Barker"),
+                new DynamicArrayList<String>("Adam", "Kaufman"),
+                new DynamicArrayList<String>("Bob", "West"),
+                new DynamicArrayList<String>("Bob", "Barker"),
+                new DynamicArrayList<String>("Bob", "Kaufman"),
+                new DynamicArrayList<String>("Charlie", "West"),
+                new DynamicArrayList<String>("Charlie", "Barker"),
+                new DynamicArrayList<String>("Charlie", "Kaufman")
         );
 
         assertEquals(permutedNames, firstNames.cartesianProduct(lastNames));
@@ -520,10 +479,10 @@ public class DynamicArrayListTest {
         DynamicArrayList<Integer> oneAndTwo = new DynamicArrayList<Integer>(1, 2);
 
         DynamicList<DynamicList<Integer>> permutations = new DynamicArrayList<DynamicList<Integer>>(
-                list(1, 1),
-                list(1, 2),
-                list(2, 1),
-                list(2, 2)
+                new DynamicArrayList<Integer>(1, 1),
+                new DynamicArrayList<Integer>(1, 2),
+                new DynamicArrayList<Integer>(2, 1),
+                new DynamicArrayList<Integer>(2, 2)
         );
 
         assertEquals(permutations, oneAndTwo.cartesianProduct());
@@ -593,7 +552,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        assertEquals(list(1, 2, 6, 24, 120), oneThroughFive.scanLeft(partialProducts));
+        assertEquals(new DynamicArrayList<Integer>(1, 2, 6, 24, 120), oneThroughFive.scanLeft(partialProducts));
     }
 
     @Test
@@ -607,7 +566,7 @@ public class DynamicArrayListTest {
             }
         };
 
-        assertEquals(list(0, 1, 3, 6, 10, 15), oneThroughFive.scanLeft(0, partialSums));
+        assertEquals(new DynamicArrayList<Integer>(0, 1, 3, 6, 10, 15), oneThroughFive.scanLeft(0, partialSums));
     }
 
     @Test

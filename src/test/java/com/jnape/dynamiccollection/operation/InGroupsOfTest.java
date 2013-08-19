@@ -5,8 +5,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("unchecked")
@@ -52,9 +53,7 @@ public class InGroupsOfTest {
 
     @Test
     public void shouldGetEmptyListIfZeroElements() {
-        List<Object> empty = new ArrayList<Object>();
-
-        assertEquals(empty, InGroupsOf.inGroupsOf(empty, 2));
+        assertEquals(new ArrayList<List<Object>>(), InGroupsOf.inGroupsOf(emptyList(), 2));
     }
 
     @Test(expected = IllegalArgumentException.class)

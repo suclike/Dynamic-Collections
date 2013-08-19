@@ -4,7 +4,6 @@ import com.jnape.dynamiccollection.lambda.Accumulator;
 import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.Procedure;
-import com.jnape.dynamiccollection.lambda.builtin.accumulator.Add;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;
@@ -30,97 +29,65 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
         super(iterator);
     }
 
-    public static NumericDynamicArrayList numbers(Number... numbers) {
-        return new NumericDynamicArrayList(numbers);
-    }
-
-    public static NumericDynamicArrayList numbers(Iterator<? extends Number> numbers) {
-        return new NumericDynamicArrayList(numbers);
-    }
-
-    public static NumericDynamicArrayList numbers(Collection<? extends Number> numbers) {
-        return new NumericDynamicArrayList(numbers);
-    }
-
-    public static NumericDynamicList fromTo(Number from, Number to, Number increment) {
-        if (increment.doubleValue() <= 0)
-            throw new IllegalArgumentException("Increment must be greater than 0");
-
-        NumericDynamicList range = new NumericDynamicArrayList();
-        NumericType coercion = coercionFor(from, to);
-
-        Number next = from;
-        while (next.doubleValue() <= to.doubleValue()) {
-            range.add(coercion.coerce(next));
-            next = Add.add(next, increment);
-        }
-
-        return range;
-    }
-
-    public static NumericDynamicList fromTo(Number from, Number to) {
-        return fromTo(from, to, 1);
+    @Override
+    public NumericDynamicArrayList subList(int fromIndex, int toIndex) {
+        return new NumericDynamicArrayList(super.subList(fromIndex, toIndex));
     }
 
     @Override
-    public NumericDynamicList subList(int fromIndex, int toIndex) {
-        return numbers(super.subList(fromIndex, toIndex));
-    }
-
-    @Override
-    public NumericDynamicList concat(Collection<Number> collection) {
-        return numbers(super.concat(collection));
+    public NumericDynamicArrayList concat(Collection<Number> collection) {
+        return new NumericDynamicArrayList(super.concat(collection));
     }
 
     @Override
     public NumericDynamicList concat(Number... numbers) {
-        return numbers(super.concat(numbers));
+        return new NumericDynamicArrayList(super.concat(numbers));
     }
 
     @Override
     public NumericDynamicList each(IndexedProcedure<? super Number> indexedProcedure) {
-        return numbers(super.each(indexedProcedure));
+        return new NumericDynamicArrayList(super.each(indexedProcedure));
     }
 
     @Override
     public NumericDynamicList forEach(Procedure<? super Number> procedure) {
-        return numbers(super.forEach(procedure));
+        return new NumericDynamicArrayList(super.forEach(procedure));
     }
 
     @Override
     public NumericDynamicList filter(Function<? super Number, Boolean> filterer) {
-        return numbers(super.filter(filterer));
+        return new NumericDynamicArrayList(super.filter(filterer));
     }
 
     @Override
     public NumericDynamicList reject(Function<? super Number, Boolean> rejector) {
-        return numbers(super.reject(rejector));
+        return new NumericDynamicArrayList(super.reject(rejector));
     }
 
     @Override
     public NumericDynamicList without(Collection<? super Number> exclusions) {
-        return numbers(super.without(exclusions));
+        return new NumericDynamicArrayList(super.without(exclusions));
     }
 
     @Override
     public NumericDynamicList unique() {
-        return numbers(super.unique());
+        return new NumericDynamicArrayList(super.unique());
     }
 
     @Override
     public <Comparison extends Comparable<Comparison>> NumericDynamicList sort(
             Function<? super Number, Comparison> mapper) {
-        return numbers(super.sort(mapper));
+        return new NumericDynamicArrayList(super.sort(mapper));
     }
 
     @Override
     public NumericDynamicList reverse() {
-        return numbers(super.reverse());
+        return new NumericDynamicArrayList(super.reverse());
     }
 
     @Override
     public NumericDynamicList scanLeft(Number startingAccumulation, Accumulator<Number, Number> accumulator) {
-        return numbers(super.scanLeft(startingAccumulation, accumulator));
+        return new NumericDynamicArrayList(super.scanLeft(startingAccumulation, accumulator));
     }
 
     @Override
@@ -148,7 +115,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public Number harmonicMean() {
-        return divide(size(), numbers(map(new Function<Number, Number>() {
+        return divide(size(), new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return divide(1f, number);
@@ -158,7 +125,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toBytes() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.byteValue();
@@ -168,7 +135,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toShorts() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.shortValue();
@@ -178,7 +145,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toIntegers() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.intValue();
@@ -188,7 +155,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toLongs() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.longValue();
@@ -198,7 +165,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toFloats() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.floatValue();
@@ -208,7 +175,7 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
 
     @Override
     public NumericDynamicList toDoubles() {
-        return numbers(map(new Function<Number, Number>() {
+        return new NumericDynamicArrayList(map(new Function<Number, Number>() {
             @Override
             public Number apply(Number number) {
                 return number.doubleValue();

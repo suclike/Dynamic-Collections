@@ -6,7 +6,7 @@ import testsupport.Item;
 
 import java.util.List;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.ItemFixture.*;

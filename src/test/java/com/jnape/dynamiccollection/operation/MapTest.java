@@ -6,20 +6,20 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static com.jnape.dynamiccollection.operation.Map.map;
 import static com.jnape.dynamiccollection.operation.Map.mapWhile;
 import static org.junit.Assert.assertEquals;
 
 public class MapTest {
 
-    private static final Function<Integer, Integer> DOUBLE = new Function<Integer, Integer>() {
+    private static final Function<Integer, Integer> DOUBLE         = new Function<Integer, Integer>() {
         @Override
         public Integer apply(Integer n) {
             return n * 2;
         }
     };
-    private static final Predicate<Integer> LESS_THAN_FOUR = new Predicate<Integer>() {
+    private static final Predicate<Integer>         LESS_THAN_FOUR = new Predicate<Integer>() {
         @Override
         public Boolean apply(Integer n) {
             return n < 4;

@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection.operation;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -20,7 +21,7 @@ public class JoinTest {
 
     @Test
     public void shouldJoinListOfAnyType() {
-        List<?> increments = asList(1, 2d, 3.5f, "4");
+        List<?> increments = Arrays.<Object>asList(1, 2d, 3.5f, "4");
         assertEquals("1 < 2.0 < 3.5 < 4", Join.join(increments, " < "));
     }
 }

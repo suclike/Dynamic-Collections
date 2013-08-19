@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 

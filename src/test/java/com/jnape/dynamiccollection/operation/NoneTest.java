@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.fromTo;
 import static com.jnape.dynamiccollection.operation.None.none;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

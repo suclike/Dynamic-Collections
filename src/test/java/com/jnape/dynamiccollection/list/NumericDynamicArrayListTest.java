@@ -8,13 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
-import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
-import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.numbers;
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.InheritanceAssert.assertThat;
 
@@ -22,7 +19,7 @@ import static testsupport.assertion.InheritanceAssert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class NumericDynamicArrayListTest {
 
-    private static final NumericDynamicList HETEROGENEOUS_NUMBERS = numbers((byte) 1, (short) 2, 3, 4L, 5F, 6D);
+    private static final NumericDynamicList HETEROGENEOUS_NUMBERS = new NumericDynamicArrayList((byte) 1, (short) 2, 3, 4L, 5F, 6D);
     @Mock private Function<Number, Number>    numericMapper;
     @Mock private Predicate<Number>           numericPredicate;
     @Mock private Accumulator<Number, Number> numericScanner;
@@ -40,7 +37,7 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromIterator() {
-        Iterator<? extends Number> iterator = asList(1f, 2l, 3).iterator();
+        Iterator<Number> iterator = Arrays.<Number>asList(1f, 2l, 3).iterator();
         NumericDynamicArrayList dynamicArrayList = new NumericDynamicArrayList(iterator);
 
         assertEquals(3, dynamicArrayList.size());
@@ -51,7 +48,7 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromCollection() {
-        Collection<? extends Number> numbers = list(1f, (short) 2, (byte) 3);
+        Collection<? extends Number> numbers = Arrays.<Number>asList(1f, (short) 2, (byte) 3);
 
         NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(numbers);
 
@@ -63,7 +60,7 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldHaveFactoryMethodThatPopulatesFromVarArgs() {
-        NumericDynamicArrayList numericDynamicArrayList = numbers(1, 2, 3, 4);
+        NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(1, 2, 3, 4);
 
         assertEquals(4, numericDynamicArrayList.size());
         assertEquals(1, numericDynamicArrayList.get(0));
@@ -75,9 +72,9 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldHaveFactoryMethodThatPopulatesFromIterator() {
-        Iterator<? extends Number> iterator = asList(1f, 2l, 3).iterator();
+        Iterator<? extends Number> iterator = Arrays.<Number>asList(1f, 2l, 3).iterator();
 
-        NumericDynamicArrayList dynamicArrayList = numbers(iterator);
+        NumericDynamicArrayList dynamicArrayList = new NumericDynamicArrayList(iterator);
 
         assertEquals(3, dynamicArrayList.size());
         assertEquals(1f, dynamicArrayList.get(0));
@@ -88,31 +85,14 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldHaveFactoryMethodThatPopulatesFromCollection() {
-        Collection<? extends Number> numbers = list(1f, (short) 2, (byte) 3);
+        Collection<? extends Number> numbers = Arrays.<Number>asList(1f, (short) 2, (byte) 3);
 
-        NumericDynamicArrayList numericDynamicArrayList = numbers(numbers);
+        NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(numbers);
 
         assertEquals(3, numericDynamicArrayList.size());
         assertEquals(1f, numericDynamicArrayList.get(0));
         assertEquals((short) 2, numericDynamicArrayList.get(1));
         assertEquals((byte) 3, numericDynamicArrayList.get(2));
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfNWithTypeOfHighestPrecedenceOfFromAndTo() {
-        assertEquals(numbers(1l, 2l, 3l, 4l, 5l), fromTo(1l, 5l, 1));
-        assertEquals(numbers(1d, 3d, 5d), fromTo(1, 5d, 2));
-        assertEquals(numbers((short) 1), fromTo((short) 1, (byte) 2, 2f));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldFailIfFromToWithIncrementOfZeroOrLess() {
-        fromTo(1, 10, 0);
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatCreatesRangeOfNumbersInIncrementsOfOneIfNoIncrementProvided() {
-        assertEquals(numbers(1, 2, 3, 4, 5), fromTo(1, 5));
     }
 
     @Test
@@ -124,39 +104,39 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldHaveCustomScanLeftThatReturnsNumericDynamicArrayListIfAccumulatorExtendsNumber() {
         assertThat(
-                numbers().scanLeft(0, numericScanner)
+                new NumericDynamicArrayList().scanLeft(0, numericScanner)
         ).isA(NumericDynamicArrayList.class);
     }
 
     @Test
     public void shouldComputeSum() {
-        assertEquals(10, numbers(1, 2, 3, 4).sum());
+        assertEquals(10, new NumericDynamicArrayList(1, 2, 3, 4).sum());
     }
 
     @Test
     public void shouldComputeProduct() {
-        assertEquals(24, numbers(1, 2, 3, 4).product());
+        assertEquals(24, new NumericDynamicArrayList(1, 2, 3, 4).product());
     }
 
     @Test
     public void shouldComputeArithmeticMean() {
-        assertEquals(2, numbers(1, 2, 3).arithmeticMean());
+        assertEquals(2, new NumericDynamicArrayList(1, 2, 3).arithmeticMean());
     }
 
     @Test
     public void shouldComputeGeometricMean() {
-        assertEquals(4, numbers(2, 8).geometricMean());
+        assertEquals(4, new NumericDynamicArrayList(2, 8).geometricMean());
     }
 
     @Test
     public void shouldComputeHarmonicMean() {
-        assertEquals(12f / 7, numbers(1f, 2f, 4f).harmonicMean());
+        assertEquals(12f / 7, new NumericDynamicArrayList(1f, 2f, 4f).harmonicMean());
     }
 
     @Test
     public void shouldMapToBytes() {
         assertEquals(
-                fromTo((byte) 1, (byte) 6),
+                new NumericDynamicArrayList((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6),
                 HETEROGENEOUS_NUMBERS.toBytes()
         );
     }
@@ -164,7 +144,7 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldMapToShorts() {
         assertEquals(
-                fromTo((short) 1, (short) 6),
+                new NumericDynamicArrayList((short) 1, (short) 2, (short) 3, (short) 4, (short) 5, (short) 6),
                 HETEROGENEOUS_NUMBERS.toShorts()
         );
     }
@@ -172,7 +152,7 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldMapToIntegers() {
         assertEquals(
-                fromTo(1, 6),
+                new NumericDynamicArrayList(1, 2, 3, 4, 5, 6),
                 HETEROGENEOUS_NUMBERS.toIntegers()
         );
     }
@@ -180,7 +160,7 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldMapToLongs() {
         assertEquals(
-                fromTo(1L, 6L),
+                new NumericDynamicArrayList(1L, 2L, 3L, 4L, 5L, 6L),
                 HETEROGENEOUS_NUMBERS.toLongs()
         );
     }
@@ -188,7 +168,7 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldMapToFloats() {
         assertEquals(
-                fromTo(1F, 6F),
+                new NumericDynamicArrayList(1F, 2F, 3F, 4F, 5F, 6F),
                 HETEROGENEOUS_NUMBERS.toFloats()
         );
     }
@@ -196,7 +176,7 @@ public class NumericDynamicArrayListTest {
     @Test
     public void shouldMapToDoubles() {
         assertEquals(
-                fromTo(1D, 6D),
+                new NumericDynamicArrayList(1D, 2D, 3D, 4D, 5D, 6D),
                 HETEROGENEOUS_NUMBERS.toDoubles()
         );
     }

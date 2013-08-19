@@ -7,11 +7,11 @@ import com.jnape.dynamiccollection.operation.Take;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 
 public class CachingStream<Element> implements Stream<Element> {
 
-    private final DynamicList<Element> cache;
+    private final DynamicList<Element>                           cache;
     private final CapacityMonitor<Element, DynamicList<Element>> capacityMonitor;
 
     public CachingStream(Collection<Element> elements, Function<DynamicList<Element>, Element> generator) {

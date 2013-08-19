@@ -3,12 +3,12 @@ package com.jnape.dynamiccollection.operation;
 import com.jnape.dynamiccollection.lambda.Accumulator;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.add;
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
-import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.fromTo;
-import static com.jnape.dynamiccollection.list.NumericDynamicArrayList.numbers;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.fromTo;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.numbers;
 import static org.junit.Assert.assertEquals;
 
 public class ScanTest {
@@ -23,21 +23,21 @@ public class ScanTest {
 
     @Test
     public void shouldUseHeadIfNoStartingAccumulationProvided() {
-        assertEquals(list(1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, SCANNER));
+        assertEquals(Arrays.<Number>asList(1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, SCANNER));
     }
 
     @Test
     public void shouldScanLeftUsingStartingAccumulation() {
-        assertEquals(list(0, 1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, 0, SCANNER));
+        assertEquals(Arrays.<Number>asList(0, 1, 3, 6, 10, 15), Scan.scanLeft(ONE_THROUGH_FIVE, 0, SCANNER));
     }
 
     @Test
     public void shouldReturnEmptyListIfNoElementsAndNoStartingAccumulatorProvided() {
-        assertEquals(list(), Scan.scanLeft(numbers(), SCANNER));
+        assertEquals(Arrays.<Number>asList(), Scan.scanLeft(numbers(), SCANNER));
     }
 
     @Test
     public void shouldReturnListOfStartingAccumulationIfNoElementsAndStartingAccumulationProvided() {
-        assertEquals(list(0), Scan.scanLeft(numbers(), 0, SCANNER));
+        assertEquals(Arrays.<Number>asList(0), Scan.scanLeft(numbers(), 0, SCANNER));
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 
 public class Group {
 
@@ -21,7 +21,8 @@ public class Group {
         });
     }
 
-    public static <Element, Output> List<List<Element>> group(Collection<Element> elements, final Function<? super Element, Output> mapper) {
+    public static <Element, Output> List<List<Element>> group(Collection<Element> elements,
+                                                              final Function<? super Element, Output> mapper) {
         List<List<Element>> groups = new ArrayList<List<Element>>();
         DynamicList<Element> candidates = list(elements);
 

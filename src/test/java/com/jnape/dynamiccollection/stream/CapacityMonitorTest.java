@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,9 +19,8 @@ import static org.mockito.Mockito.verify;
 public class CapacityMonitorTest {
 
     @Mock
-    private Function<List<Integer>, Integer> generator;
-
-    private List<Integer> list;
+    private Function<List<Integer>, Integer>        generator;
+    private List<Integer>                           list;
     private CapacityMonitor<Integer, List<Integer>> capacityMonitor;
 
     @Before

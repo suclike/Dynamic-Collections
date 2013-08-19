@@ -2,7 +2,7 @@ package com.jnape.dynamiccollection.list.exception;
 
 import org.junit.Test;
 
-import static com.jnape.dynamiccollection.list.DynamicArrayList.list;
+import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

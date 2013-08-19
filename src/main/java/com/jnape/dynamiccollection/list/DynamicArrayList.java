@@ -1,7 +1,10 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
-import com.jnape.dynamiccollection.lambda.*;
+import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.Procedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
 import com.jnape.dynamiccollection.operation.Map;
@@ -42,18 +45,18 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> subList(int fromIndex, int toIndex) {
-        return list(super.subList(fromIndex, toIndex));
+    public DynamicArrayList<Element> subList(int fromIndex, int toIndex) {
+        return new DynamicArrayList<Element>(super.subList(fromIndex, toIndex));
     }
 
     @Override
-    public DynamicList<Element> concat(Collection<Element> collection) {
-        return list(Concatenate.concatenate(this, collection));
+    public DynamicArrayList<Element> concat(Collection<Element> collection) {
+        return new DynamicArrayList<Element>(Concatenate.concatenate(this, collection));
     }
 
     @Override
     public DynamicList<Element> concat(Element... elements) {
-        return concat(list(elements));
+        return concat(new DynamicArrayList<Element>(elements));
     }
 
     @Override
@@ -70,27 +73,28 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> filter(Function<? super Element, Boolean> filterer) {
-        return list(Filter.filter(this, filterer));
+        return new DynamicArrayList<Element>(Filter.filter(this, filterer));
     }
 
     @Override
     public DynamicList<Element> reject(Function<? super Element, Boolean> rejector) {
-        return list(Reject.reject(this, rejector));
+        return new DynamicArrayList<Element>(Reject.reject(this, rejector));
     }
 
     @Override
     public <Output> DynamicList<Output> map(Function<? super Element, Output> mapper) {
-        return list(Map.map(this, mapper));
+        return new DynamicArrayList<Output>(Map.map(this, mapper));
     }
 
     @Override
-    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper, Function<? super Output, Boolean> predicate) {
-        return list(Map.mapWhile(this, mapper, predicate));
+    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper,
+                                                 Function<? super Output, Boolean> predicate) {
+        return new DynamicArrayList<Output>(Map.mapWhile(this, mapper, predicate));
     }
 
     @Override
     public DynamicList<Element> without(Collection<? super Element> exclusions) {
-        return list(Without.without(this, exclusions));
+        return new DynamicArrayList<Element>(Without.without(this, exclusions));
     }
 
     @Override
@@ -100,17 +104,17 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public DynamicList<Element> unique() {
-        return list(Unique.unique(this));
+        return new DynamicArrayList<Element>(Unique.unique(this));
     }
 
     @Override
     public DynamicList<Element> unique(Function<? super Element, ?> mapper) {
-        return list(Unique.unique(this, mapper));
+        return new DynamicArrayList<Element>(Unique.unique(this, mapper));
     }
 
     @Override
     public DynamicList<Element> duplicates() {
-        return list(Duplicates.duplicates(this));
+        return new DynamicArrayList<Element>(Duplicates.duplicates(this));
     }
 
     @Override
@@ -189,23 +193,23 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     @Override
     public <Accumulation> DynamicList<Accumulation> scanLeft(Accumulation startingAccumulation,
                                                              Accumulator<Accumulation, ? super Element> accumulator) {
-        return list(Scan.scanLeft(this, startingAccumulation, accumulator));
+        return new DynamicArrayList<Accumulation>(Scan.scanLeft(this, startingAccumulation, accumulator));
     }
 
     @Override
     public DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator) {
-        return list(Scan.scanLeft(this, accumulator));
+        return new DynamicArrayList<Element>(Scan.scanLeft(this, accumulator));
     }
 
     @Override
     public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(
             Function<? super Element, Comparison> mapper) {
-        return list(Sort.sort(this, mapper));
+        return new DynamicArrayList<Element>(Sort.sort(this, mapper));
     }
 
     @Override
     public DynamicList<Element> reverse() {
-        return list(Reverse.reverse(this));
+        return new DynamicArrayList<Element>(Reverse.reverse(this));
     }
 
     @Override
@@ -238,7 +242,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
             @Override
             public DynamicList<DynamicList<Element>> apply(DynamicList<DynamicList<Element>> accumulation,
                                                            List<Element> elements) {
-                accumulation.add(list(elements));
+                accumulation.add(new DynamicArrayList<Element>(elements));
                 return accumulation;
             }
         });
@@ -252,81 +256,5 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     private void ensureNotEmpty() {
         if (isEmpty())
             throw new ListWasEmptyException();
-    }
-
-    public static <Element> DynamicArrayList<Element> list() {
-        return new DynamicArrayList<Element>();
-    }
-
-    public static DynamicArrayList<Byte> list(byte[] bytes) {
-        DynamicArrayList<Byte> list = new DynamicArrayList<Byte>();
-        for (byte b : bytes)
-            list.add(b);
-        return list;
-    }
-
-    public static DynamicArrayList<Short> list(short[] shorts) {
-        DynamicArrayList<Short> list = new DynamicArrayList<Short>();
-        for (short s : shorts)
-            list.add(s);
-        return list;
-    }
-
-    public static DynamicArrayList<Integer> list(int[] ints) {
-        DynamicArrayList<Integer> list = new DynamicArrayList<Integer>();
-        for (int i : ints)
-            list.add(i);
-        return list;
-    }
-
-    public static DynamicArrayList<Long> list(long[] longs) {
-        DynamicArrayList<Long> list = new DynamicArrayList<Long>();
-        for (long l : longs)
-            list.add(l);
-        return list;
-    }
-
-    public static DynamicArrayList<Float> list(float[] floats) {
-        DynamicArrayList<Float> list = new DynamicArrayList<Float>();
-        for (float f : floats)
-            list.add(f);
-        return list;
-    }
-
-    public static DynamicArrayList<Double> list(double[] doubles) {
-        DynamicArrayList<Double> list = new DynamicArrayList<Double>();
-        for (double d : doubles)
-            list.add(d);
-        return list;
-    }
-
-    public static DynamicArrayList<Boolean> list(boolean[] booleans) {
-        DynamicArrayList<Boolean> list = new DynamicArrayList<Boolean>();
-        for (boolean b : booleans)
-            list.add(b);
-        return list;
-    }
-
-    public static DynamicArrayList<Character> list(char[] chars) {
-        DynamicArrayList<Character> list = new DynamicArrayList<Character>();
-        for (char c : chars)
-            list.add(c);
-        return list;
-    }
-
-    public static <Element> DynamicArrayList<Element> list(Element[] elements) {
-        return new DynamicArrayList<Element>(elements);
-    }
-
-    public static <Element> DynamicArrayList<Element> list(Element element, Element... elements) {
-        return new DynamicArrayList<Element>(element, elements);
-    }
-
-    public static <Element> DynamicArrayList<Element> list(Collection<Element> collection) {
-        return new DynamicArrayList<Element>(collection);
-    }
-
-    public static <Element> DynamicArrayList<Element> list(Iterator<Element> iterator) {
-        return new DynamicArrayList<Element>(iterator);
     }
 }

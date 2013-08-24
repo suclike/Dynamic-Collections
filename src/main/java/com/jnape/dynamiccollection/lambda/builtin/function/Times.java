@@ -1,10 +1,10 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.multiply;
 
-public class Times implements Function<Number, Number> {
+public final class Times extends MonadicFunction<Number, Number> {
 
     private final Number multiplier;
 
@@ -17,7 +17,7 @@ public class Times implements Function<Number, Number> {
         return multiply(multiplicand, multiplier);
     }
 
-    public static Function<Number, Number> times(Number multiplier) {
+    public static MonadicFunction<Number, Number> times(Number multiplier) {
         return new Times(multiplier);
     }
 }

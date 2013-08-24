@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.datatype.option;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 public class None<Value> implements Option<Value> {
 
@@ -15,7 +15,7 @@ public class None<Value> implements Option<Value> {
     }
 
     @Override
-    public <Output> Option<Output> map(Function<? super Value, Output> mapper) {
+    public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
         return new None<Output>();
     }
 

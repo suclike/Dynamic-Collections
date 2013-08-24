@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.stream;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class CachingStreamTest {
 
     @Mock
-    private Function<DynamicList<Integer>, Integer> generator;
+    private MonadicFunction<DynamicList<Integer>, Integer> generator;
 
     @Before
     public void setUp() {

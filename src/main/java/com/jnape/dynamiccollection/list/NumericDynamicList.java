@@ -1,9 +1,9 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.MonadicProcedure;
 
 import java.util.Collection;
 
@@ -22,13 +22,13 @@ public interface NumericDynamicList extends DynamicList<Number> {
     NumericDynamicList each(IndexedProcedure<? super Number> indexedProcedure);
 
     @Override
-    NumericDynamicList forEach(Procedure<? super Number> procedure);
+    NumericDynamicList forEach(MonadicProcedure<? super Number> procedure);
 
     @Override
-    NumericDynamicList filter(Function<? super Number, Boolean> filterer);
+    NumericDynamicList filter(MonadicFunction<? super Number, Boolean> filterer);
 
     @Override
-    NumericDynamicList reject(Function<? super Number, Boolean> rejector);
+    NumericDynamicList reject(MonadicFunction<? super Number, Boolean> rejector);
 
     @Override
     NumericDynamicList without(Collection<? super Number> exclusions);
@@ -38,7 +38,7 @@ public interface NumericDynamicList extends DynamicList<Number> {
 
     @Override
     <Comparison extends Comparable<Comparison>> NumericDynamicList sort(
-            Function<? super Number, Comparison> comparator);
+            MonadicFunction<? super Number, Comparison> comparator);
 
     @Override
     NumericDynamicList reverse();

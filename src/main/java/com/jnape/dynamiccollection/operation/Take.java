@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,8 @@ public class Take {
         return taken;
     }
 
-    public static <Element> Collection<Element> takeWhile(Iterable<Element> iterable, Function<? super Element, Boolean> predicate) {
+    public static <Element> Collection<Element> takeWhile(Iterable<Element> iterable,
+                                                          MonadicFunction<? super Element, Boolean> predicate) {
         Collection<Element> taken = new ArrayList<Element>();
 
         Iterator<Element> iterator = iterable.iterator();

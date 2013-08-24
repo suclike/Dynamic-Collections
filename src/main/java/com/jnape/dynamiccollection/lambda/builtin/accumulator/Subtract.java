@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
-public class Subtract implements Accumulator<Number, Number> {
+public final class Subtract extends Accumulator<Number, Number> {
 
     public static Number subtract(Number minuend, Number subtrahend) {
         return minus().apply(minuend, subtrahend);

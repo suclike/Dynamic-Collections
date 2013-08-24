@@ -24,10 +24,10 @@ public class EachTest {
         Each.each(letters, procedure);
 
         InOrder inOrder = inOrder(procedure);
-        inOrder.verify(procedure).execute('a', 0);
-        inOrder.verify(procedure).execute('b', 1);
-        inOrder.verify(procedure).execute('c', 2);
-        inOrder.verify(procedure).execute('d', 3);
-        inOrder.verify(procedure).execute('e', 4);
+        inOrder.verify(procedure).execute(0, 'a');
+        inOrder.verify(procedure).execute(1, 'b');
+        inOrder.verify(procedure).execute(2, 'c');
+        inOrder.verify(procedure).execute(3, 'd');
+        inOrder.verify(procedure).execute(4, 'e');
     }
 }

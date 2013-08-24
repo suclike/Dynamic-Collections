@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class UniqueTest {
     public void shouldRemoveNonUniqueElementsBasedOnMappedComparison() {
         Collection<String> mixedCase = asList("one", "One", "ONE", "two", "ThREE", "THREE");
 
-        Function<String, String> lowerCase = new Function<String, String>() {
+        MonadicFunction<String, String> lowerCase = new MonadicFunction<String, String>() {
             @Override
             public String apply(String word) {
                 return word.toLowerCase();

@@ -1,4 +1,4 @@
 package com.jnape.dynamiccollection.lambda;
 
-public interface Predicate<Input> extends Function<Input, Boolean> {
+public abstract class Predicate<Input> extends MonadicFunction<Input, Boolean> {
 }

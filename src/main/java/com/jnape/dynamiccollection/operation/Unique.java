@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import com.jnape.dynamiccollection.lambda.Predicate;
 
 import java.util.ArrayList;
@@ -10,7 +10,8 @@ import static com.jnape.dynamiccollection.operation.Any.any;
 
 public class Unique {
 
-    public static <Element> Collection<Element> unique(Collection<Element> collection, final Function<? super Element, ?> mapper) {
+    public static <Element> Collection<Element> unique(Collection<Element> collection,
+                                                       final MonadicFunction<? super Element, ?> mapper) {
         Collection<Element> unique = new ArrayList<Element>();
 
         for (final Element element : collection) {

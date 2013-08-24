@@ -2,9 +2,9 @@ package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
 import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.MonadicProcedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
 import com.jnape.dynamiccollection.operation.Map;
@@ -66,29 +66,29 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> forEach(Procedure<? super Element> procedure) {
+    public DynamicList<Element> forEach(MonadicProcedure<? super Element> procedure) {
         ForEach.forEach(this, procedure);
         return this;
     }
 
     @Override
-    public DynamicList<Element> filter(Function<? super Element, Boolean> filterer) {
+    public DynamicList<Element> filter(MonadicFunction<? super Element, Boolean> filterer) {
         return new DynamicArrayList<Element>(Filter.filter(this, filterer));
     }
 
     @Override
-    public DynamicList<Element> reject(Function<? super Element, Boolean> rejector) {
+    public DynamicList<Element> reject(MonadicFunction<? super Element, Boolean> rejector) {
         return new DynamicArrayList<Element>(Reject.reject(this, rejector));
     }
 
     @Override
-    public <Output> DynamicList<Output> map(Function<? super Element, Output> mapper) {
+    public <Output> DynamicList<Output> map(MonadicFunction<? super Element, Output> mapper) {
         return new DynamicArrayList<Output>(Map.map(this, mapper));
     }
 
     @Override
-    public <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper,
-                                                 Function<? super Output, Boolean> predicate) {
+    public <Output> DynamicList<Output> mapWhile(MonadicFunction<? super Element, Output> mapper,
+                                                 MonadicFunction<? super Output, Boolean> predicate) {
         return new DynamicArrayList<Output>(Map.mapWhile(this, mapper, predicate));
     }
 
@@ -98,7 +98,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public Partition<Element> partition(Function<? super Element, Boolean> partitioner) {
+    public Partition<Element> partition(MonadicFunction<? super Element, Boolean> partitioner) {
         return com.jnape.dynamiccollection.operation.Partition.partition(this, partitioner);
     }
 
@@ -108,7 +108,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<Element> unique(Function<? super Element, ?> mapper) {
+    public DynamicList<Element> unique(MonadicFunction<? super Element, ?> mapper) {
         return new DynamicArrayList<Element>(Unique.unique(this, mapper));
     }
 
@@ -123,7 +123,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper) {
+    public DynamicList<DynamicList<Element>> group(MonadicFunction<? super Element, ?> mapper) {
         return graduateToDynamic(Group.group(this, mapper));
     }
 
@@ -143,22 +143,23 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public boolean any(Function<? super Element, Boolean> matcher) {
+    public boolean any(MonadicFunction<? super Element, Boolean> matcher) {
         return Any.any(this, matcher);
     }
 
     @Override
-    public boolean anyWhile(Function<? super Element, Boolean> matcher, Function<? super Element, Boolean> predicate) {
+    public boolean anyWhile(MonadicFunction<? super Element, Boolean> matcher,
+                            MonadicFunction<? super Element, Boolean> predicate) {
         return Any.anyWhile(this, matcher, predicate);
     }
 
     @Override
-    public boolean all(Function<? super Element, Boolean> matcher) {
+    public boolean all(MonadicFunction<? super Element, Boolean> matcher) {
         return All.all(this, matcher);
     }
 
     @Override
-    public boolean none(Function<? super Element, Boolean> matcher) {
+    public boolean none(MonadicFunction<? super Element, Boolean> matcher) {
         return None.none(this, matcher);
     }
 
@@ -203,7 +204,7 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(
-            Function<? super Element, Comparison> mapper) {
+            MonadicFunction<? super Element, Comparison> mapper) {
         return new DynamicArrayList<Element>(Sort.sort(this, mapper));
     }
 
@@ -228,12 +229,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> Element min(Function<? super Element, Comparison> mapper) {
+    public <Comparison extends Comparable<Comparison>> Element min(
+            MonadicFunction<? super Element, Comparison> mapper) {
         return sort(mapper).first();
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> Element max(Function<? super Element, Comparison> mapper) {
+    public <Comparison extends Comparable<Comparison>> Element max(
+            MonadicFunction<? super Element, Comparison> mapper) {
         return sort(mapper).last();
     }
 

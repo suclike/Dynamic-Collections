@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.stream;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 public class CapacityMonitorTest {
 
     @Mock
-    private Function<List<Integer>, Integer>        generator;
+    private MonadicFunction<List<Integer>, Integer> generator;
     private List<Integer>                           list;
     private CapacityMonitor<Integer, List<Integer>> capacityMonitor;
 

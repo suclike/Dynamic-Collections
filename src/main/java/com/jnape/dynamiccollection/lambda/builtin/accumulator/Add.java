@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
-public class Add implements Accumulator<Number, Number> {
+public final class Add extends Accumulator<Number, Number> {
 
     public static Number add(Number augend, Number addend) {
         return plus().apply(augend, addend);

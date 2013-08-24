@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.datatype.option;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import org.junit.Test;
 
 import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
@@ -23,7 +23,7 @@ public class SomeTest {
     @Test
     public void shouldMapToSomeValue() {
         Some<String> some = new Some<String>("foo");
-        Function<Object, Integer> toInt = always(0);
+        MonadicFunction<Object, Integer> toInt = always(0);
         assertEquals(new Some<Integer>(0), some.map(toInt));
     }
 

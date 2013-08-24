@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.datatype.option;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import org.junit.Test;
 
 import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
@@ -21,7 +21,7 @@ public class NoneTest {
     @Test
     public void shouldMapToNone() {
         None<String> none = new None<String>();
-        Function<Object, Integer> toInt = always(0);
+        MonadicFunction<Object, Integer> toInt = always(0);
         assertEquals(new None<Integer>(), none.map(toInt));
     }
 

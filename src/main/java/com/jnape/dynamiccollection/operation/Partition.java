@@ -1,15 +1,15 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.lambda.Function;
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import com.jnape.dynamiccollection.list.DynamicArrayList;
 
 import java.util.Collection;
 
 public class Partition {
 
-    public static <Element> com.jnape.dynamiccollection.datatype.Partition<Element> partition(Collection<Element> collection, Function<? super Element, Boolean> partitioner) {
+    public static <Element> com.jnape.dynamiccollection.datatype.Partition<Element> partition(
+            Collection<Element> collection, MonadicFunction<? super Element, Boolean> partitioner) {
         DynamicCollection<Element> trues = new DynamicArrayList<Element>();
         DynamicCollection<Element> falses = new DynamicArrayList<Element>();
 

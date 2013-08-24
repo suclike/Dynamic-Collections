@@ -143,7 +143,7 @@ public class DynamicArrayListTest {
 
         final List<String> allCaps = new ArrayList<String>();
 
-        Procedure<String> addUpperCasedToAllCaps = new Procedure<String>() {
+        MonadicProcedure<String> addUpperCasedToAllCaps = new MonadicProcedure<String>() {
             @Override
             public void execute(String word) {
                 allCaps.add(word.toUpperCase());
@@ -185,7 +185,7 @@ public class DynamicArrayListTest {
     @Test
     public void shouldMapOverList() {
         DynamicArrayList<String> prepositions = new DynamicArrayList<String>("Aboard", "About", "Above", "Across");
-        Function<String, Integer> intoWordLength = new Function<String, Integer>() {
+        MonadicFunction<String, Integer> intoWordLength = new MonadicFunction<String, Integer>() {
             @Override
             public Integer apply(String word) {
                 return word.length();
@@ -200,7 +200,7 @@ public class DynamicArrayListTest {
     public void shouldMapOverListWhilePredicate() {
         DynamicArrayList<Integer> numbers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
 
-        Function<Integer, Integer> timesTwo = new Function<Integer, Integer>() {
+        MonadicFunction<Integer, Integer> timesTwo = new MonadicFunction<Integer, Integer>() {
             @Override
             public Integer apply(Integer integer) {
                 return integer * 2;
@@ -256,7 +256,7 @@ public class DynamicArrayListTest {
         DynamicArrayList<String> mixedCaseWords = new DynamicArrayList<String>(
                 "One", "ONE", "Two", "two", "three"
         );
-        assertEquals(new DynamicArrayList<String>("One", "Two", "three"), mixedCaseWords.unique(new Function<String, String>() {
+        assertEquals(new DynamicArrayList<String>("One", "Two", "three"), mixedCaseWords.unique(new MonadicFunction<String, String>() {
             @Override
             public String apply(String mixedCaseWord) {
                 return mixedCaseWord.toLowerCase();
@@ -289,7 +289,7 @@ public class DynamicArrayListTest {
         assertEquals(new DynamicArrayList<DynamicList<String>>(
                 new DynamicArrayList<String>("one", "two"),
                 new DynamicArrayList<String>("three")
-        ), words.group(new Function<String, Integer>() {
+        ), words.group(new MonadicFunction<String, Integer>() {
             @Override
             public Integer apply(String word) {
                 return word.length();
@@ -571,7 +571,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldSortWithCustomComparator() {
-        Function<Item, String> byLabel = new Function<Item, String>() {
+        MonadicFunction<Item, String> byLabel = new MonadicFunction<Item, String>() {
             @Override
             public String apply(Item item) {
                 return item.getLabel();
@@ -620,7 +620,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldGetMax() {
-        Function<String, Integer> wordLength = new Function<String, Integer>() {
+        MonadicFunction<String, Integer> wordLength = new MonadicFunction<String, Integer>() {
             @Override
             public Integer apply(String s) {
                 return s.length();
@@ -632,7 +632,7 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldGetMin() {
-        Function<Integer, Integer> integerValue = new Function<Integer, Integer>() {
+        MonadicFunction<Integer, Integer> integerValue = new MonadicFunction<Integer, Integer>() {
             @Override
             public Integer apply(Integer integer) {
                 return integer;

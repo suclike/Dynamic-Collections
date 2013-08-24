@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
-public class Multiply implements Accumulator<Number, Number> {
+public final class Multiply extends Accumulator<Number, Number> {
 
     public static Number multiply(Number multiplicand, Number multiplier) {
         return times().apply(multiplicand, multiplier);

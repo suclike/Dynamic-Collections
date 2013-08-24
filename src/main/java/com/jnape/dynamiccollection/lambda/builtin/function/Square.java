@@ -1,10 +1,10 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.multiply;
 
-public class Square implements Function<Number, Number> {
+public final class Square extends MonadicFunction<Number, Number> {
 
     @Override
     public Number apply(Number number) {

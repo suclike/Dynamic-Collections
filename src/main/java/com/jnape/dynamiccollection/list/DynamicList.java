@@ -2,9 +2,9 @@ package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
 import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.Function;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.MonadicProcedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.Collection;
@@ -25,20 +25,20 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> each(IndexedProcedure<? super Element> indexedProcedure);
 
     @Override
-    DynamicList<Element> forEach(Procedure<? super Element> procedure);
+    DynamicList<Element> forEach(MonadicProcedure<? super Element> procedure);
 
     @Override
-    DynamicList<Element> filter(Function<? super Element, Boolean> filterer);
+    DynamicList<Element> filter(MonadicFunction<? super Element, Boolean> filterer);
 
     @Override
-    DynamicList<Element> reject(Function<? super Element, Boolean> rejector);
+    DynamicList<Element> reject(MonadicFunction<? super Element, Boolean> rejector);
 
     @Override
-    <Output> DynamicList<Output> map(Function<? super Element, Output> mapper);
+    <Output> DynamicList<Output> map(MonadicFunction<? super Element, Output> mapper);
 
     @Override
-    <Output> DynamicList<Output> mapWhile(Function<? super Element, Output> mapper,
-                                          Function<? super Output, Boolean> predicate);
+    <Output> DynamicList<Output> mapWhile(MonadicFunction<? super Element, Output> mapper,
+                                          MonadicFunction<? super Output, Boolean> predicate);
 
     @Override
     DynamicList<Element> without(Collection<? super Element> exclusions);
@@ -47,7 +47,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<Element> unique();
 
     @Override
-    DynamicList<Element> unique(Function<? super Element, ?> mapper);
+    DynamicList<Element> unique(MonadicFunction<? super Element, ?> mapper);
 
     @Override
     DynamicList<Element> duplicates();
@@ -56,7 +56,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<DynamicList<Element>> group();
 
     @Override
-    DynamicList<DynamicList<Element>> group(Function<? super Element, ?> mapper);
+    DynamicList<DynamicList<Element>> group(MonadicFunction<? super Element, ?> mapper);
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 
@@ -81,7 +81,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator);
 
-    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(Function<? super Element, Comparison> mapper);
+    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(
+            MonadicFunction<? super Element, Comparison> mapper);
 
     DynamicList<Element> reverse();
 
@@ -91,7 +92,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element last() throws ListWasEmptyException;
 
-    <Comparison extends Comparable<Comparison>> Element min(Function<? super Element, Comparison> mapper);
+    <Comparison extends Comparable<Comparison>> Element min(MonadicFunction<? super Element, Comparison> mapper);
 
-    <Comparison extends Comparable<Comparison>> Element max(Function<? super Element, Comparison> mapper);
+    <Comparison extends Comparable<Comparison>> Element max(MonadicFunction<? super Element, Comparison> mapper);
 }

@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -17,7 +17,7 @@ public class SortTest {
     public void shouldSortListUsingComparisonMapper() {
         List<Item> items = asList(B, C, A);
 
-        Function<Item, String> byLabel = new Function<Item, String>() {
+        MonadicFunction<Item, String> byLabel = new MonadicFunction<Item, String>() {
             @Override
             public String apply(Item item) {
                 return item.getLabel();

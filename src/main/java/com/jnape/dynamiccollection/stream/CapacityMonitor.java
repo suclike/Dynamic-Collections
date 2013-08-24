@@ -1,15 +1,15 @@
 package com.jnape.dynamiccollection.stream;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import java.util.List;
 
 public class CapacityMonitor<Element, Elements extends List<Element>> {
 
-    private final Elements elements;
-    private final Function<Elements, Element> generator;
+    private final Elements                           elements;
+    private final MonadicFunction<Elements, Element> generator;
 
-    public CapacityMonitor(Elements elements, Function<Elements, Element> generator) {
+    public CapacityMonitor(Elements elements, MonadicFunction<Elements, Element> generator) {
         this.elements = elements;
         this.generator = generator;
     }

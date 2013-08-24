@@ -1,10 +1,10 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Divide.divide;
 
-public class DividedBy implements Function<Number, Number> {
+public final class DividedBy extends MonadicFunction<Number, Number> {
 
     private final Number divisor;
 
@@ -17,7 +17,7 @@ public class DividedBy implements Function<Number, Number> {
         return divide(dividend, divisor);
     }
 
-    public static Function<Number, Number> divided_by(Number divisor) {
+    public static MonadicFunction<Number, Number> divided_by(Number divisor) {
         return new DividedBy(divisor);
     }
 }

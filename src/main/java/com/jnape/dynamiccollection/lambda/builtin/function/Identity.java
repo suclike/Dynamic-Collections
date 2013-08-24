@@ -1,8 +1,8 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
-public class Identity<InputOutput> implements Function<InputOutput, InputOutput> {
+public final class Identity<InputOutput> extends MonadicFunction<InputOutput, InputOutput> {
 
     public static <InputOutput> Identity<InputOutput> id() {
         return new Identity<InputOutput>();

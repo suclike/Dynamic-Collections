@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Procedure;
+import com.jnape.dynamiccollection.lambda.MonadicProcedure;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @RunWith(MockitoJUnitRunner.class)
 public class ForEachTest {
 
-    @Mock private Procedure<Integer> procedure;
+    @Mock private MonadicProcedure<Integer> procedure;
 
     @Test
     public void shouldExecuteProcedureOnEachElementInCollection() {

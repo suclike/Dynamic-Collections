@@ -1,10 +1,10 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Subtract.subtract;
 
-public class Minus implements Function<Number, Number> {
+public class Minus extends MonadicFunction<Number, Number> {
 
     private final Number subtrahend;
 
@@ -17,7 +17,7 @@ public class Minus implements Function<Number, Number> {
         return subtract(minuend, subtrahend);
     }
 
-    public static Function<Number, Number> minus(Number subtrahend) {
+    public static MonadicFunction<Number, Number> minus(Number subtrahend) {
         return new Minus(subtrahend);
     }
 }

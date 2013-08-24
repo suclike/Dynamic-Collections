@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Function;
+import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import com.jnape.dynamiccollection.lambda.Predicate;
 import com.jnape.dynamiccollection.list.DynamicList;
 
@@ -13,7 +13,7 @@ import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 public class Group {
 
     public static <Element> List<List<Element>> group(Collection<Element> elements) {
-        return group(elements, new Function<Element, Object>() {
+        return group(elements, new MonadicFunction<Element, Object>() {
             @Override
             public Object apply(Element element) {
                 return element;
@@ -22,7 +22,7 @@ public class Group {
     }
 
     public static <Element, Output> List<List<Element>> group(Collection<Element> elements,
-                                                              final Function<? super Element, Output> mapper) {
+                                                              final MonadicFunction<? super Element, Output> mapper) {
         List<List<Element>> groups = new ArrayList<List<Element>>();
         DynamicList<Element> candidates = list(elements);
 

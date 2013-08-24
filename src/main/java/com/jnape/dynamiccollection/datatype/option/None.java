@@ -1,0 +1,36 @@
+package com.jnape.dynamiccollection.datatype.option;
+
+import com.jnape.dynamiccollection.lambda.Function;
+
+public class None<Value> implements Option<Value> {
+
+    @Override
+    public Value get() {
+        throw new IllegalStateException("Can't get value from None.");
+    }
+
+    @Override
+    public Option<Value> orElse(Value orElse) {
+        return new Some<Value>(orElse);
+    }
+
+    @Override
+    public <Output> Option<Output> map(Function<? super Value, Output> mapper) {
+        return new None<Output>();
+    }
+
+    @Override
+    public Value getOrElse(Value orElse) {
+        return orElse;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof None;
+    }
+}

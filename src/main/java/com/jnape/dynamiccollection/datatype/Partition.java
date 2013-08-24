@@ -1,25 +1,22 @@
 package com.jnape.dynamiccollection.datatype;
 
 import com.jnape.dynamiccollection.DynamicCollection;
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.list.DynamicArrayList;
 
 import java.util.Collection;
 
-public class Partition<Element> {
-
-    private final DynamicCollection<Element> trues;
-    private final DynamicCollection<Element> falses;
+public class Partition<Element> extends Tuple2<DynamicCollection<Element>, DynamicCollection<Element>> {
 
     public Partition(Collection<Element> trues, Collection<Element> falses) {
-        this.trues = new DynamicArrayList<Element>(trues);
-        this.falses = new DynamicArrayList<Element>(falses);
+        super(new DynamicArrayList<Element>(trues), new DynamicArrayList<Element>(falses));
     }
 
     public DynamicCollection<Element> trues() {
-        return trues;
+        return _1;
     }
 
     public DynamicCollection<Element> falses() {
-        return falses;
+        return _2;
     }
 }

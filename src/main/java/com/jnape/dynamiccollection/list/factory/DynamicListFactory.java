@@ -1,5 +1,6 @@
 package com.jnape.dynamiccollection.list.factory;
 
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.builtin.accumulator.Add;
 import com.jnape.dynamiccollection.list.DynamicArrayList;
 import com.jnape.dynamiccollection.list.DynamicList;
@@ -9,7 +10,9 @@ import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 
+import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
 public class DynamicListFactory {
@@ -120,5 +123,16 @@ public class DynamicListFactory {
 
     public static NumericDynamicList fromTo(Number from, Number to) {
         return fromTo(from, to, 1);
+    }
+
+    public static <_1, _2> DynamicList<Tuple2<_1, _2>> tuples(Collection<Map.Entry<_1, _2>> entries) {
+        DynamicList<Tuple2<_1, _2>> tuples = new DynamicArrayList<Tuple2<_1, _2>>();
+        for (Map.Entry<_1, _2> entry : entries)
+            tuples.add(tuple(entry.getKey(), entry.getValue()));
+        return tuples;
+    }
+
+    public static <_1, _2> DynamicList<Tuple2<_1, _2>> tuples(Map<_1, _2> map) {
+        return tuples(map.entrySet());
     }
 }

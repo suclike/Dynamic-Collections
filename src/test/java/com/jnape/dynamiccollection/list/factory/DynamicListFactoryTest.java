@@ -1,15 +1,17 @@
 package com.jnape.dynamiccollection.list.factory;
 
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.list.DynamicList;
 import org.junit.Test;
 import testsupport.Item;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
 import static testsupport.ItemFixture.*;
 
 public class DynamicListFactoryTest {
@@ -112,5 +114,41 @@ public class DynamicListFactoryTest {
                 DynamicListFactory.<Boolean>list(true, false, true),
                 list(new boolean[]{true, false, true})
         );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldCreateDynamicListOfTuplesFromSetOfMapEntries() {
+        Collection<Map.Entry<String, Integer>> entries = new HashMap<String, Integer>() {{
+            put("Key 1", 1);
+            put("Key 2", 2);
+            put("Key 3", 3);
+        }}.entrySet();
+
+        List<Tuple2<String, Integer>> actual = tuples(entries);
+        assertEquals(3, actual.size());
+        assertThat(actual, hasItems(
+                new Tuple2<String, Integer>("Key 1", 1),
+                new Tuple2<String, Integer>("Key 2", 2),
+                new Tuple2<String, Integer>("Key 3", 3)
+        ));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldCreateDynamicListOfTuplesFromMapUsingEntrySet() {
+        Map<String, Integer> map = new HashMap<String, Integer>() {{
+            put("Key 1", 1);
+            put("Key 2", 2);
+            put("Key 3", 3);
+        }};
+
+        List<Tuple2<String, Integer>> actual = tuples(map);
+        assertEquals(3, actual.size());
+        assertThat(actual, hasItems(
+                new Tuple2<String, Integer>("Key 1", 1),
+                new Tuple2<String, Integer>("Key 2", 2),
+                new Tuple2<String, Integer>("Key 3", 3)
+        ));
     }
 }

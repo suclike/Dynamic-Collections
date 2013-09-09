@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

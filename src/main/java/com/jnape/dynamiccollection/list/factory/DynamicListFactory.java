@@ -1,8 +1,8 @@
 package com.jnape.dynamiccollection.list.factory;
 
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
-import com.jnape.dynamiccollection.lambda.NiladicFunction;
 import com.jnape.dynamiccollection.lambda.builtin.accumulator.Add;
+import com.jnape.dynamiccollection.lambda.niladic.NiladicFunction;
 import com.jnape.dynamiccollection.list.*;
 import com.jnape.dynamiccollection.operation.NumericType;
 

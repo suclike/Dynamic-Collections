@@ -1,6 +1,7 @@
-package com.jnape.dynamiccollection.lambda;
+package com.jnape.dynamiccollection.lambda.dyadic;
 
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 
 public abstract class DyadicProcedure<Input1, Input2> extends MonadicProcedure<Tuple2<Input1, Input2>> {
 

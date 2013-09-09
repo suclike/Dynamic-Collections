@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;

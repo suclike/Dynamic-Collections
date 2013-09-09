@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 import org.junit.Test;
 
 import java.util.Arrays;

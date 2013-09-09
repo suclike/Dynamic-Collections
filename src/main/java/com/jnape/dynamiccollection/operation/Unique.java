@@ -1,7 +1,7 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collection;

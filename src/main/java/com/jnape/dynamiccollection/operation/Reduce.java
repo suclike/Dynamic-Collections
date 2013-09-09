@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 
 import java.util.List;
 
@@ -8,7 +8,8 @@ import static com.jnape.dynamiccollection.operation.Fold.foldLeft;
 
 public class Reduce {
 
-    public static <InputOutput> InputOutput reduce(List<InputOutput> list, Accumulator<InputOutput, ? super InputOutput> accumulator) {
+    public static <InputOutput> InputOutput reduce(List<InputOutput> list,
+                                                   Accumulator<InputOutput, ? super InputOutput> accumulator) {
         InputOutput head = list.get(0);
         List<InputOutput> tail = list.subList(1, list.size());
 

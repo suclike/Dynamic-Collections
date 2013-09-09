@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda;
+package com.jnape.dynamiccollection.lambda.monadic;
 
 import com.jnape.dynamiccollection.datatype.option.Option;
 

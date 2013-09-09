@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.MonadicProcedure;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 
 import java.util.Collection;
 

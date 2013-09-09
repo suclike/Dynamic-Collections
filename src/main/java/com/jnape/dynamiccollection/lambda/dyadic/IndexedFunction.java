@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda;
+package com.jnape.dynamiccollection.lambda.dyadic;
 
 public abstract class IndexedFunction<Input, Output> extends DyadicFunction<Number, Input, Output> {
 

@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.datatype.option;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 public class None<Value> implements Option<Value> {
 

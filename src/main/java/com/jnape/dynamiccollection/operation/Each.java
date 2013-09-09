@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
 
 import java.util.Collection;
 

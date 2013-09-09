@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 import com.jnape.dynamiccollection.list.DynamicList;
 
 import java.util.List;

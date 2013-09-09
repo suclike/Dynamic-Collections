@@ -1,12 +1,13 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 
 import java.util.List;
 
 public class Fold {
 
-    public static <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation, Accumulator<Output, ? super Input> accumulator) {
+    public static <Input, Output> Output foldLeft(List<Input> list, Output startingAccumulation,
+                                                  Accumulator<Output, ? super Input> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (Input input : list)
@@ -15,7 +16,8 @@ public class Fold {
         return accumulation;
     }
 
-    public static <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation, Accumulator<Output, ? super Input> accumulator) {
+    public static <Input, Output> Output foldRight(List<Input> list, Output startingAccumulation,
+                                                   Accumulator<Output, ? super Input> accumulator) {
         Output accumulation = startingAccumulation;
 
         for (int i = list.size(); --i >= 0; )

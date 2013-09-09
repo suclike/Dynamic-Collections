@@ -1,9 +1,9 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.MonadicProcedure;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;

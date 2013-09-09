@@ -1,9 +1,9 @@
 package com.jnape.dynamiccollection.operation;
 
-import com.jnape.dynamiccollection.lambda.DyadicFunction;
-import com.jnape.dynamiccollection.lambda.IndexedFunction;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 import com.jnape.dynamiccollection.list.NumericDynamicArrayList;
 import org.junit.Test;
 

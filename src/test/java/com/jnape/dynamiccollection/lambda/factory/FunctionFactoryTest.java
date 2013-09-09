@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.lambda.factory;
 
-import com.jnape.dynamiccollection.lambda.NiladicFunction;
+import com.jnape.dynamiccollection.lambda.niladic.NiladicFunction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

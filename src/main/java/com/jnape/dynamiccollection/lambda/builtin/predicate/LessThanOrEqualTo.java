@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.lambda.builtin.predicate;
 
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 
 public final class LessThanOrEqualTo extends Predicate<Number> {
 

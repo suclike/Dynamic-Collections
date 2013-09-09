@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.lambda.builtin.accumulator;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 

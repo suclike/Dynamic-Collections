@@ -1,8 +1,8 @@
 package com.jnape.dynamiccollection.list;
 
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

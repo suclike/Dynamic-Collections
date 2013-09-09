@@ -1,7 +1,7 @@
 package com.jnape.dynamiccollection.operation;
 
 
-import com.jnape.dynamiccollection.lambda.Predicate;
+import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 import org.junit.Test;
 
 import java.util.ArrayList;

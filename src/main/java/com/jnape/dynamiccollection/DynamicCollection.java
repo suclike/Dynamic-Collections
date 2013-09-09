@@ -1,10 +1,10 @@
 package com.jnape.dynamiccollection;
 
 import com.jnape.dynamiccollection.datatype.Partition;
-import com.jnape.dynamiccollection.lambda.DyadicFunction;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.MonadicProcedure;
+import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 
 import java.util.Collection;
 

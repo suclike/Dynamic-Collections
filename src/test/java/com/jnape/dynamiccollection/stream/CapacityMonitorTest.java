@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.stream;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

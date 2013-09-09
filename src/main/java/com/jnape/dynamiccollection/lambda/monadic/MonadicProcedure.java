@@ -1,4 +1,4 @@
-package com.jnape.dynamiccollection.lambda;
+package com.jnape.dynamiccollection.lambda.monadic;
 
 public abstract class MonadicProcedure<Input> {
 

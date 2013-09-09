@@ -1,7 +1,11 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.lambda.*;
+import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
+import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
+import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.Collection;

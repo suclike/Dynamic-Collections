@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.datatype.option;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 import static java.lang.String.format;
 

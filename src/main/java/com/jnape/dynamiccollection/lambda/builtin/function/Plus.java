@@ -1,6 +1,6 @@
 package com.jnape.dynamiccollection.lambda.builtin.function;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.add;
 

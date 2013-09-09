@@ -22,13 +22,13 @@ public final class None<Value> extends Option<Value> {
     }
 
     @Override
-    public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
-        return none();
+    public Value getOrElse(Value orElse) {
+        return orElse;
     }
 
     @Override
-    public Value getOrElse(Value orElse) {
-        return orElse;
+    public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
+        return none();
     }
 
     @Override

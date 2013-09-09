@@ -23,13 +23,13 @@ public final class Some<Value> extends Option<Value> {
     }
 
     @Override
-    public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
-        return some(mapper.apply(value));
+    public Value getOrElse(Value orElse) {
+        return value;
     }
 
     @Override
-    public Value getOrElse(Value orElse) {
-        return value;
+    public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
+        return some(mapper.apply(value));
     }
 
     @Override

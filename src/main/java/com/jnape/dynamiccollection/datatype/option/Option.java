@@ -18,9 +18,9 @@ public abstract class Option<Value> {
 
     public abstract Option<Value> orElse(Value value);
 
-    public abstract <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);
-
     public abstract Value getOrElse(Value orElse);
+
+    public abstract <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);
 
     @SuppressWarnings("FinalStaticMethod")
     public static final <Value> Option<Value> option(Value value) {

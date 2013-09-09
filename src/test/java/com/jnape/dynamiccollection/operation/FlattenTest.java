@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.jnape.dynamiccollection.datatype.option.OptionFactory.some;
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.options;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -21,9 +21,9 @@ public class FlattenTest {
     @SuppressWarnings("unchecked")
     public void shouldDiscardNones() {
         List<Option<String>> options = asList(
-                new com.jnape.dynamiccollection.datatype.option.None<String>(),
+                com.jnape.dynamiccollection.datatype.option.None.<String>none(),
                 some("foo"),
-                new com.jnape.dynamiccollection.datatype.option.None<String>());
+                com.jnape.dynamiccollection.datatype.option.None.<String>none());
 
         assertEquals(asList("foo"), Flatten.flatten(options));
     }

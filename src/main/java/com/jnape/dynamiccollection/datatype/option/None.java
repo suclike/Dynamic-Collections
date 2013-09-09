@@ -2,7 +2,14 @@ package com.jnape.dynamiccollection.datatype.option;
 
 import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
-public class None<Value> implements Option<Value> {
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
+
+public final class None<Value> extends Option<Value> {
+
+    private static final None NONE = new None();
+
+    private None() {
+    }
 
     @Override
     public Value get() {
@@ -11,22 +18,17 @@ public class None<Value> implements Option<Value> {
 
     @Override
     public Option<Value> orElse(Value orElse) {
-        return new Some<Value>(orElse);
+        return some(orElse);
     }
 
     @Override
     public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
-        return new None<Output>();
+        return none();
     }
 
     @Override
     public Value getOrElse(Value orElse) {
         return orElse;
-    }
-
-    @Override
-    public Boolean isNone() {
-        return true;
     }
 
     @Override
@@ -41,6 +43,11 @@ public class None<Value> implements Option<Value> {
 
     @Override
     public String toString() {
-        return "None[]";
+        return "None()";
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <Value> None<Value> none() {
+        return (None<Value>) NONE;
     }
 }

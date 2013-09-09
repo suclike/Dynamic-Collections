@@ -9,7 +9,7 @@ import testsupport.Item;
 
 import java.util.*;
 
-import static com.jnape.dynamiccollection.datatype.option.OptionFactory.some;
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
 import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.*;
 import static java.util.Arrays.asList;
@@ -175,10 +175,10 @@ public class DynamicListFactoryTest {
         assertEquals(new OptionalDynamicArrayList<String>(
                 some("foo"),
                 some("bar"),
-                new None<String>(),
+                None.<String>none(),
                 some("baz"),
-                new None<String>(),
-                new None<String>()
+                None.<String>none(),
+                None.<String>none()
         ), options("foo", "bar", null, "baz", null, null));
     }
 

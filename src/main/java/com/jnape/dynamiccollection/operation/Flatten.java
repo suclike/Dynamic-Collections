@@ -11,7 +11,7 @@ public class Flatten {
         List<Element> flattened = new ArrayList<Element>();
 
         for (Option<Element> option : options)
-            if (!option.isNone())
+            if (option.isSome())
                 flattened.add(option.get());
 
         return flattened;

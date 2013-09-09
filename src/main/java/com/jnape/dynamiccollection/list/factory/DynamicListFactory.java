@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import static com.jnape.dynamiccollection.datatype.option.OptionFactory.option;
+import static com.jnape.dynamiccollection.datatype.option.Option.option;
 import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 

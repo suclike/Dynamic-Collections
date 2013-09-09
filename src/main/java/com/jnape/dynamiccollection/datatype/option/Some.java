@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 import static java.lang.String.format;
 
-public class Some<Value> implements Option<Value> {
+public final class Some<Value> extends Option<Value> {
 
     private final Value value;
 
@@ -24,17 +24,12 @@ public class Some<Value> implements Option<Value> {
 
     @Override
     public <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper) {
-        return new Some<Output>(mapper.apply(value));
+        return some(mapper.apply(value));
     }
 
     @Override
     public Value getOrElse(Value orElse) {
         return value;
-    }
-
-    @Override
-    public Boolean isNone() {
-        return false;
     }
 
     @Override
@@ -54,5 +49,9 @@ public class Some<Value> implements Option<Value> {
     @Override
     public String toString() {
         return format("Some[%s]", value);
+    }
+
+    public static <Value> Some<Value> some(Value value) {
+        return new Some<Value>(value);
     }
 }

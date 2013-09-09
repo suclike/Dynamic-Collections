@@ -4,10 +4,11 @@ import com.jnape.dynamiccollection.datatype.option.None;
 import com.jnape.dynamiccollection.datatype.option.Option;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.jnape.dynamiccollection.datatype.option.OptionFactory.some;
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.InheritanceAssert.assertThat;
@@ -41,7 +42,7 @@ public class OptionalDynamicArrayListTest {
     @Test
     @SuppressWarnings("unchecked")
     public void shouldConstructAndPopulateFromIterator() {
-        Iterator<Option<String>> iterator = asList(some("foo"), some("bar"), some("baz")).iterator();
+        Iterator<Option<String>> iterator = Arrays.<Option<String>>asList(some("foo"), some("bar"), some("baz")).iterator();
         OptionalDynamicArrayList optionalDynamicArrayList = new OptionalDynamicArrayList<String>(iterator);
 
         assertEquals(3, optionalDynamicArrayList.size());
@@ -53,7 +54,7 @@ public class OptionalDynamicArrayListTest {
     @Test
     @SuppressWarnings("unchecked")
     public void shouldConstructAndPopulateFromCollection() {
-        Collection<Option<Integer>> numbers = asList(some(1), some(2), some(3));
+        Collection<Option<Integer>> numbers = Arrays.<Option<Integer>>asList(some(1), some(2), some(3));
 
         OptionalDynamicArrayList optionalDynamicArrayList = new OptionalDynamicArrayList(numbers);
 
@@ -75,7 +76,7 @@ public class OptionalDynamicArrayListTest {
         OptionalDynamicArrayList<String> options = new OptionalDynamicArrayList<String>(
                 some("foo"),
                 some("bar"),
-                new None<String>(),
+                None.<String>none(),
                 some("baz")
         );
 

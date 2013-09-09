@@ -2,15 +2,28 @@ package com.jnape.dynamiccollection.datatype.option;
 
 import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
-public interface Option<Value> {
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
 
-    Value get();
+public abstract class Option<Value> {
 
-    Option<Value> orElse(Value value);
+    public final Boolean isNone() {
+        return this instanceof None;
+    }
 
-    <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);
+    public final Boolean isSome() {
+        return !isNone();
+    }
 
-    Value getOrElse(Value orElse);
+    public abstract Value get();
 
-    Boolean isNone();
+    public abstract Option<Value> orElse(Value value);
+
+    public abstract <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);
+
+    public abstract Value getOrElse(Value orElse);
+
+    @SuppressWarnings("FinalStaticMethod")
+    public static final <Value> Option<Value> option(Value value) {
+        return value != null ? some(value) : None.<Value>none();
+    }
 }

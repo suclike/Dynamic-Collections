@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.multiply;
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Multiply.multiply;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.list;
 import static com.jnape.dynamiccollection.operation.Map.map;
 import static com.jnape.dynamiccollection.operation.Map.mapWhile;

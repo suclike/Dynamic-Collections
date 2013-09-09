@@ -10,7 +10,7 @@ import testsupport.Item;
 import java.util.*;
 
 import static com.jnape.dynamiccollection.datatype.option.OptionFactory.some;
-import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
+import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;

@@ -7,7 +7,7 @@ import org.apache.commons.lang.mutable.MutableInt;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
+import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 
 public class Map {
 

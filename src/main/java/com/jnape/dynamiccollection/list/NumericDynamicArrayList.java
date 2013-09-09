@@ -9,9 +9,9 @@ import com.jnape.dynamiccollection.operation.NumericType;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.plus;
-import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Divide.divide;
-import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Multiply.times;
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Add.plus;
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Divide.divide;
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Multiply.times;
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 import static java.lang.Math.pow;
 

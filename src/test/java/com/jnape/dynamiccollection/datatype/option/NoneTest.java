@@ -3,7 +3,7 @@ package com.jnape.dynamiccollection.datatype.option;
 import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 import org.junit.Test;
 
-import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
+import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 import static org.junit.Assert.assertEquals;
 
 public class NoneTest {

@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.jnape.dynamiccollection.lambda.builtin.accumulator.Add.add;
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Add.add;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.fromTo;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.numbers;
 import static org.junit.Assert.assertEquals;

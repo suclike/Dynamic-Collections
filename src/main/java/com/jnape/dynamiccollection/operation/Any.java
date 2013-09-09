@@ -4,7 +4,7 @@ import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 import java.util.Collection;
 
-import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
+import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 
 public class Any {
 

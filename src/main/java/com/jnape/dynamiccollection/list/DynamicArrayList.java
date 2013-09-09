@@ -1,10 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.MonadicProcedure;
+import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import com.jnape.dynamiccollection.operation.*;
 import com.jnape.dynamiccollection.operation.Map;
@@ -83,6 +80,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
 
     @Override
     public <Output> DynamicList<Output> map(MonadicFunction<? super Element, Output> mapper) {
+        return new DynamicArrayList<Output>(Map.map(this, mapper));
+    }
+
+    @Override
+    public <Output> DynamicList<Output> map(DyadicFunction<Number, ? super Element, Output> mapper) {
         return new DynamicArrayList<Output>(Map.map(this, mapper));
     }
 

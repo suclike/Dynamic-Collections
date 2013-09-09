@@ -11,4 +11,6 @@ public interface Option<Value> {
     <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);
 
     Value getOrElse(Value orElse);
+
+    Boolean isNone();
 }

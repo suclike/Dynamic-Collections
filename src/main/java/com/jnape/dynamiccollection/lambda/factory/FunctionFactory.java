@@ -1,13 +1,13 @@
 package com.jnape.dynamiccollection.lambda.factory;
 
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
+import com.jnape.dynamiccollection.lambda.NiladicFunction;
 
 public class FunctionFactory {
 
-    public static <ConstantValue> MonadicFunction<Object, ConstantValue> always(final ConstantValue constantValue) {
-        return new MonadicFunction<Object, ConstantValue>() {
+    public static <ConstantValue> NiladicFunction<ConstantValue> always(final ConstantValue constantValue) {
+        return new NiladicFunction<ConstantValue>() {
             @Override
-            public ConstantValue apply(Object anything) {
+            public ConstantValue apply() {
                 return constantValue;
             }
         };

@@ -1,17 +1,16 @@
 package com.jnape.dynamiccollection.list.factory;
 
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
+import com.jnape.dynamiccollection.lambda.NiladicFunction;
 import com.jnape.dynamiccollection.lambda.builtin.accumulator.Add;
-import com.jnape.dynamiccollection.list.DynamicArrayList;
-import com.jnape.dynamiccollection.list.DynamicList;
-import com.jnape.dynamiccollection.list.NumericDynamicArrayList;
-import com.jnape.dynamiccollection.list.NumericDynamicList;
+import com.jnape.dynamiccollection.list.*;
 import com.jnape.dynamiccollection.operation.NumericType;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import static com.jnape.dynamiccollection.datatype.option.OptionFactory.option;
 import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
@@ -134,5 +133,23 @@ public class DynamicListFactory {
 
     public static <_1, _2> DynamicList<Tuple2<_1, _2>> tuples(Map<_1, _2> map) {
         return tuples(map.entrySet());
+    }
+
+    public static <Output> DynamicList<Output> doTimes(int iterations, NiladicFunction<Output> fn) {
+        DynamicList<Output> outputs = new DynamicArrayList<Output>();
+
+        for (int i = 0; i < iterations; i++)
+            outputs.add(fn.apply());
+
+        return outputs;
+    }
+
+    public static <Output> OptionalDynamicList<Output> options(Output... outputs) {
+        OptionalDynamicList<Output> options = new OptionalDynamicArrayList<Output>();
+
+        for (Output output : outputs)
+            options.add(option(output));
+
+        return options;
     }
 }

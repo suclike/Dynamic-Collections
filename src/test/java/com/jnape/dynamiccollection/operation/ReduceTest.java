@@ -41,7 +41,7 @@ public class ReduceTest {
         Accumulator<Object, Object> accumulator = new Accumulator<Object, Object>() {
             @Override
             public Object apply(Object accumulation, Object o) {
-                return null;
+                return new Object();
             }
         };
 

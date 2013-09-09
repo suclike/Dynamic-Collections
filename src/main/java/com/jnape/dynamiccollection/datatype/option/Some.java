@@ -2,6 +2,8 @@ package com.jnape.dynamiccollection.datatype.option;
 
 import com.jnape.dynamiccollection.lambda.MonadicFunction;
 
+import static java.lang.String.format;
+
 public class Some<Value> implements Option<Value> {
 
     private final Value value;
@@ -31,6 +33,11 @@ public class Some<Value> implements Option<Value> {
     }
 
     @Override
+    public Boolean isNone() {
+        return false;
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }
@@ -42,5 +49,10 @@ public class Some<Value> implements Option<Value> {
             return this.value.equals(that.value);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return format("Some[%s]", value);
     }
 }

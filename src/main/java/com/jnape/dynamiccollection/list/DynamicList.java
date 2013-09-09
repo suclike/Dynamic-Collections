@@ -1,10 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
-import com.jnape.dynamiccollection.lambda.Accumulator;
-import com.jnape.dynamiccollection.lambda.IndexedProcedure;
-import com.jnape.dynamiccollection.lambda.MonadicFunction;
-import com.jnape.dynamiccollection.lambda.MonadicProcedure;
+import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 
 import java.util.Collection;
@@ -35,6 +32,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     @Override
     <Output> DynamicList<Output> map(MonadicFunction<? super Element, Output> mapper);
+
+    @Override
+    <Output> DynamicList<Output> map(DyadicFunction<Number, ? super Element, Output> indexedMapper);
 
     @Override
     <Output> DynamicList<Output> mapWhile(MonadicFunction<? super Element, Output> mapper,

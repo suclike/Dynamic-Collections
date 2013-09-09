@@ -1,12 +1,16 @@
 package com.jnape.dynamiccollection.list.factory;
 
+import com.jnape.dynamiccollection.datatype.option.None;
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.list.DynamicList;
+import com.jnape.dynamiccollection.list.OptionalDynamicArrayList;
 import org.junit.Test;
 import testsupport.Item;
 
 import java.util.*;
 
+import static com.jnape.dynamiccollection.datatype.option.OptionFactory.some;
+import static com.jnape.dynamiccollection.lambda.factory.FunctionFactory.always;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.*;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -137,18 +141,45 @@ public class DynamicListFactoryTest {
     @Test
     @SuppressWarnings("unchecked")
     public void shouldCreateDynamicListOfTuplesFromMapUsingEntrySet() {
-        Map<String, Integer> map = new HashMap<String, Integer>() {{
+        Map<String, Integer> map = new TreeMap<String, Integer>() {{
             put("Key 1", 1);
             put("Key 2", 2);
             put("Key 3", 3);
         }};
 
-        List<Tuple2<String, Integer>> actual = tuples(map);
-        assertEquals(3, actual.size());
-        assertThat(actual, hasItems(
+        assertEquals(list(
                 new Tuple2<String, Integer>("Key 1", 1),
                 new Tuple2<String, Integer>("Key 2", 2),
                 new Tuple2<String, Integer>("Key 3", 3)
-        ));
+        ), tuples(map));
     }
+
+    @Test
+    public void shouldCreateDynamicListOfIterativeFunctionApplicationResults() {
+        assertEquals(asList(1, 1, 1, 1, 1), doTimes(5, always(1)));
+    }
+
+    @Test
+    public void shouldHandleZeroFunctionApplications() {
+        assertEquals(new ArrayList<String>(), doTimes(0, always("foo")));
+    }
+
+    @Test
+    public void shouldHandleNegativeFunctionApplications() {
+        assertEquals(new ArrayList<Character>(), doTimes(-1, always('a')));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void shouldCreateDynamicListOfOptionsFromValues() {
+        assertEquals(new OptionalDynamicArrayList<String>(
+                some("foo"),
+                some("bar"),
+                new None<String>(),
+                some("baz"),
+                new None<String>(),
+                new None<String>()
+        ), options("foo", "bar", null, "baz", null, null));
+    }
+
 }

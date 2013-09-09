@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.*;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
@@ -194,6 +196,26 @@ public class DynamicArrayListTest {
 
         DynamicArrayList<Integer> mapped = new DynamicArrayList<Integer>(6, 5, 5, 6);
         assertEquals(mapped, prepositions.map(intoWordLength));
+    }
+
+    @Test
+    public void shouldMapOverListWithIndex() {
+        DynamicArrayList<String> verbs = new DynamicArrayList<String>("grow", "go", "see", "be");
+        DyadicFunction<Number, String, Tuple2<Number, Integer>> intoIndexAndWordLength = new IndexedFunction<String, Tuple2<Number, Integer>>() {
+            @Override
+            public Tuple2<Number, Integer> apply(Number index, String string) {
+                return tuple(index, string.length());
+            }
+        };
+
+        DynamicArrayList<Tuple2<Number, Integer>> mapped = new DynamicArrayList<Tuple2<Number, Integer>>(
+                new Tuple2<Number, Integer>(0, 4),
+                new Tuple2<Number, Integer>(1, 2),
+                new Tuple2<Number, Integer>(2, 3),
+                new Tuple2<Number, Integer>(3, 2)
+        );
+
+        assertEquals(mapped, verbs.map(intoIndexAndWordLength));
     }
 
     @Test
@@ -534,7 +556,7 @@ public class DynamicArrayListTest {
         Accumulator<Integer, Integer> accumulator = new Accumulator<Integer, Integer>() {
             @Override
             public Integer apply(Integer accumulation, Integer integer) {
-                return null;
+                return 0;
             }
         };
 

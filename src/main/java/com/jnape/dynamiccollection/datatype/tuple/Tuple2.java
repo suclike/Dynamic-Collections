@@ -46,7 +46,7 @@ public class Tuple2<_1, _2> implements Map.Entry<_1, _2> {
     @Override
     public String toString() {
         return reflectionToString(this, new StandardToStringStyle() {{
-            setUseShortClassName(true);
+            setUseClassName(false);
             setUseIdentityHashCode(false);
             setFieldSeparator(", ");
             setContentStart("<");

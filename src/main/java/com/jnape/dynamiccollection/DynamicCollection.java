@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.lambda.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.MonadicFunction;
 import com.jnape.dynamiccollection.lambda.MonadicProcedure;
@@ -22,6 +23,8 @@ public interface DynamicCollection<Element> extends Collection<Element> {
     DynamicCollection<Element> reject(MonadicFunction<? super Element, Boolean> rejector);
 
     <Output> DynamicCollection<Output> map(MonadicFunction<? super Element, Output> mapper);
+
+    <Output> DynamicCollection<Output> map(DyadicFunction<Number, ? super Element, Output> indexedMapper);
 
     <Output> DynamicCollection<Output> mapWhile(MonadicFunction<? super Element, Output> mapper,
                                                 MonadicFunction<? super Output, Boolean> predicate);

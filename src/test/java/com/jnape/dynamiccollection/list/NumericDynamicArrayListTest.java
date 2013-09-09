@@ -15,8 +15,8 @@ import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.InheritanceAssert.assertThat;
 
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class NumericDynamicArrayListTest {
 
     private static final NumericDynamicList HETEROGENEOUS_NUMBERS = new NumericDynamicArrayList((byte) 1, (short) 2, 3, 4L, 5F, 6D);
@@ -36,6 +36,16 @@ public class NumericDynamicArrayListTest {
     }
 
     @Test
+    public void shouldConstructAndPopulateFromArray() {
+        NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(new Integer[]{1, 2, 3});
+
+        assertEquals(3, numericDynamicArrayList.size());
+        assertEquals(1, numericDynamicArrayList.get(0));
+        assertEquals(2, numericDynamicArrayList.get(1));
+        assertEquals(3, numericDynamicArrayList.get(2));
+    }
+
+    @Test
     public void shouldConstructAndPopulateFromIterator() {
         Iterator<Number> iterator = Arrays.<Number>asList(1f, 2l, 3).iterator();
         NumericDynamicArrayList dynamicArrayList = new NumericDynamicArrayList(iterator);
@@ -48,43 +58,6 @@ public class NumericDynamicArrayListTest {
 
     @Test
     public void shouldConstructAndPopulateFromCollection() {
-        Collection<? extends Number> numbers = Arrays.<Number>asList(1f, (short) 2, (byte) 3);
-
-        NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(numbers);
-
-        assertEquals(3, numericDynamicArrayList.size());
-        assertEquals(1f, numericDynamicArrayList.get(0));
-        assertEquals((short) 2, numericDynamicArrayList.get(1));
-        assertEquals((byte) 3, numericDynamicArrayList.get(2));
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromVarArgs() {
-        NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(1, 2, 3, 4);
-
-        assertEquals(4, numericDynamicArrayList.size());
-        assertEquals(1, numericDynamicArrayList.get(0));
-        assertEquals(2, numericDynamicArrayList.get(1));
-        assertEquals(3, numericDynamicArrayList.get(2));
-        assertEquals(4, numericDynamicArrayList.get(3));
-
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromIterator() {
-        Iterator<? extends Number> iterator = Arrays.<Number>asList(1f, 2l, 3).iterator();
-
-        NumericDynamicArrayList dynamicArrayList = new NumericDynamicArrayList(iterator);
-
-        assertEquals(3, dynamicArrayList.size());
-        assertEquals(1f, dynamicArrayList.get(0));
-        assertEquals(2l, dynamicArrayList.get(1));
-        assertEquals(3, dynamicArrayList.get(2));
-
-    }
-
-    @Test
-    public void shouldHaveFactoryMethodThatPopulatesFromCollection() {
         Collection<? extends Number> numbers = Arrays.<Number>asList(1f, (short) 2, (byte) 3);
 
         NumericDynamicArrayList numericDynamicArrayList = new NumericDynamicArrayList(numbers);

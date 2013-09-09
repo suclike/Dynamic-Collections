@@ -25,6 +25,11 @@ public class None<Value> implements Option<Value> {
     }
 
     @Override
+    public Boolean isNone() {
+        return true;
+    }
+
+    @Override
     public int hashCode() {
         return 31;
     }
@@ -32,5 +37,10 @@ public class None<Value> implements Option<Value> {
     @Override
     public boolean equals(Object other) {
         return other instanceof None;
+    }
+
+    @Override
+    public String toString() {
+        return "None[]";
     }
 }

@@ -14,12 +14,13 @@ public class CachingStream<Element> implements Stream<Element> {
     private final DynamicList<Element>                           cache;
     private final CapacityMonitor<Element, DynamicList<Element>> capacityMonitor;
 
-    public CachingStream(Collection<Element> elements, MonadicFunction<DynamicList<Element>, Element> generator) {
+    public CachingStream(Collection<Element> elements,
+                         MonadicFunction<? super DynamicList<Element>, Element> generator) {
         cache = list(elements);
         capacityMonitor = new CapacityMonitor<Element, DynamicList<Element>>(cache, generator);
     }
 
-    public CachingStream(MonadicFunction<DynamicList<Element>, Element> generator) {
+    public CachingStream(MonadicFunction<? super DynamicList<Element>, Element> generator) {
         this(new ArrayList<Element>(), generator);
     }
 

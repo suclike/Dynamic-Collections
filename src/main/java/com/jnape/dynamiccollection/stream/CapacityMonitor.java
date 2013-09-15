@@ -6,10 +6,10 @@ import java.util.List;
 
 public class CapacityMonitor<Element, Elements extends List<Element>> {
 
-    private final Elements                           elements;
-    private final MonadicFunction<Elements, Element> generator;
+    private final Elements                                   elements;
+    private final MonadicFunction<? super Elements, Element> generator;
 
-    public CapacityMonitor(Elements elements, MonadicFunction<Elements, Element> generator) {
+    public CapacityMonitor(Elements elements, MonadicFunction<? super Elements, Element> generator) {
         this.elements = elements;
         this.generator = generator;
     }

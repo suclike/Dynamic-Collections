@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.DynamicCollection;
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
@@ -67,6 +68,9 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<DynamicList<Element>> allSequencesOf(int elementsPerSequences);
 
     DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists);
+
+    <Output> DynamicList<Output> zipWith(MonadicFunction<Tuple2<Element, Element>, Output> zipper,
+                                         List<? extends Element> list);
 
     DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
 

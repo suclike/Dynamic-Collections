@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
+import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
 import org.junit.Test;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ReduceTest {
         assertEquals("1, 2, 3", Reduce.reduce(strings, commaDelimit));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = ListWasEmptyException.class)
     public void shouldThrowExceptionIfReduceOnEmptyList() {
         Accumulator<Object, Object> accumulator = new Accumulator<Object, Object>() {
             @Override

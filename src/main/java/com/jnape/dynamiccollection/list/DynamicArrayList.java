@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
@@ -146,6 +147,12 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     @Override
     public DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists) {
         return graduateToDynamic(Zip.zip(this, lists));
+    }
+
+    @Override
+    public <Output> DynamicList<Output> zipWith(MonadicFunction<Tuple2<Element, Element>, Output> zipper,
+                                                List<? extends Element> list) {
+        return new DynamicArrayList<Output>(Zip.zipWith(zipper, this, list));
     }
 
     @Override

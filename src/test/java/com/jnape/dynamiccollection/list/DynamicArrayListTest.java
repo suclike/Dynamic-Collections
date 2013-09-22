@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static testsupport.ItemFixture.*;
@@ -376,6 +377,21 @@ public class DynamicArrayListTest {
                 new DynamicArrayList<Integer>(1, 4, 7),
                 new DynamicArrayList<Integer>(2, 5, 8)
         ), oneTwo.zip(fourFiveSix, sevenEight));
+    }
+
+    @Test
+    public void shouldZipWithAnotherListUsingZipperFunction() {
+        DynamicArrayList<String> list1 = new DynamicArrayList<String>("the", "in");
+        DynamicArrayList<String> list2 = new DynamicArrayList<String>("rain", "Spain");
+
+        MonadicFunction<Tuple2<String, String>, String> concatWithSpace = new MonadicFunction<Tuple2<String, String>, String>() {
+            @Override
+            public String apply(Tuple2<String, String> tuple) {
+                return format("%s %s", tuple._1, tuple._2);
+            }
+        };
+
+        assertEquals(new DynamicArrayList<String>("the rain", "in Spain"), list1.zipWith(concatWithSpace, list2));
     }
 
     @Test

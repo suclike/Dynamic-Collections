@@ -1,8 +1,12 @@
 package com.jnape.dynamiccollection.operation;
 
+import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
 import static java.lang.Math.min;
 
 public class Zip {
@@ -19,6 +23,17 @@ public class Zip {
         }
 
         return zipped;
+    }
+
+    public static <Element1, Element2, Output> List<Output> zipWith(
+            MonadicFunction<Tuple2<Element1, Element2>, Output> zipper, List<? extends Element1> xs,
+            List<? extends Element2> ys) {
+        List<Output> outputs = new ArrayList<Output>();
+
+        for (int i = 0; i < smallestListSize(xs, ys); i++)
+            outputs.add(zipper.apply(tuple(xs.get(i), ys.get(i))));
+
+        return outputs;
     }
 
     private static int smallestListSize(List heads, List... tails) {

@@ -5,7 +5,8 @@ import java.util.Collection;
 
 public class Concatenate {
 
-    public static <Element> Collection<Element> concatenate(Collection<Element> collection1, Collection<Element> collection2) {
+    public static <Element> Collection<Element> concatenate(Collection<Element> collection1,
+                                                            Collection<Element> collection2) {
         Collection<Element> concatenation = new ArrayList<Element>();
 
         concatenation.addAll(collection1);

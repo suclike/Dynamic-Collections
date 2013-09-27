@@ -42,13 +42,6 @@
         </developer>
     </developers>
 
-    <distributionManagement>
-        <site>
-            <id>jnape</id>
-            <url>scp://${site.url}</url>
-        </site>
-    </distributionManagement>
-
     <properties>
         <junit.version>4.8.2</junit.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>

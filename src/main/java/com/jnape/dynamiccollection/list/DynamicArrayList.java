@@ -193,6 +193,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
+    public DynamicList<Element> shuffle() {
+        return new DynamicArrayList<Element>(Shuffle.shuffle(this));
+    }
+
+    @Override
     public <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation,
                                                 Accumulator<Accumulation, ? super Element> accumulator) {
         return Fold.foldLeft(this, startingAccumulation, accumulator);

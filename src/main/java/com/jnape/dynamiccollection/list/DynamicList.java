@@ -76,6 +76,8 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> cartesianProduct();
 
+    DynamicList<Element> shuffle();
+
     <Accumulation> Accumulation foldLeft(Accumulation startingAccumulation,
                                          Accumulator<Accumulation, ? super Element> accumulator);
 

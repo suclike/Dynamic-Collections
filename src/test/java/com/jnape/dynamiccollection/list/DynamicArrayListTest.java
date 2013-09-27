@@ -10,6 +10,7 @@ import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 import com.jnape.dynamiccollection.lambda.monadic.MonadicProcedure;
 import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 import com.jnape.dynamiccollection.list.exception.ListWasEmptyException;
+import org.junit.Assert;
 import org.junit.Test;
 import testsupport.Item;
 
@@ -24,6 +25,7 @@ import static com.jnape.dynamiccollection.lambda.monadic.builtin.LessThanOrEqual
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import static testsupport.ItemFixture.*;
 import static testsupport.assertion.InheritanceAssert.assertThat;
 
@@ -538,6 +540,15 @@ public class DynamicArrayListTest {
         );
 
         assertEquals(permutations, oneAndTwo.cartesianProduct());
+    }
+
+    @Test
+    public void shouldShuffleElements() {
+        DynamicArrayList<Integer> integers = new DynamicArrayList<Integer>(1, 2, 3, 4, 5);
+        DynamicList<Integer> shuffled = integers.shuffle();
+
+        assertFalse(shuffled.equals(integers));
+        Assert.assertThat(shuffled, hasItems(1, 2, 3, 4, 5));
     }
 
     @Test

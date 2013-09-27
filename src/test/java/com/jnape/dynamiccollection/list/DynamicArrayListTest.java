@@ -18,7 +18,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.jnape.dynamiccollection.datatype.option.Some.some;
 import static com.jnape.dynamiccollection.datatype.tuple.TupleFactory.tuple;
+import static com.jnape.dynamiccollection.lambda.monadic.builtin.LessThanOrEqualTo.lte;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -127,6 +129,12 @@ public class DynamicArrayListTest {
         String[] inSpain = {"in", "Spain"};
 
         assertEquals(new DynamicArrayList<String>("The", "rain", "in", "Spain"), theRain.concat(inSpain));
+    }
+
+    @Test
+    public void shouldFindElement() {
+        DynamicArrayList<Integer> oneThroughFive = new DynamicArrayList<Integer>(5, 4, 3, 2, 1);
+        assertEquals(some(3), oneThroughFive.find(lte(3)));
     }
 
     @Test

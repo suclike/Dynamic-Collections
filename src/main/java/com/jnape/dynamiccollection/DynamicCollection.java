@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.datatype.option.Option;
 import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.dyadic.IndexedProcedure;
 import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
@@ -13,6 +14,8 @@ public interface DynamicCollection<Element> extends Collection<Element> {
     DynamicCollection<Element> concat(Collection<Element> collection);
 
     DynamicCollection<Element> concat(Element... elements);
+
+    Option<Element> find(MonadicFunction<? super Element, Boolean> predicate);
 
     DynamicCollection<Element> each(IndexedProcedure<? super Element> indexedProcedure);
 

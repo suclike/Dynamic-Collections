@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.list;
 
 import com.jnape.dynamiccollection.datatype.Partition;
+import com.jnape.dynamiccollection.datatype.option.Option;
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
@@ -59,6 +60,11 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     @Override
     public DynamicList<Element> concat(Element... elements) {
         return concat(new DynamicArrayList<Element>(elements));
+    }
+
+    @Override
+    public Option<Element> find(MonadicFunction<? super Element, Boolean> predicate) {
+        return Find.find(predicate, this);
     }
 
     @Override

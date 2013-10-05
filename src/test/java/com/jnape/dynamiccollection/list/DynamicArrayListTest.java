@@ -391,17 +391,17 @@ public class DynamicArrayListTest {
 
     @Test
     public void shouldZipWithAnotherListUsingZipperFunction() {
-        DynamicArrayList<String> list1 = new DynamicArrayList<String>("the", "in");
-        DynamicArrayList<String> list2 = new DynamicArrayList<String>("rain", "Spain");
+        DynamicArrayList<Integer> indices = new DynamicArrayList<Integer>(0, 1);
+        DynamicArrayList<String> names = new DynamicArrayList<String>("foo", "bar");
 
-        MonadicFunction<Tuple2<String, String>, String> concatWithSpace = new MonadicFunction<Tuple2<String, String>, String>() {
+        MonadicFunction<Tuple2<Integer, String>, String> concatWithSpace = new MonadicFunction<Tuple2<Integer, String>, String>() {
             @Override
-            public String apply(Tuple2<String, String> tuple) {
+            public String apply(Tuple2<Integer, String> tuple) {
                 return format("%s %s", tuple._1, tuple._2);
             }
         };
 
-        assertEquals(new DynamicArrayList<String>("the rain", "in Spain"), list1.zipWith(concatWithSpace, list2));
+        assertEquals(new DynamicArrayList<String>("0 foo", "1 bar"), indices.zipWith(concatWithSpace, names));
     }
 
     @Test

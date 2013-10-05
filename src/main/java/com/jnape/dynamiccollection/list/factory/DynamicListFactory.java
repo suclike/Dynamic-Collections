@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection.list.factory;
 
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
 import com.jnape.dynamiccollection.lambda.dyadic.builtin.Add;
+import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 import com.jnape.dynamiccollection.lambda.niladic.NiladicFunction;
 import com.jnape.dynamiccollection.list.*;
 import com.jnape.dynamiccollection.operation.NumericType;
@@ -140,6 +141,15 @@ public class DynamicListFactory {
 
         for (int i = 0; i < iterations; i++)
             outputs.add(fn.apply());
+
+        return outputs;
+    }
+
+    public static <Output> DynamicList<Output> doTimes(int iterations, MonadicFunction<? super Integer, Output> fn) {
+        DynamicList<Output> outputs = new DynamicArrayList<Output>();
+
+        for (int i = 0; i < iterations; i++)
+            outputs.add(fn.apply(i));
 
         return outputs;
     }

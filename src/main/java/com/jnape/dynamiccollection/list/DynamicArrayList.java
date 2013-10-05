@@ -156,8 +156,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Output> DynamicList<Output> zipWith(MonadicFunction<Tuple2<Element, Element>, Output> zipper,
-                                                List<? extends Element> list) {
+    public <OtherElement, Output> DynamicList<Output> zipWith(
+            MonadicFunction<Tuple2<Element, OtherElement>, Output> zipper, List<? extends OtherElement> list) {
         return new DynamicArrayList<Output>(Zip.zipWith(zipper, this, list));
     }
 

@@ -10,6 +10,7 @@ import testsupport.Item;
 import java.util.*;
 
 import static com.jnape.dynamiccollection.datatype.option.Some.some;
+import static com.jnape.dynamiccollection.lambda.monadic.builtin.Square.square;
 import static com.jnape.dynamiccollection.lambda.niladic.builtin.Always.always;
 import static com.jnape.dynamiccollection.list.factory.DynamicListFactory.*;
 import static java.util.Arrays.asList;
@@ -167,6 +168,11 @@ public class DynamicListFactoryTest {
     @Test
     public void shouldHandleNegativeFunctionApplications() {
         assertEquals(new ArrayList<Character>(), doTimes(-1, always('a')));
+    }
+
+    @Test
+    public void shouldPassCurrentExecutionIndexDuringDoTimes() {
+        assertEquals(Arrays.<Number>asList(0, 1, 4, 9, 16), doTimes(5, square()));
     }
 
     @Test

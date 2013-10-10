@@ -328,7 +328,7 @@ public class DynamicArrayListTest {
         assertEquals(new DynamicArrayList<DynamicList<String>>(
                 new DynamicArrayList<String>("one", "two"),
                 new DynamicArrayList<String>("three")
-        ), words.group(new MonadicFunction<String, Integer>() {
+        ), words.groupBy(new MonadicFunction<String, Integer>() {
             @Override
             public Integer apply(String word) {
                 return word.length();

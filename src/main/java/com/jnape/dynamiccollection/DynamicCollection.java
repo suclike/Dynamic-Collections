@@ -44,7 +44,7 @@ public interface DynamicCollection<Element> extends Collection<Element> {
 
     DynamicCollection<? extends DynamicCollection<Element>> group();
 
-    DynamicCollection<? extends DynamicCollection<Element>> group(MonadicFunction<? super Element, ?> mapper);
+    DynamicCollection<? extends DynamicCollection<Element>> groupBy(MonadicFunction<? super Element, ?> mapper);
 
     boolean any(MonadicFunction<? super Element, Boolean> matcher);
 

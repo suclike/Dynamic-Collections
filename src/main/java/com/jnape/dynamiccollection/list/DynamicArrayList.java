@@ -136,8 +136,8 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public DynamicList<DynamicList<Element>> group(MonadicFunction<? super Element, ?> mapper) {
-        return graduateToDynamic(Group.group(this, mapper));
+    public DynamicList<DynamicList<Element>> groupBy(MonadicFunction<? super Element, ?> mapper) {
+        return graduateToDynamic(Group.groupBy(this, mapper));
     }
 
     @Override

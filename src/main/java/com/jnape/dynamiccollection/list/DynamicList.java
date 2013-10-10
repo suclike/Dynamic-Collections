@@ -61,7 +61,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
     DynamicList<DynamicList<Element>> group();
 
     @Override
-    DynamicList<DynamicList<Element>> group(MonadicFunction<? super Element, ?> mapper);
+    DynamicList<DynamicList<Element>> groupBy(MonadicFunction<? super Element, ?> mapper);
 
     DynamicList<DynamicList<Element>> inGroupsOf(int elementsPerGroup);
 

@@ -91,8 +91,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<Element> scanLeft(Accumulator<Element, ? super Element> accumulator);
 
-    <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(
-            MonadicFunction<? super Element, Comparison> mapper);
+    DynamicList<Element> sort(MonadicFunction<? super Element, ? extends Comparable>... mappers);
 
     DynamicList<Element> reverse();
 
@@ -102,7 +101,7 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     Element last() throws ListWasEmptyException;
 
-    <Comparison extends Comparable<Comparison>> Element min(MonadicFunction<? super Element, Comparison> mapper);
+    Element min(MonadicFunction<? super Element, ? extends Comparable> mapper);
 
-    <Comparison extends Comparable<Comparison>> Element max(MonadicFunction<? super Element, Comparison> mapper);
+    Element max(MonadicFunction<? super Element, ? extends Comparable> mapper);
 }

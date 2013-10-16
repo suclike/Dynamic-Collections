@@ -17,7 +17,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
-import static testsupport.ItemFixture.*;
+import static testsupport.fixture.ItemFixture.*;
 
 public class DynamicListFactoryTest {
 

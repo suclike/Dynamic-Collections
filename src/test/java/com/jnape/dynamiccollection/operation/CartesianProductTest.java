@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static testsupport.ItemFixture.*;
+import static testsupport.fixture.ItemFixture.*;
 
 @SuppressWarnings("unchecked")
 public class CartesianProductTest {

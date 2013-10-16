@@ -37,8 +37,7 @@ public interface NumericDynamicList extends DynamicList<Number> {
     NumericDynamicList unique();
 
     @Override
-    <Comparison extends Comparable<Comparison>> NumericDynamicList sort(
-            MonadicFunction<? super Number, Comparison> comparator);
+    NumericDynamicList sort(MonadicFunction<? super Number, ? extends Comparable>... mappers);
 
     @Override
     NumericDynamicList reverse();
@@ -55,15 +54,15 @@ public interface NumericDynamicList extends DynamicList<Number> {
 
     Number harmonicMean();
 
-    NumericDynamicList toBytes();
+    DynamicList<Byte> toBytes();
 
-    NumericDynamicList toShorts();
+    DynamicList<Short> toShorts();
 
-    NumericDynamicList toIntegers();
+    DynamicList<Integer> toIntegers();
 
-    NumericDynamicList toLongs();
+    DynamicList<Long> toLongs();
 
-    NumericDynamicList toFloats();
+    DynamicList<Float> toFloats();
 
-    NumericDynamicList toDoubles();
+    DynamicList<Double> toDoubles();
 }

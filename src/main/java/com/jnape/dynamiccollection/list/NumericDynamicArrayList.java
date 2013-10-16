@@ -75,9 +75,8 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> NumericDynamicList sort(
-            MonadicFunction<? super Number, Comparison> mapper) {
-        return new NumericDynamicArrayList(super.sort(mapper));
+    public NumericDynamicList sort(MonadicFunction<? super Number, ? extends Comparable>... mappers) {
+        return new NumericDynamicArrayList(super.sort(mappers));
     }
 
     @Override
@@ -124,62 +123,62 @@ public class NumericDynamicArrayList extends DynamicArrayList<Number> implements
     }
 
     @Override
-    public NumericDynamicList toBytes() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Byte> toBytes() {
+        return map(new MonadicFunction<Number, Byte>() {
             @Override
-            public Number apply(Number number) {
+            public Byte apply(Number number) {
                 return number.byteValue();
             }
-        }));
+        });
     }
 
     @Override
-    public NumericDynamicList toShorts() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Short> toShorts() {
+        return map(new MonadicFunction<Number, Short>() {
             @Override
-            public Number apply(Number number) {
+            public Short apply(Number number) {
                 return number.shortValue();
             }
-        }));
+        });
     }
 
     @Override
-    public NumericDynamicList toIntegers() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Integer> toIntegers() {
+        return map(new MonadicFunction<Number, Integer>() {
             @Override
-            public Number apply(Number number) {
+            public Integer apply(Number number) {
                 return number.intValue();
             }
-        }));
+        });
     }
 
     @Override
-    public NumericDynamicList toLongs() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Long> toLongs() {
+        return map(new MonadicFunction<Number, Long>() {
             @Override
-            public Number apply(Number number) {
+            public Long apply(Number number) {
                 return number.longValue();
             }
-        }));
+        });
     }
 
     @Override
-    public NumericDynamicList toFloats() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Float> toFloats() {
+        return map(new MonadicFunction<Number, Float>() {
             @Override
-            public Number apply(Number number) {
+            public Float apply(Number number) {
                 return number.floatValue();
             }
-        }));
+        });
     }
 
     @Override
-    public NumericDynamicList toDoubles() {
-        return new NumericDynamicArrayList(map(new MonadicFunction<Number, Number>() {
+    public DynamicList<Double> toDoubles() {
+        return map(new MonadicFunction<Number, Double>() {
             @Override
-            public Number apply(Number number) {
+            public Double apply(Number number) {
                 return number.doubleValue();
             }
-        }));
+        });
     }
 }

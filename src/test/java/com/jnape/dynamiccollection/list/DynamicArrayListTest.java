@@ -26,8 +26,8 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
-import static testsupport.ItemFixture.*;
 import static testsupport.assertion.InheritanceAssert.assertThat;
+import static testsupport.fixture.ItemFixture.*;
 
 @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "UnusedDeclaration", "unchecked"})
 public class DynamicArrayListTest {

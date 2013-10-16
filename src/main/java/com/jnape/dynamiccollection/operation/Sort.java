@@ -9,20 +9,25 @@ import java.util.List;
 
 public class Sort {
 
-    public static <Element, Comparison extends Comparable<Comparison>> List<Element> sort(List<Element> elements,
-                                                                                          final MonadicFunction<? super Element, Comparison> mapper) {
-        Comparator<Element> internalComparator = new Comparator<Element>() {
+    @SuppressWarnings("unchecked")
+    public static <Element> List<Element> sort(List<Element> elements,
+                                               final MonadicFunction<? super Element, ? extends Comparable>... mappers) {
+        List<Element> sorted = new ArrayList<Element>(elements);
+
+        Comparator<Element> comparator = new Comparator<Element>() {
             @Override
             public int compare(Element a, Element b) {
-                Comparison comparableA = mapper.apply(a);
-                Comparison comparableB = mapper.apply(b);
+                int comparison = 0;
 
-                return comparableA.compareTo(comparableB);
+                int i = -1;
+                while (++i < mappers.length && comparison == 0)
+                    comparison = mappers[i].apply(a).compareTo(mappers[i].apply(b));
+
+                return comparison;
             }
         };
 
-        List<Element> sorted = new ArrayList<Element>(elements);
-        Collections.sort(sorted, internalComparator);
+        Collections.sort(sorted, comparator);
         return sorted;
     }
 }

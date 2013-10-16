@@ -227,9 +227,9 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> DynamicList<Element> sort(
-            MonadicFunction<? super Element, Comparison> mapper) {
-        return new DynamicArrayList<Element>(Sort.sort(this, mapper));
+    @SuppressWarnings("unchecked")
+    public DynamicList<Element> sort(MonadicFunction<? super Element, ? extends Comparable>... mappers) {
+        return new DynamicArrayList<Element>(Sort.sort(this, mappers));
     }
 
     @Override
@@ -253,14 +253,14 @@ public class DynamicArrayList<Element> extends ArrayList<Element> implements Dyn
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> Element min(
-            MonadicFunction<? super Element, Comparison> mapper) {
+    @SuppressWarnings("unchecked")
+    public Element min(MonadicFunction<? super Element, ? extends Comparable> mapper) {
         return sort(mapper).first();
     }
 
     @Override
-    public <Comparison extends Comparable<Comparison>> Element max(
-            MonadicFunction<? super Element, Comparison> mapper) {
+    @SuppressWarnings("unchecked")
+    public Element max(MonadicFunction<? super Element, ? extends Comparable> mapper) {
         return sort(mapper).last();
     }
 

@@ -1,6 +1,6 @@
 package testsupport;
 
-import static java.lang.String.format;
+import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
 
 public class Item {
 
@@ -16,6 +16,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return format("{Item %s}", label);
+        return reflectionToString(this);
     }
 }

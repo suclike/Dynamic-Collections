@@ -368,25 +368,15 @@ public class DynamicArrayListTest {
     }
 
     @Test
-    public void shouldZipToNothing() {
-        DynamicArrayList<Item> aB = new DynamicArrayList<Item>(A, B);
-
-        assertEquals(new DynamicArrayList<DynamicList<Item>>(
-                new DynamicArrayList<Item>(A),
-                new DynamicArrayList<Item>(B)
-        ), aB.zip());
-    }
-
-    @Test
     public void shouldZipLists() {
         DynamicArrayList<Integer> oneTwo = new DynamicArrayList<Integer>(1, 2, 3);
         List<Integer> fourFiveSix = asList(4, 5, 6);
-        List<Integer> sevenEight = asList(7, 8);
 
-        assertEquals(new DynamicArrayList<DynamicList<Integer>>(
-                new DynamicArrayList<Integer>(1, 4, 7),
-                new DynamicArrayList<Integer>(2, 5, 8)
-        ), oneTwo.zip(fourFiveSix, sevenEight));
+        assertEquals(new DynamicArrayList<Tuple2<Integer, Integer>>(
+                tuple(1, 4),
+                tuple(2, 5),
+                tuple(3, 6)
+        ), oneTwo.zip(fourFiveSix));
     }
 
     @Test

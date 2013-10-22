@@ -67,10 +67,10 @@ public interface DynamicList<Element> extends DynamicCollection<Element>, List<E
 
     DynamicList<DynamicList<Element>> allSequencesOf(int elementsPerSequences);
 
-    DynamicList<DynamicList<Element>> zip(List<? extends Element>... lists);
+    <Other> DynamicList<Tuple2<Element, Other>> zip(List<Other> others);
 
     <OtherElement, Output> DynamicList<Output> zipWith(MonadicFunction<Tuple2<Element, OtherElement>, Output> zipper,
-                                                       List<? extends OtherElement> list);
+                                                       List<OtherElement> list);
 
     DynamicList<DynamicList<Element>> cartesianProduct(List<? extends Element> collection);
 

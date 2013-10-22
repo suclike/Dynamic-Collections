@@ -1,6 +1,7 @@
 package com.jnape.dynamiccollection.operation;
 
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
+import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.monadic.MonadicFunction;
 
 import java.util.ArrayList;
@@ -11,37 +12,23 @@ import static java.lang.Math.min;
 
 public class Zip {
 
-    public static <Element> List<List<Element>> zip(List<? extends Element> heads, List<? extends Element>... tails) {
-        List<List<Element>> zipped = new ArrayList<List<Element>>();
-
-        for (int i = 0; i < smallestListSize(heads, tails); i++) {
-            List<Element> entry = new ArrayList<Element>();
-            entry.add(heads.get(i));
-            for (List<? extends Element> tail : tails)
-                entry.add(tail.get(i));
-            zipped.add(entry);
-        }
-
-        return zipped;
+    public static <X, Y> List<Tuple2<X, Y>> zip(List<X> xs, List<Y> ys) {
+        return zipWith(new DyadicFunction<X, Y, Tuple2<X, Y>>() {
+            @Override
+            public Tuple2<X, Y> apply(X x, Y y) {
+                return tuple(x, y);
+            }
+        }, xs, ys);
     }
 
-    public static <Element1, Element2, Output> List<Output> zipWith(
-            MonadicFunction<Tuple2<Element1, Element2>, Output> zipper, List<? extends Element1> xs,
-            List<? extends Element2> ys) {
+    public static <X, Y, Output> List<Output> zipWith(MonadicFunction<Tuple2<X, Y>, Output> zipper,
+                                                      List<X> xs,
+                                                      List<Y> ys) {
         List<Output> outputs = new ArrayList<Output>();
 
-        for (int i = 0; i < smallestListSize(xs, ys); i++)
+        for (int i = 0; i < min(xs.size(), ys.size()); i++)
             outputs.add(zipper.apply(tuple(xs.get(i), ys.get(i))));
 
         return outputs;
-    }
-
-    private static int smallestListSize(List heads, List... tails) {
-        int smallestListSize = heads.size();
-
-        for (List tail : tails)
-            smallestListSize = min(smallestListSize, tail.size());
-
-        return smallestListSize;
     }
 }

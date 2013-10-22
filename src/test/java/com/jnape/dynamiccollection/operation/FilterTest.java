@@ -1,5 +1,6 @@
 package com.jnape.dynamiccollection.operation;
 
+import com.jnape.dynamiccollection.lambda.dyadic.DyadicFunction;
 import com.jnape.dynamiccollection.lambda.monadic.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,5 +43,19 @@ public class FilterTest {
         when(filterer.apply(anyInt())).thenReturn(false);
 
         assertEquals(new ArrayList<Integer>(), filter(oneThroughFive, filterer));
+    }
+
+    @Test
+    public void shouldFilterPassingIndexToFunction() {
+        List<String> names = asList("Alan", "Bob", "Charlie", "Dave");
+
+        DyadicFunction<Integer, String, Boolean> whereIndexIs2 = new DyadicFunction<Integer, String, Boolean>() {
+            @Override
+            public Boolean apply(Integer integer, String name) {
+                return integer == 2;
+            }
+        };
+
+        assertEquals(asList("Charlie"), filter(names, whereIndexIs2));
     }
 }

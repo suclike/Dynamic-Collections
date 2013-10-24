@@ -2,6 +2,7 @@ package com.jnape.dynamiccollection.list.factory;
 
 import com.jnape.dynamiccollection.datatype.option.None;
 import com.jnape.dynamiccollection.datatype.tuple.Tuple2;
+import com.jnape.dynamiccollection.lambda.niladic.NiladicProcedure;
 import com.jnape.dynamiccollection.list.DynamicList;
 import com.jnape.dynamiccollection.list.OptionalDynamicArrayList;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.IsCollectionContaining.hasItems;
+import static org.mockito.Mockito.*;
 import static testsupport.fixture.ItemFixture.*;
 
 public class DynamicListFactoryTest {
@@ -173,6 +175,15 @@ public class DynamicListFactoryTest {
     @Test
     public void shouldPassCurrentExecutionIndexDuringDoTimes() {
         assertEquals(Arrays.<Number>asList(0, 1, 4, 9, 16), doTimes(5, square()));
+    }
+
+    @Test
+    public void shouldExecuteBlock() {
+        NiladicProcedure block = mock(NiladicProcedure.class);
+
+        doTimes(10, block);
+
+        verify(block, times(10)).execute();
     }
 
     @Test

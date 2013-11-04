@@ -23,6 +23,11 @@ public final class Some<Value> extends Option<Value> {
     }
 
     @Override
+    public <Thrown extends Throwable> Value orThrow(Thrown throwable) throws Thrown {
+        return value;
+    }
+
+    @Override
     public Value getOrElse(Value orElse) {
         return value;
     }

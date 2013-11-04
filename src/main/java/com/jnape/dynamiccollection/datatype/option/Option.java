@@ -18,6 +18,8 @@ public abstract class Option<Value> {
 
     public abstract Option<Value> orElse(Value value);
 
+    public abstract <Thrown extends Throwable> Value orThrow(Thrown throwable) throws Thrown;
+
     public abstract Value getOrElse(Value orElse);
 
     public abstract <Output> Option<Output> map(MonadicFunction<? super Value, Output> mapper);

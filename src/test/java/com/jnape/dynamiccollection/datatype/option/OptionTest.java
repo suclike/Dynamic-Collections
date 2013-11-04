@@ -39,4 +39,14 @@ public class OptionTest {
     public void shouldKnowNoneIsNotSome() {
         assertFalse(None.<Object>none().isSome());
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowIfNone() {
+        None.none().orThrow(new IllegalStateException());
+    }
+
+    @Test
+    public void shouldNotThrowIfSome() {
+        assertEquals("thing", some("thing").orThrow(new IllegalStateException()));
+    }
 }

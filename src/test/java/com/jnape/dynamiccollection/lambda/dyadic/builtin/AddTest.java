@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.lambda.dyadic.builtin;
 import org.junit.Test;
 import testsupport.UnsupportedNumber;
 
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Add.add;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
 
@@ -10,7 +11,7 @@ public class AddTest {
 
     @Test
     public void shouldAddNumbers() {
-        Add add = new Add();
+        Add<Number> add = new Add<Number>();
 
         assertEquals((byte) 1, add.apply((byte) 0, (byte) 1));
         assertEquals((short) 3, add.apply((short) 1, (short) 2));
@@ -23,7 +24,7 @@ public class AddTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailIfAddingUnsupportedNumericType() {
         UnsupportedNumber unsupportedNumber = new UnsupportedNumber();
-        new Add().apply(1, unsupportedNumber);
+        new Add<Number>().apply(1, unsupportedNumber);
     }
 
     @Test
@@ -33,6 +34,6 @@ public class AddTest {
 
     @Test
     public void shouldProvideConvenienceMethodForApply() {
-        assertEquals(3, Add.add(1, 2));
+        assertEquals((Integer) 3, add(1, 2));
     }
 }

@@ -4,19 +4,20 @@ import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
-public final class Divide extends Accumulator<Number, Number> {
+public final class Divide<Numeric extends Number> extends Accumulator<Numeric, Numeric> {
 
-    public static Number divide(Number dividend, Number divisor) {
-        return divided_by().apply(dividend, divisor);
+    public static <Numeric extends Number> Numeric divide(Numeric dividend, Numeric divisor) {
+        return Divide.<Numeric>dividedBy().apply(dividend, divisor);
     }
 
-    public static Divide divided_by() {
-        return new Divide();
+    public static <Numeric extends Number> Divide<Numeric> dividedBy() {
+        return new Divide<Numeric>();
     }
 
     @Override
-    public Number apply(Number dividend, Number divisor) {
+    @SuppressWarnings("unchecked")
+    public Numeric apply(Numeric dividend, Numeric divisor) {
         double quotient = dividend.doubleValue() / divisor.doubleValue();
-        return coercionFor(dividend, divisor).coerce(quotient);
+        return (Numeric) coercionFor(dividend, divisor).coerce(quotient);
     }
 }

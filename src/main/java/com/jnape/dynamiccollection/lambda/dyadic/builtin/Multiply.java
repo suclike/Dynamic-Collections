@@ -4,19 +4,20 @@ import com.jnape.dynamiccollection.lambda.dyadic.Accumulator;
 
 import static com.jnape.dynamiccollection.operation.NumericType.coercionFor;
 
-public final class Multiply extends Accumulator<Number, Number> {
+public final class Multiply<Numeric extends Number> extends Accumulator<Numeric, Numeric> {
 
-    public static Number multiply(Number multiplicand, Number multiplier) {
-        return times().apply(multiplicand, multiplier);
+    public static <Numeric extends Number> Numeric multiply(Numeric multiplicand, Numeric multiplier) {
+        return Multiply.<Numeric>times().apply(multiplicand, multiplier);
     }
 
-    public static Multiply times() {
-        return new Multiply();
+    public static <Numeric extends Number> Multiply<Numeric> times() {
+        return new Multiply<Numeric>();
     }
 
     @Override
-    public Number apply(Number multiplicand, Number multiplier) {
+    @SuppressWarnings("unchecked")
+    public Numeric apply(Numeric multiplicand, Numeric multiplier) {
         double product = multiplicand.doubleValue() * multiplier.doubleValue();
-        return coercionFor(multiplicand, multiplier).coerce(product);
+        return (Numeric) coercionFor(multiplicand, multiplier).coerce(product);
     }
 }

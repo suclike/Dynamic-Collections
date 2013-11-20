@@ -9,7 +9,7 @@ public class SquareTest {
 
     @Test
     public void shouldSquareNumber() {
-        Square square = new Square();
+        Square<Number> square = new Square<Number>();
 
         assertEquals((byte) 1, square.apply((byte) 1));
         assertEquals((short) 4, square.apply((short) 2));

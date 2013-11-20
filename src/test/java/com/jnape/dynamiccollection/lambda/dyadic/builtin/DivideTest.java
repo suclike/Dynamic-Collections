@@ -3,6 +3,7 @@ package com.jnape.dynamiccollection.lambda.dyadic.builtin;
 import org.junit.Test;
 import testsupport.UnsupportedNumber;
 
+import static com.jnape.dynamiccollection.lambda.dyadic.builtin.Divide.divide;
 import static org.junit.Assert.assertEquals;
 import static testsupport.assertion.ReflectionAssert.assertReflectionEquals;
 
@@ -10,7 +11,7 @@ public class DivideTest {
 
     @Test
     public void shouldDivideNumbers() {
-        Divide divide = new Divide();
+        Divide<Number> divide = new Divide<Number>();
 
         assertEquals((byte) 96, divide.apply((byte) 96, (byte) 1));
         assertEquals((short) 48, divide.apply((short) 96, (short) 2));
@@ -23,16 +24,16 @@ public class DivideTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailIfDividingUnsupportedNumericType() {
         UnsupportedNumber unsupportedNumber = new UnsupportedNumber();
-        new Divide().apply(1, unsupportedNumber);
+        new Divide<Number>().apply(1, unsupportedNumber);
     }
 
     @Test
     public void shouldHaveStaticFactoryMethod() {
-        assertReflectionEquals(new Divide(), Divide.divided_by());
+        assertReflectionEquals(new Divide<Number>(), Divide.dividedBy());
     }
 
     @Test
     public void shouldProvideConvenienceMethodForApply() {
-        assertEquals(2, Divide.divide(10, 5));
+        assertEquals((Integer) 2, divide(10, 5));
     }
 }

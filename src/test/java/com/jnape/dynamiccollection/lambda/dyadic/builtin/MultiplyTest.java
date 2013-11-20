@@ -10,7 +10,7 @@ public class MultiplyTest {
 
     @Test
     public void shouldMultiplyNumbers() {
-        Multiply multiply = new Multiply();
+        Multiply<Number> multiply = new Multiply<Number>();
 
         assertEquals((byte) 96, multiply.apply((byte) 1, (byte) 96));
         assertEquals((short) 96, multiply.apply((short) 2, (short) 48));
@@ -23,16 +23,16 @@ public class MultiplyTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailIfMultiplyingUnsupportedNumericType() {
         UnsupportedNumber unsupportedNumber = new UnsupportedNumber();
-        new Multiply().apply(1, unsupportedNumber);
+        new Multiply<Number>().apply(1, unsupportedNumber);
     }
 
     @Test
     public void shouldHaveStaticFactoryMethod() {
-        assertReflectionEquals(new Multiply(), Multiply.times());
+        assertReflectionEquals(new Multiply<Number>(), Multiply.times());
     }
 
     @Test
     public void shouldProvideConvenienceMethodForApply() {
-        assertEquals(10, Multiply.multiply(5, 2));
+        assertEquals((Integer) 10, Multiply.multiply(5, 2));
     }
 }
